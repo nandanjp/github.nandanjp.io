@@ -24,7 +24,7 @@ export function HeroContent() {
             className="flex flex-col gap-5"
         >
             {/* Section label */}
-            <motion.p variants={item} className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground/50">
+            <motion.p variants={item} className="font-mono text-xs uppercase tracking-[0.22em] text-muted-foreground">
                 {SITE.home.hero.label}
             </motion.p>
 

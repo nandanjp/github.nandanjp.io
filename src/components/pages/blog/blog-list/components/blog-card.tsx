@@ -88,7 +88,7 @@ export function BlogCard({ post, index }: BlogCardProps) {
                     <span className="size-2.5 rounded-full bg-red-400/70" />
                     <span className="size-2.5 rounded-full bg-yellow-400/70" />
                     <span className="size-2.5 rounded-full bg-green-400/70" />
-                    <span className="ml-auto font-mono text-[10px] text-muted-foreground/50">
+                    <span className="ml-auto font-mono text-xs text-muted-foreground">
                         {post.slug}.mdx
                     </span>
                 </div>
@@ -101,7 +101,7 @@ export function BlogCard({ post, index }: BlogCardProps) {
                             {post.meta.tags.slice(0, 4).map(tag => (
                                 <span
                                     key={tag}
-                                    className="font-mono text-[10px] px-1.5 py-0.5 rounded border border-foreground/10 bg-background/40 text-muted-foreground/60"
+                                    className="font-mono text-xs px-1.5 py-0.5 rounded border border-foreground/10 bg-background/40 text-muted-foreground/60"
                                 >
                                     #{tag}
                                 </span>
@@ -125,11 +125,11 @@ export function BlogCard({ post, index }: BlogCardProps) {
                     )}
 
                     {/* Metadata row */}
-                    <div className="flex items-center gap-2 font-mono text-[10px] text-muted-foreground/60">
+                    <div className="flex items-center gap-2 font-mono text-xs text-muted-foreground/60">
                         <span>{formatDate(post.meta.date)}</span>
                         <span className="text-muted-foreground/30">·</span>
                         <span>{post.readingTime} min read</span>
-                        <ArrowRight className="ml-auto size-3.5 text-muted-foreground/40 transition-transform group-hover:translate-x-0.5" />
+                        <ArrowRight className="ml-auto size-3.5 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
                     </div>
                 </div>
             </Link>

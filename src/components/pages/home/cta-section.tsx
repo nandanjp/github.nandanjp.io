@@ -16,7 +16,7 @@ export function CtaSection() {
                     className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6"
                 >
                     <div>
-                        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground/50 mb-4">
+                        <p className="font-mono text-xs uppercase tracking-[0.22em] text-muted-foreground mb-4">
                             {SITE.home.cta.label}
                         </p>
                         <h2 className="font-hand font-bold text-4xl sm:text-5xl tracking-tight">

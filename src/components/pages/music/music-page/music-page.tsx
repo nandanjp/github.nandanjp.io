@@ -119,7 +119,7 @@ export function MusicPage() {
     return (
         <div className="flex flex-col gap-6">
             {/* Stats strip */}
-            <div className="flex items-center gap-3 font-mono text-[10px] text-muted-foreground/40">
+            <div className="flex items-center gap-3 font-mono text-xs text-muted-foreground">
                 <span>{tracks.length} tracks</span>
                 <span className="text-muted-foreground/20">·</span>
                 <span>{formatTotalTime(tracks)}</span>
@@ -152,25 +152,25 @@ export function MusicPage() {
                                 className="size-10 rounded-lg object-cover shrink-0"
                             />
                             <div className="flex-1 min-w-0">
-                                <p className="font-mono text-[9px] uppercase tracking-widest text-muted-foreground/40 mb-0.5">
+                                <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-0.5">
                                     now playing
                                 </p>
                                 <p className="font-hand font-bold text-lg leading-tight truncate text-primary">
                                     {playingTrack.name}
                                 </p>
-                                <p className="font-mono text-[10px] text-muted-foreground/60 truncate">
+                                <p className="font-mono text-xs text-muted-foreground/60 truncate">
                                     {playingTrack.artists.join(', ')}
                                 </p>
                             </div>
                             {/* Waveform */}
                             <NowPlayingWave />
                             {/* Duration remaining */}
-                            <span className="font-mono text-[10px] text-muted-foreground/40 tabular-nums shrink-0">
+                            <span className="font-mono text-xs text-muted-foreground tabular-nums shrink-0">
                                 0:{String(Math.round((1 - progress) * 30)).padStart(2, '0')}
                             </span>
                             <button
                                 onClick={handleStop}
-                                className="text-muted-foreground/50 hover:text-foreground transition-colors shrink-0"
+                                className="text-muted-foreground hover:text-foreground transition-colors shrink-0"
                                 aria-label="Stop"
                             >
                                 <Pause className="size-4" />

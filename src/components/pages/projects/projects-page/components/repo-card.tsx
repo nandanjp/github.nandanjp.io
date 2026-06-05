@@ -65,7 +65,7 @@ export function RepoCard({ repo, index }: RepoCardProps) {
                         className="size-1.5 rounded-full shrink-0 animate-pulse"
                         style={{ backgroundColor: langColor }}
                     />
-                    <span className="font-mono text-[10px] text-zinc-500 dark:text-zinc-500">
+                    <span className="font-mono text-xs text-zinc-500 dark:text-zinc-500">
                         ~/repos/{repo.name}
                     </span>
                     <ExternalLink className="ml-auto size-3 text-zinc-400 dark:text-zinc-600 group-hover:text-zinc-600 dark:group-hover:text-zinc-400 transition-colors" />
@@ -79,7 +79,7 @@ export function RepoCard({ repo, index }: RepoCardProps) {
                             {repo.topics.slice(0, 3).map(topic => (
                                 <span
                                     key={topic}
-                                    className="font-mono text-[10px] px-1.5 py-0.5 rounded border border-zinc-200 dark:border-zinc-700/60 bg-zinc-100 dark:bg-zinc-800/60 text-zinc-500 dark:text-zinc-500"
+                                    className="font-mono text-xs px-1.5 py-0.5 rounded border border-zinc-200 dark:border-zinc-700/60 bg-zinc-100 dark:bg-zinc-800/60 text-zinc-500 dark:text-zinc-500"
                                 >
                                     #{topic}
                                 </span>
@@ -101,7 +101,7 @@ export function RepoCard({ repo, index }: RepoCardProps) {
                     )}
 
                     {/* Stats */}
-                    <div className="font-mono text-[10px] text-zinc-400 dark:text-zinc-500 flex items-center gap-3 flex-wrap">
+                    <div className="font-mono text-xs text-zinc-400 dark:text-zinc-500 flex items-center gap-3 flex-wrap">
                         {repo.language && (
                             <span className="flex items-center gap-1">
                                 <Circle className="size-2.5 fill-current" style={{ color: langColor }} />

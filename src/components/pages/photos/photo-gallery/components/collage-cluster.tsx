@@ -87,7 +87,7 @@ function CollagePolaroid({ photo, index, pileIndex, marginLeft, onClick }: Colla
                     </div>
                 </div>
                 <div className={cn('h-8 flex items-center justify-center', theme.bg)}>
-                    <span className="font-mono text-[10px] tracking-widest text-foreground/30">
+                    <span className="font-mono text-xs tracking-widest text-foreground/30">
                         {label}
                     </span>
                 </div>

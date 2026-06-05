@@ -80,7 +80,7 @@ export function PhotoCard({ photo, index, onClick }: PhotoCardProps) {
 
                 {/* Polaroid bottom strip */}
                 <div className={cn('h-8 flex items-center justify-center px-3', theme.bg)}>
-                    <span className="font-mono text-[10px] tracking-widest text-foreground/30">
+                    <span className="font-mono text-xs tracking-widest text-foreground/30">
                         {label}
                     </span>
                 </div>

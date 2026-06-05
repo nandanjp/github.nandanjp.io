@@ -27,7 +27,7 @@ export function MdxCodeBlock({
             className="not-prose my-6 overflow-hidden rounded-xl border border-border bg-[#0d1117] shadow-sm"
         >
             <div className="flex items-center justify-between border-b border-border/50 bg-white/[0.03] px-4 py-2">
-                <span className="font-mono text-[11px] text-muted-foreground/70 uppercase tracking-wider">
+                <span className="font-mono text-xs text-muted-foreground/70 uppercase tracking-wider">
                     {language ?? 'code'}
                 </span>
                 <CopyButton getText={getCode} />

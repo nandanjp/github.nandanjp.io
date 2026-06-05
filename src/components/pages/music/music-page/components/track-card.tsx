@@ -63,7 +63,7 @@ export function TrackCard({ track, index, isPlaying, progress, onPlay, onStop }:
                 ) : (
                     <>
                         <span className={cn(
-                            'font-mono text-xs text-muted-foreground/40 tabular-nums',
+                            'font-mono text-xs text-muted-foreground tabular-nums',
                             hasPreview && 'group-hover:hidden',
                         )}>
                             {String(index + 1).padStart(2, '0')}
@@ -101,7 +101,7 @@ export function TrackCard({ track, index, isPlaying, progress, onPlay, onStop }:
                         const ac = getArtistColor(a)
                         return (
                             <span key={a} className={cn(
-                                'inline-flex items-center text-[9px] px-1.5 py-px rounded-full font-mono leading-none shrink-0 transition-colors',
+                                'inline-flex items-center text-xs px-1.5 py-px rounded-full font-mono leading-none shrink-0 transition-colors',
                                 isPlaying || hovered ? 'bg-white/20 text-white/90' : cn(ac.bg, ac.text),
                             )}>
                                 {a}
@@ -109,8 +109,8 @@ export function TrackCard({ track, index, isPlaying, progress, onPlay, onStop }:
                         )
                     })}
                     <span className={cn(
-                        'font-mono text-[10px] truncate transition-colors',
-                        isPlaying || hovered ? 'text-white/60' : 'text-muted-foreground/40',
+                        'font-mono text-xs truncate transition-colors',
+                        isPlaying || hovered ? 'text-white/60' : 'text-muted-foreground',
                     )}>
                         <span className="mx-1 opacity-50">·</span>
                         {track.album_name}
@@ -124,13 +124,13 @@ export function TrackCard({ track, index, isPlaying, progress, onPlay, onStop }:
                     <button
                         onClick={e => { e.stopPropagation(); onStop() }}
                         aria-label="Stop"
-                        className="text-muted-foreground/50 hover:text-foreground transition-colors"
+                        className="text-muted-foreground hover:text-foreground transition-colors"
                     >
                         <Pause className="size-3.5" />
                     </button>
                 )}
                 <span className={cn(
-                    'font-mono text-[10px] tabular-nums w-8 text-right transition-colors',
+                    'font-mono text-xs tabular-nums w-8 text-right transition-colors',
                     isPlaying || hovered ? 'text-white/60' : 'text-muted-foreground/45',
                 )}>
                     {formatDuration(track.duration_ms)}

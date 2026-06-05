@@ -26,7 +26,7 @@ function EntryOutput({ entry }: { entry: Entry }) {
                         <span className="inline-block w-16 text-muted-foreground/60">{lang.label}</span>
                         <span className="text-foreground/80">{lang.level}</span>
                         {'note' in lang && (
-                            <span className="ml-2 text-muted-foreground/40 text-[10px]">{lang.note}</span>
+                            <span className="ml-2 text-muted-foreground text-xs">{lang.note}</span>
                         )}
                     </span>
                 ))}
@@ -60,7 +60,7 @@ function BeyondCodeTerminal({ inView }: { inView: boolean }) {
                 <span className="size-2.5 rounded-full bg-red-400/70" />
                 <span className="size-2.5 rounded-full bg-yellow-400/70" />
                 <span className="size-2.5 rounded-full bg-green-400/70" />
-                <span className="ml-auto font-mono text-[10px] text-muted-foreground/50">{SITE.home.interests.filename}</span>
+                <span className="ml-auto font-mono text-xs text-muted-foreground">{SITE.home.interests.filename}</span>
             </div>
 
             {/* Content */}
@@ -127,7 +127,7 @@ export function InterestsSection() {
                     transition={{ duration: 0.5 }}
                     className="mb-10"
                 >
-                    <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground/50 mb-4">
+                    <p className="font-mono text-xs uppercase tracking-[0.22em] text-muted-foreground mb-4">
                         {SITE.home.interests.label}
                     </p>
                     <h2 className="font-hand font-bold text-4xl sm:text-5xl tracking-tight">

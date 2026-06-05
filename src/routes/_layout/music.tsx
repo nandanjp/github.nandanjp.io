@@ -10,7 +10,7 @@ function MusicRoute() {
     return (
         <div className="mx-auto w-full max-w-2xl px-6 sm:px-8 md:px-10 pb-16">
             <section className="pt-16 pb-10 mb-10 border-b">
-                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground/50 mb-4">
+                <p className="font-mono text-xs uppercase tracking-[0.22em] text-muted-foreground mb-4">
                     [music] — on repeat
                 </p>
                 <h1 className="font-hand font-bold text-5xl sm:text-6xl tracking-tight leading-[1.05] mb-3">

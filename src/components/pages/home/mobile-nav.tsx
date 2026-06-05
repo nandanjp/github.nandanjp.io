@@ -96,7 +96,7 @@ export function MobileNav() {
                                             className="group flex flex-col items-center py-2"
                                             activeProps={{ className: 'is-active' }}
                                         >
-                                            <span className="font-mono text-[10px] text-muted-foreground/40 tabular-nums mb-0.5">
+                                            <span className="font-mono text-xs text-muted-foreground tabular-nums mb-0.5">
                                                 {String(i + 1).padStart(2, '0')}
                                             </span>
                                             <span className="font-hand font-bold text-5xl tracking-tight transition-colors duration-200 group-hover:text-primary group-[.is-active]:text-primary">
@@ -130,7 +130,7 @@ export function MobileNav() {
                                         {SITE.identity.email}
                                     </a>
                                 </div>
-                                <span className="font-mono text-xs text-muted-foreground/40">
+                                <span className="font-mono text-xs text-muted-foreground">
                                     © {new Date().getFullYear()}
                                 </span>
                             </motion.div>

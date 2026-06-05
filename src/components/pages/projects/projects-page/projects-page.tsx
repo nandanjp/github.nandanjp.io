@@ -47,24 +47,24 @@ function ActivityCardContent({ repos }: { repos: GitHubRepo[] }) {
             <div className="mt-4 pt-4 border-t border-foreground/8 flex-1 flex flex-col">
                 <div className="grid grid-cols-3 gap-2 mb-4">
                     <div className="flex flex-col items-center gap-0.5 rounded-lg p-2 bg-background/40 border border-foreground/8">
-                        <Package className="size-3.5 text-muted-foreground/50 mb-0.5" />
+                        <Package className="size-3.5 text-muted-foreground mb-0.5" />
                         <span className="font-hand font-bold text-lg leading-none">{repos.length}</span>
-                        <span className="font-mono text-[9px] text-muted-foreground/50">repos</span>
+                        <span className="font-mono text-xs text-muted-foreground">repos</span>
                     </div>
                     <div className="flex flex-col items-center gap-0.5 rounded-lg p-2 bg-background/40 border border-foreground/8">
-                        <GitBranch className="size-3.5 text-muted-foreground/50 mb-0.5" />
+                        <GitBranch className="size-3.5 text-muted-foreground mb-0.5" />
                         <span className="font-hand font-bold text-lg leading-none">{activeThisMonth}</span>
-                        <span className="font-mono text-[9px] text-muted-foreground/50">this month</span>
+                        <span className="font-mono text-xs text-muted-foreground">this month</span>
                     </div>
                     <div className="flex flex-col items-center gap-0.5 rounded-lg p-2 bg-background/40 border border-foreground/8">
-                        <Clock className="size-3.5 text-muted-foreground/50 mb-0.5" />
+                        <Clock className="size-3.5 text-muted-foreground mb-0.5" />
                         <span className="font-hand font-bold text-lg leading-none">{lastPush}</span>
-                        <span className="font-mono text-[9px] text-muted-foreground/50">last push</span>
+                        <span className="font-mono text-xs text-muted-foreground">last push</span>
                     </div>
                 </div>
 
                 {/* Recent activity list */}
-                <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground/40 mb-2">
+                <p className="font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground mb-2">
                     recent activity
                 </p>
                 <div className="flex flex-col gap-1.5">
@@ -80,10 +80,10 @@ function ActivityCardContent({ repos }: { repos: GitHubRepo[] }) {
                                 className="size-2 shrink-0 fill-current"
                                 style={{ color: LANGUAGE_COLORS[repo.language ?? ''] ?? '#8b949e' }}
                             />
-                            <span className="font-mono text-[10px] text-foreground/70 truncate group-hover:text-foreground transition-colors">
+                            <span className="font-mono text-xs text-foreground/70 truncate group-hover:text-foreground transition-colors">
                                 {repo.name}
                             </span>
-                            <span className="ml-auto font-mono text-[9px] text-muted-foreground/40 shrink-0">
+                            <span className="ml-auto font-mono text-xs text-muted-foreground shrink-0">
                                 {relativeTime(repo.updated_at)}
                             </span>
                         </a>
@@ -147,7 +147,7 @@ export function ProjectsPage() {
                         <span className="size-2.5 rounded-full bg-red-400/70" />
                         <span className="size-2.5 rounded-full bg-yellow-400/70" />
                         <span className="size-2.5 rounded-full bg-green-400/70" />
-                        <span className="ml-auto font-mono text-[10px] text-muted-foreground/50">
+                        <span className="ml-auto font-mono text-xs text-muted-foreground">
                             activity.svg
                         </span>
                     </div>
@@ -173,7 +173,7 @@ export function ProjectsPage() {
                     className="flex flex-col gap-5"
                 >
                     <div>
-                        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground/50 mb-2">
+                        <p className="font-mono text-xs uppercase tracking-[0.22em] text-muted-foreground mb-2">
                             featured repositories
                         </p>
                         <h2 className="font-hand font-bold text-3xl sm:text-4xl tracking-tight">

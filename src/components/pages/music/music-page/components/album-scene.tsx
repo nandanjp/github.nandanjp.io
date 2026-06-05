@@ -18,7 +18,7 @@ export function AlbumScene({ tracks }: AlbumSceneProps) {
 
     return (
         <div className="flex flex-col gap-3">
-            <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground/40">
+            <p className="font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">
                 {albums.length} albums
             </p>
 
@@ -60,7 +60,7 @@ export function AlbumScene({ tracks }: AlbumSceneProps) {
                                 <p className="font-hand font-bold text-sm leading-tight truncate">
                                     {track.album_name}
                                 </p>
-                                <p className="font-mono text-[10px] text-muted-foreground/55 truncate">
+                                <p className="font-mono text-xs text-muted-foreground/55 truncate">
                                     {track.artists[0]}
                                 </p>
                             </div>

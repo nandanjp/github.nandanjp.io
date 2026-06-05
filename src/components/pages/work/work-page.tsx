@@ -111,7 +111,7 @@ function ProjectEntryCard({ entry, index }: { entry: ProjectEntry; index: number
             <p className="font-hand font-bold text-xl sm:text-2xl leading-tight text-foreground">
                 {entry.name}
             </p>
-            <p className="font-mono text-[10px] text-muted-foreground/50 mt-1 tracking-wider">
+            <p className="font-mono text-xs text-muted-foreground mt-1 tracking-wider">
                 {entry.tech}
             </p>
             <BulletSkeletons count={3} accent="violet" />
@@ -130,7 +130,7 @@ export function WorkPage() {
                 <span className="size-2.5 rounded-full bg-red-400/70" />
                 <span className="size-2.5 rounded-full bg-yellow-400/70" />
                 <span className="size-2.5 rounded-full bg-green-400/70" />
-                <span className="ml-auto font-mono text-[10px] text-muted-foreground/50">
+                <span className="ml-auto font-mono text-xs text-muted-foreground">
                     {SITE.work.filename}
                 </span>
             </div>

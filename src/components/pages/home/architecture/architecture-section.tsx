@@ -48,7 +48,7 @@ const DEPLOYED_APPS = [
 function DeployedApps() {
     return (
         <div className="flex flex-col gap-2.5">
-            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground/40">
+            <p className="font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">
                 {SITE.home.architecture.deploymentsLabel}
             </p>
             <div className="flex flex-wrap gap-2.5">
@@ -72,7 +72,7 @@ function DeployedApps() {
                             <p className={cn('font-hand font-bold text-sm leading-tight', app.text)}>
                                 {app.name}
                             </p>
-                            <p className={cn('font-mono text-[10px] leading-tight', app.sub)}>
+                            <p className={cn('font-mono text-xs leading-tight', app.sub)}>
                                 {app.url}
                             </p>
                         </div>
@@ -124,7 +124,7 @@ function ArchitectureDiagram() {
             <text
                 x="20" y="124"
                 className="fill-primary/50"
-                fontSize="11"
+                fontSize="12"
                 style={{ fontFamily: HAND_FONT }}
             >
                 {SITE.home.architecture.clusterLabel}
@@ -179,7 +179,7 @@ function ArchitectureDiagram() {
                         y={node.cy + 12}
                         textAnchor="middle"
                         dominantBaseline="middle"
-                        fontSize="11"
+                        fontSize="12"
                         className="fill-muted-foreground"
                         style={{ fontFamily: HAND_FONT }}
                     >
@@ -205,7 +205,7 @@ export function ArchitectureSection() {
             >
                 {/* Text */}
                 <div className="flex flex-col gap-5">
-                    <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground/50">
+                    <p className="font-mono text-xs uppercase tracking-[0.22em] text-muted-foreground">
                         {SITE.home.architecture.label}
                     </p>
                     <h2 className="font-hand font-bold text-4xl sm:text-5xl tracking-tight">
@@ -223,7 +223,7 @@ export function ArchitectureSection() {
                         <span className="size-2.5 rounded-full bg-red-400/70" />
                         <span className="size-2.5 rounded-full bg-yellow-400/70" />
                         <span className="size-2.5 rounded-full bg-green-400/70" />
-                        <span className="ml-auto font-mono text-[10px] text-muted-foreground/50">
+                        <span className="ml-auto font-mono text-xs text-muted-foreground">
                             {SITE.home.architecture.filename}
                         </span>
                     </div>

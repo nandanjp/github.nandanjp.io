@@ -154,7 +154,7 @@ function ArtistGraph({ artistName, albums }: ArtistGraphProps) {
                 </text>
                 <text x={albumCX + NODE_R + 38} y={albumCY + 12}
                     textAnchor="start" dominantBaseline="middle"
-                    fontSize="11" className="fill-muted-foreground"
+                    fontSize="12" className="fill-muted-foreground"
                     style={{ fontFamily: HAND_FONT }}
                 >
                     {albumLabel}
@@ -212,7 +212,7 @@ function ArtistGraph({ artistName, albums }: ArtistGraphProps) {
                         />
                         <text
                             x={node.x} y={node.y + NODE_R + 14}
-                            textAnchor="middle" fontSize="11"
+                            textAnchor="middle" fontSize="12"
                             className="fill-muted-foreground"
                             style={{ fontFamily: HAND_FONT }}
                         >
@@ -258,7 +258,7 @@ export function ArtistExplorer({ tracks }: { tracks: Track[] }) {
                 <span className="size-2.5 rounded-full bg-red-400/70" />
                 <span className="size-2.5 rounded-full bg-yellow-400/70" />
                 <span className="size-2.5 rounded-full bg-green-400/70" />
-                <span className="ml-auto font-mono text-[10px] text-muted-foreground/50">
+                <span className="ml-auto font-mono text-xs text-muted-foreground">
                     artist-explorer.excalidraw
                 </span>
             </div>

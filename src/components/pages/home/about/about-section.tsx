@@ -155,7 +155,7 @@ export function AboutSection() {
             >
                 {/* Bio */}
                 <motion.div variants={item} className="flex flex-col gap-6">
-                    <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground/50">
+                    <p className="font-mono text-xs uppercase tracking-[0.22em] text-muted-foreground">
                         {SITE.home.about.label}
                     </p>
                     <h2 className="font-hand font-bold text-4xl sm:text-5xl tracking-tight leading-[1.1]">
@@ -170,7 +170,7 @@ export function AboutSection() {
 
                 {/* Stack */}
                 <motion.div variants={item} className="flex flex-col gap-7">
-                    <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground/50">
+                    <p className="font-mono text-xs uppercase tracking-[0.22em] text-muted-foreground">
                         {SITE.home.about.stackLabel}
                     </p>
 

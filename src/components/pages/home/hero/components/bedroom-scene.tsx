@@ -1,6 +1,6 @@
 import { Suspense, useMemo } from 'react'
 import { Canvas } from '@react-three/fiber'
-import { useGLTF, OrbitControls, Environment, Center } from '@react-three/drei'
+import { useGLTF, OrbitControls, Center } from '@react-three/drei'
 
 function BedroomModel() {
     const { scene } = useGLTF('/models/bedroom.glb')
@@ -23,7 +23,7 @@ export function BedroomScene() {
             <Suspense fallback={null}>
                 <ambientLight intensity={1.5} />
                 <directionalLight position={[4, 6, 4]} intensity={1.2} />
-                <Environment preset="apartment" />
+
                 <BedroomModel />
                 <OrbitControls
                     enableZoom

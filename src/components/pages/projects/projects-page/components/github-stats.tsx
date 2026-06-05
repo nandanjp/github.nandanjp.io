@@ -25,7 +25,7 @@ export function GitHubStatsCard({ stats }: GitHubStatsCardProps) {
                     href={`https://github.com/${stats.username}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="ml-auto flex items-center gap-1 font-mono text-[10px] text-muted-foreground/50 hover:text-muted-foreground/80 transition-colors"
+                    className="ml-auto flex items-center gap-1 font-mono text-xs text-muted-foreground hover:text-muted-foreground/80 transition-colors"
                 >
                     github.profile
                     <ExternalLink className="size-3" />
@@ -77,7 +77,7 @@ export function GitHubStatsCard({ stats }: GitHubStatsCardProps) {
                 {/* Top Languages */}
                 {stats.languages.length > 0 && (
                     <div className="mt-5">
-                        <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground/40 mb-3">
+                        <p className="font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground mb-3">
                             Top Languages
                         </p>
                         <div className="flex flex-col gap-2.5">
@@ -112,7 +112,7 @@ function StatPill({
         <div className={cn('flex flex-col items-center gap-1 rounded-lg p-3', className)}>
             <div>{icon}</div>
             <p className="font-hand font-bold text-2xl leading-none">{value}</p>
-            <p className="font-mono text-[10px] text-muted-foreground/60">{label}</p>
+            <p className="font-mono text-xs text-muted-foreground/60">{label}</p>
         </div>
     )
 }

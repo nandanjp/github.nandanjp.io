@@ -75,7 +75,7 @@ export function PhotoGallery() {
 
     return (
         <>
-            <p className="font-mono text-[10px] text-muted-foreground/40 mb-6">
+            <p className="font-mono text-xs text-muted-foreground mb-6">
                 {photos.length} photos
             </p>
             <PhotoGrid photos={photos} onPhotoClick={setLightboxPhoto} />

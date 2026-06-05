@@ -18,7 +18,7 @@ export function Hero() {
                         <span className="size-2.5 rounded-full bg-red-400/70" />
                         <span className="size-2.5 rounded-full bg-yellow-400/70" />
                         <span className="size-2.5 rounded-full bg-green-400/70" />
-                        <span className="ml-auto font-mono text-[10px] text-muted-foreground/50">
+                        <span className="ml-auto font-mono text-xs text-muted-foreground">
                             bedroom.glb
                         </span>
                     </div>

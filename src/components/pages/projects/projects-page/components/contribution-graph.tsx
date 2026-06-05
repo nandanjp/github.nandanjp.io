@@ -120,7 +120,7 @@ export function ContributionGraph({ repos }: ContributionGraphProps) {
                     key={`${label}-${x}`}
                     x={x}
                     y={OFF_Y - 6}
-                    fontSize="9"
+                    fontSize="12"
                     className="fill-muted-foreground/50"
                 >
                     {label}
@@ -133,7 +133,7 @@ export function ContributionGraph({ repos }: ContributionGraphProps) {
                     key={label}
                     x={OFF_X - 3}
                     y={OFF_Y + d * STRIDE + CELL - 2}
-                    fontSize="8"
+                    fontSize="12"
                     textAnchor="end"
                     className="fill-muted-foreground/50"
                 >
@@ -160,7 +160,7 @@ export function ContributionGraph({ repos }: ContributionGraphProps) {
             <text
                 x={OFF_X}
                 y={legendY}
-                fontSize="9"
+                fontSize="12"
                 className="fill-muted-foreground/50"
                 fontFamily="'JetBrains Mono Variable', monospace"
             >
@@ -180,7 +180,7 @@ export function ContributionGraph({ repos }: ContributionGraphProps) {
             <text
                 x={OFF_X + 28 + 5 * (CELL + 2) + 2}
                 y={legendY}
-                fontSize="9"
+                fontSize="12"
                 className="fill-muted-foreground/50"
                 fontFamily="'JetBrains Mono Variable', monospace"
             >
