@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
+import { SITE } from '@/content/site'
 import {
     siTypescript,
     siGo,
@@ -156,35 +157,28 @@ export function AboutSection() {
                 {/* Bio */}
                 <motion.div variants={item} className="flex flex-col gap-6">
                     <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground/50">
-                        [02] — about
+                        {SITE.home.about.label}
                     </p>
                     <h2 className="font-hand font-bold text-4xl sm:text-5xl tracking-tight leading-[1.1]">
-                        Systems thinker,<br />frontend builder.
+                        {SITE.home.about.heading.split('\n').map((line, i, arr) => (
+                            <span key={i}>{line}{i < arr.length - 1 && <br />}</span>
+                        ))}
                     </h2>
                     <div className="space-y-3 text-muted-foreground leading-relaxed text-base sm:text-lg">
-                        <p>
-                            I build backend infrastructure and developer tools by day,
-                            and explore web graphics and UI engineering by night.
-                            Currently deep in Kubernetes, distributed systems, and
-                            making things go really fast.
-                        </p>
-                        <p>
-                            When I&apos;m not writing code, I&apos;m playing guitar,
-                            watching anime, or hunting for the best bowl of ramen in the city.
-                        </p>
+                        {SITE.home.about.body.map((p, i) => <p key={i}>{p}</p>)}
                     </div>
                 </motion.div>
 
                 {/* Stack */}
                 <motion.div variants={item} className="flex flex-col gap-7">
                     <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground/50">
-                        tech stack
+                        {SITE.home.about.stackLabel}
                     </p>
 
                     <div className="flex flex-col gap-5">
                         <div>
                             <p className="font-mono text-xs text-muted-foreground/60 mb-3">
-                                Languages
+                                {SITE.home.about.languagesLabel}
                             </p>
                             <div className="flex flex-wrap gap-2">
                                 {LANGUAGES.map(lang => (
@@ -195,7 +189,7 @@ export function AboutSection() {
 
                         <div className="border-t pt-5">
                             <p className="font-mono text-xs text-muted-foreground/60 mb-3">
-                                Tools
+                                {SITE.home.about.toolsLabel}
                             </p>
                             <div className="flex flex-wrap gap-2">
                                 {TOOLS.map(tool => (

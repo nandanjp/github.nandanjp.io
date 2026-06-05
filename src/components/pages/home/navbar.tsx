@@ -3,14 +3,7 @@ import { GhibliIcon } from '@/components/icons/ghibli'
 import { cn } from '@/lib/utils'
 import { ThemeToggle } from '@/components/theme-toggle'
 import { MobileNav } from '@/components/pages/home/mobile-nav'
-
-const NAV_LINKS = [
-    { path: '/blog',     label: 'Blog' },
-    { path: '/projects', label: 'Projects' },
-    { path: '/photos',   label: 'Photos' },
-    { path: '/music',    label: 'Music' },
-    { path: '/work',     label: 'Work' },
-] as const
+import { SITE } from '@/content/site'
 
 export function Navbar() {
     return (
@@ -26,7 +19,7 @@ export function Navbar() {
 
                 {/* Desktop links */}
                 <nav className="hidden md:flex items-center gap-1 flex-1">
-                    {NAV_LINKS.map(link => (
+                    {SITE.nav.links.map(link => (
                         <Link
                             key={link.path}
                             to={link.path}

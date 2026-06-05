@@ -1,20 +1,9 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { Link } from '@tanstack/react-router'
+import { SITE } from '@/content/site'
 
-type Entry =
-    | { cmd: string; color: string; type: 'text'; text: string }
-    | { cmd: string; color: string; type: 'languages' }
-    | { cmd: string; color: string; type: 'music' }
-
-const ENTRIES: Entry[] = [
-    { cmd: 'powerlifting', color: '#f87171', type: 'text', text: 'Competing in raw powerlifting. Bench · Squat · Deadlift.' },
-    { cmd: 'sports',       color: '#4ade80', type: 'text', text: 'Basketball, badminton, cricket — always up for a game.' },
-    { cmd: 'traveling',    color: '#60a5fa', type: 'text', text: 'New cities, new food, new perspectives. Always planning the next trip.' },
-    { cmd: 'languages',    color: '#c084fc', type: 'languages' },
-    { cmd: 'watching',     color: '#fbbf24', type: 'text', text: 'Anime, films, and shows. Always mid-series on something good.' },
-    { cmd: 'music',        color: '#f472b6', type: 'music' },
-]
+const ENTRIES = SITE.home.interests.entries
 
 function BlinkingCursor() {
     return (
@@ -26,24 +15,21 @@ function BlinkingCursor() {
     )
 }
 
+type Entry = typeof ENTRIES[number]
+
 function EntryOutput({ entry }: { entry: Entry }) {
     if (entry.type === 'languages') {
         return (
             <div className="flex flex-col gap-0.5 font-mono text-xs">
-                <span>
-                    <span className="inline-block w-16 text-muted-foreground/60">English</span>
-                    <span className="text-foreground/80">native</span>
-                </span>
-                <span>
-                    <span className="inline-block w-16 text-muted-foreground/60">日本語</span>
-                    <span className="text-foreground/80">少し</span>
-                    <span className="ml-2 text-muted-foreground/40 text-[10px]">(a little)</span>
-                </span>
-                <span>
-                    <span className="inline-block w-16 text-muted-foreground/60">中文</span>
-                    <span className="text-foreground/80">一点点</span>
-                    <span className="ml-2 text-muted-foreground/40 text-[10px]">(a tiny bit)</span>
-                </span>
+                {SITE.home.interests.languages.map(lang => (
+                    <span key={lang.label}>
+                        <span className="inline-block w-16 text-muted-foreground/60">{lang.label}</span>
+                        <span className="text-foreground/80">{lang.level}</span>
+                        {'note' in lang && (
+                            <span className="ml-2 text-muted-foreground/40 text-[10px]">{lang.note}</span>
+                        )}
+                    </span>
+                ))}
             </div>
         )
     }
@@ -57,7 +43,7 @@ function EntryOutput({ entry }: { entry: Entry }) {
                     className="transition-colors"
                     style={{ color: entry.color }}
                 >
-                    see /music →
+                    {SITE.home.interests.musicLink}
                 </Link>
             </p>
         )
@@ -74,7 +60,7 @@ function BeyondCodeTerminal({ inView }: { inView: boolean }) {
                 <span className="size-2.5 rounded-full bg-red-400/70" />
                 <span className="size-2.5 rounded-full bg-yellow-400/70" />
                 <span className="size-2.5 rounded-full bg-green-400/70" />
-                <span className="ml-auto font-mono text-[10px] text-muted-foreground/50">beyond-code.sh</span>
+                <span className="ml-auto font-mono text-[10px] text-muted-foreground/50">{SITE.home.interests.filename}</span>
             </div>
 
             {/* Content */}
@@ -142,13 +128,15 @@ export function InterestsSection() {
                     className="mb-10"
                 >
                     <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground/50 mb-4">
-                        [05] — beyond code
+                        {SITE.home.interests.label}
                     </p>
                     <h2 className="font-hand font-bold text-4xl sm:text-5xl tracking-tight">
-                        Life beyond<br />the terminal.
+                        {SITE.home.interests.heading.split('\n').map((line, i, arr) => (
+                            <span key={i}>{line}{i < arr.length - 1 && <br />}</span>
+                        ))}
                     </h2>
                     <p className="mt-3 text-muted-foreground text-sm sm:text-base max-w-lg">
-                        Engineering is what I do — curiosity is who I am.
+                        {SITE.home.interests.sub}
                     </p>
                 </motion.div>
 

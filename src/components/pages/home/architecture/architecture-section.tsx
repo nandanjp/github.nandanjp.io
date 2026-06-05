@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { cn } from '@/lib/utils'
+import { SITE } from '@/content/site'
 
 const HAND_FONT = "'Caveat Variable', cursive"
 
@@ -39,43 +40,16 @@ const ARROWS: { d: string }[] = [
 ]
 
 const DEPLOYED_APPS = [
-    {
-        emoji: '🌐',
-        name: 'Personal Site',
-        url: 'nandan-hl.dev',
-        rotate: -1.6,
-        bg:     'bg-sky-100/80   dark:bg-sky-950/40',
-        border: 'border-sky-300/60 dark:border-sky-700/50',
-        text:   'text-sky-800    dark:text-sky-200',
-        sub:    'text-sky-500/70 dark:text-sky-400/60',
-    },
-    {
-        emoji: '🖼️',
-        name: 'Image Gallery',
-        url: 'photos.nandan-hl.dev',
-        rotate: 1.2,
-        bg:     'bg-rose-100/80   dark:bg-rose-950/40',
-        border: 'border-rose-300/60 dark:border-rose-700/50',
-        text:   'text-rose-800    dark:text-rose-200',
-        sub:    'text-rose-500/70 dark:text-rose-400/60',
-    },
-    {
-        emoji: '🎬',
-        name: 'Media Catalog',
-        url: 'sadge-list.nandan-hl.dev',
-        rotate: -0.8,
-        bg:     'bg-emerald-100/80   dark:bg-emerald-950/40',
-        border: 'border-emerald-300/60 dark:border-emerald-700/50',
-        text:   'text-emerald-800    dark:text-emerald-200',
-        sub:    'text-emerald-500/70 dark:text-emerald-400/60',
-    },
+    { ...SITE.home.architecture.deployedApps[0], rotate: -1.6, bg: 'bg-sky-100/80   dark:bg-sky-950/40',     border: 'border-sky-300/60 dark:border-sky-700/50',     text: 'text-sky-800    dark:text-sky-200',     sub: 'text-sky-500/70 dark:text-sky-400/60' },
+    { ...SITE.home.architecture.deployedApps[1], rotate:  1.2, bg: 'bg-rose-100/80   dark:bg-rose-950/40',   border: 'border-rose-300/60 dark:border-rose-700/50',   text: 'text-rose-800    dark:text-rose-200',   sub: 'text-rose-500/70 dark:text-rose-400/60' },
+    { ...SITE.home.architecture.deployedApps[2], rotate: -0.8, bg: 'bg-emerald-100/80   dark:bg-emerald-950/40', border: 'border-emerald-300/60 dark:border-emerald-700/50', text: 'text-emerald-800    dark:text-emerald-200', sub: 'text-emerald-500/70 dark:text-emerald-400/60' },
 ] as const
 
 function DeployedApps() {
     return (
         <div className="flex flex-col gap-2.5">
             <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground/40">
-                live deployments
+                {SITE.home.architecture.deploymentsLabel}
             </p>
             <div className="flex flex-wrap gap-2.5">
                 {DEPLOYED_APPS.map((app) => (
@@ -153,7 +127,7 @@ function ArchitectureDiagram() {
                 fontSize="11"
                 style={{ fontFamily: HAND_FONT }}
             >
-                k8s cluster · homelab
+                {SITE.home.architecture.clusterLabel}
             </text>
 
             {/* Arrows */}
@@ -232,14 +206,13 @@ export function ArchitectureSection() {
                 {/* Text */}
                 <div className="flex flex-col gap-5">
                     <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground/50">
-                        [03] — architecture
+                        {SITE.home.architecture.label}
                     </p>
                     <h2 className="font-hand font-bold text-4xl sm:text-5xl tracking-tight">
-                        Homelab Systems Design
+                        {SITE.home.architecture.heading}
                     </h2>
                     <p className="text-muted-foreground text-sm sm:text-base">
-                        A 3-node Raspberry Pi k8s cluster at home. Every service — API, cache,
-                        object store, database — running on bare metal.
+                        {SITE.home.architecture.body}
                     </p>
                     <DeployedApps />
                 </div>
@@ -251,7 +224,7 @@ export function ArchitectureSection() {
                         <span className="size-2.5 rounded-full bg-yellow-400/70" />
                         <span className="size-2.5 rounded-full bg-green-400/70" />
                         <span className="ml-auto font-mono text-[10px] text-muted-foreground/50">
-                            systems-design.excalidraw
+                            {SITE.home.architecture.filename}
                         </span>
                     </div>
                     <div className="p-4 sm:p-6">

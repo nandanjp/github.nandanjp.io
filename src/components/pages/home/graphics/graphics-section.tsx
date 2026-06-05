@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
+import { SITE } from '@/content/site'
 import {
     siThreedotjs,
     siWebgl,
@@ -89,7 +90,7 @@ export function GraphicsSection() {
                             <span className="size-2.5 rounded-full bg-yellow-400/70" />
                             <span className="size-2.5 rounded-full bg-green-400/70" />
                             <span className="ml-auto font-mono text-[10px] text-muted-foreground/50">
-                                pokemon-player-room.glb
+                                {SITE.home.graphics.filename}
                             </span>
                         </div>
                         <div className="h-[260px] sm:h-[300px] md:h-auto md:aspect-square">
@@ -108,22 +109,15 @@ export function GraphicsSection() {
                     className="flex flex-col gap-5"
                 >
                     <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground/50">
-                        [04] — graphics & games
+                        {SITE.home.graphics.label}
                     </p>
                     <h2 className="font-hand font-bold text-4xl sm:text-5xl tracking-tight leading-[1.1]">
-                        Graphics, games,<br />and the GPU.
+                        {SITE.home.graphics.heading.split('\n').map((line, i, arr) => (
+                            <span key={i}>{line}{i < arr.length - 1 && <br />}</span>
+                        ))}
                     </h2>
                     <div className="space-y-3 text-muted-foreground text-sm sm:text-base leading-relaxed">
-                        <p>
-                            I&apos;m drawn to the intersection of math and visual art — WebGL,
-                            Three.js, shader programming, and the craft of making GPUs draw
-                            beautiful things in real time.
-                        </p>
-                        <p>
-                            Games were my first window into software. Pokémon specifically lit
-                            the spark — the combination of systems design, real-time rendering,
-                            and infinite replayability is still what I chase in everything I build.
-                        </p>
+                        {SITE.home.graphics.body.map((p, i) => <p key={i}>{p}</p>)}
                     </div>
                     <div className="flex flex-wrap gap-2 pt-1">
                         {GRAPHICS_TOOLS.map(tool => (

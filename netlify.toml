@@ -17,3 +17,30 @@ remote_images = [
 command = "pnpm dev"
 targetPort = 3000
 port = 8888
+
+[[plugins]]
+package = "@netlify/plugin-lighthouse"
+
+  [plugins.inputs.thresholds]
+  performance    = 0.85
+  accessibility  = 0.9
+  best-practices = 0.9
+  seo            = 0.9
+
+  [[plugins.inputs.audits]]
+  path = "/"
+
+  [[plugins.inputs.audits]]
+  path = "/blog"
+
+  [[plugins.inputs.audits]]
+  path = "/projects"
+
+  [[plugins.inputs.audits]]
+  path = "/photos"
+
+  [[plugins.inputs.audits]]
+  path = "/music"
+
+  [[plugins.inputs.audits]]
+  path = "/work"

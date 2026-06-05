@@ -4,14 +4,7 @@ import { Link } from '@tanstack/react-router'
 import { AnimatePresence, motion } from 'framer-motion'
 import { GhibliIcon } from '@/components/icons/ghibli'
 import { cn } from '@/lib/utils'
-
-const NAV_LINKS = [
-    { path: '/blog',     label: 'Blog' },
-    { path: '/projects', label: 'Projects' },
-    { path: '/photos',   label: 'Photos' },
-    { path: '/music',    label: 'Music' },
-    { path: '/work',     label: 'Work' },
-] as const
+import { SITE } from '@/content/site'
 
 export function MobileNav() {
     const [open, setOpen] = useState(false)
@@ -89,7 +82,7 @@ export function MobileNav() {
 
                             {/* Nav links */}
                             <nav className="flex flex-1 flex-col items-center justify-center gap-1">
-                                {NAV_LINKS.map((link, i) => (
+                                {SITE.nav.links.map((link, i) => (
                                     <motion.div
                                         key={link.path}
                                         initial={{ opacity: 0, y: 16 }}
@@ -122,18 +115,18 @@ export function MobileNav() {
                             >
                                 <div className="flex flex-col gap-1">
                                     <a
-                                        href="https://github.com/nandanjp"
+                                        href={SITE.identity.githubUrl}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="font-mono text-xs text-muted-foreground hover:text-foreground transition-colors"
                                     >
-                                        github.com/nandanjp
+                                        github.com/{SITE.identity.github}
                                     </a>
                                     <a
-                                        href="mailto:nandan.jp17@gmail.com"
+                                        href={`mailto:${SITE.identity.email}`}
                                         className="font-mono text-xs text-muted-foreground hover:text-foreground transition-colors"
                                     >
-                                        nandan.jp17@gmail.com
+                                        {SITE.identity.email}
                                     </a>
                                 </div>
                                 <span className="font-mono text-xs text-muted-foreground/40">

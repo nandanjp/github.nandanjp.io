@@ -1,14 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import { GhibliIcon } from '@/components/icons/ghibli'
 import { cn } from '@/lib/utils'
-
-const NAV_LINKS = [
-    { path: '/blog',     label: 'Blog' },
-    { path: '/projects', label: 'Projects' },
-    { path: '/photos',   label: 'Photos' },
-    { path: '/music',    label: 'Music' },
-    { path: '/work',     label: 'Work' },
-] as const
+import { SITE } from '@/content/site'
 
 export function Footer() {
     return (
@@ -22,14 +15,14 @@ export function Footer() {
                             <span className="font-semibold tracking-tight">Nandan Patel</span>
                         </div>
                         <p className="text-xs text-muted-foreground whitespace-nowrap">
-                            Building fast systems and elegant UIs.
+                            {SITE.footer.tagline}
                         </p>
                     </div>
 
                     {/* Nav + Socials */}
                     <div className="flex flex-col gap-4 sm:items-end">
                         <nav className="flex flex-wrap gap-x-5 gap-y-1.5">
-                            {NAV_LINKS.map(link => (
+                            {SITE.nav.links.map(link => (
                                 <Link
                                     key={link.path}
                                     to={link.path}
@@ -41,7 +34,7 @@ export function Footer() {
                         </nav>
                         <div className="flex items-center gap-3">
                             <a
-                                href="https://github.com/nandanjp"
+                                href={SITE.identity.githubUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 aria-label="GitHub"
@@ -50,7 +43,7 @@ export function Footer() {
                                 <GitHubIcon className="size-4" />
                             </a>
                             <a
-                                href="mailto:nandan.jp17@gmail.com"
+                                href={`mailto:${SITE.identity.email}`}
                                 aria-label="Email"
                                 className="text-muted-foreground transition-colors hover:text-foreground"
                             >

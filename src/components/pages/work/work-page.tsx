@@ -1,30 +1,10 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { Skeleton } from '@/components/ui/skeleton'
+import { SITE } from '@/content/site'
 
-interface WorkEntry {
-    company: string
-    role: string
-    period: string
-    rotate: number
-}
-
-interface ProjectEntry {
-    name: string
-    tech: string
-    rotate: number
-}
-
-const WORK_ENTRIES: WorkEntry[] = [
-    { company: 'Company A',  role: 'Software Engineer',          period: '2024 – present', rotate: -0.6 },
-    { company: 'Company B',  role: 'Software Engineer Intern',   period: '2023 – 2024',    rotate:  0.5 },
-    { company: 'Company C',  role: 'Software Engineer Intern',   period: '2022 – 2023',    rotate: -0.3 },
-]
-
-const PROJECT_ENTRIES: ProjectEntry[] = [
-    { name: 'Project Alpha', tech: 'Go · TypeScript · Kubernetes',    rotate:  0.6 },
-    { name: 'Project Beta',  tech: 'React · PostgreSQL · Redis',      rotate: -0.5 },
-]
+const WORK_ENTRIES = SITE.work.entries
+const PROJECT_ENTRIES = SITE.work.projects
 
 type Accent = 'sky' | 'violet'
 
@@ -78,6 +58,9 @@ function BulletSkeletons({ count, accent }: { count: number; accent: Accent }) {
         </div>
     )
 }
+
+type WorkEntry = typeof WORK_ENTRIES[number]
+type ProjectEntry = typeof PROJECT_ENTRIES[number]
 
 function WorkEntryCard({ entry, index }: { entry: WorkEntry; index: number }) {
     const ref = useRef<HTMLDivElement>(null)
@@ -148,7 +131,7 @@ export function WorkPage() {
                 <span className="size-2.5 rounded-full bg-yellow-400/70" />
                 <span className="size-2.5 rounded-full bg-green-400/70" />
                 <span className="ml-auto font-mono text-[10px] text-muted-foreground/50">
-                    resume.excalidraw
+                    {SITE.work.filename}
                 </span>
             </div>
 
@@ -177,21 +160,21 @@ export function WorkPage() {
                         className="mb-2"
                     >
                         <h1 className="font-hand font-bold text-6xl sm:text-7xl tracking-tight leading-none bg-gradient-to-r from-sky-500 to-violet-500 bg-clip-text text-transparent">
-                            Nandan Patel
+                            {SITE.work.resumeName}
                         </h1>
                         <p className="font-hand text-xl text-muted-foreground mt-2">
-                            21 · University of Waterloo
+                            {SITE.work.resumeBio}
                         </p>
                     </motion.div>
 
                     {/* Work Experience */}
-                    <SectionDivider label="Work Experience" accent="sky" />
+                    <SectionDivider label={SITE.work.experienceLabel} accent="sky" />
                     {WORK_ENTRIES.map((entry, i) => (
                         <WorkEntryCard key={entry.company} entry={entry} index={i} />
                     ))}
 
                     {/* Projects */}
-                    <SectionDivider label="Projects" accent="violet" />
+                    <SectionDivider label={SITE.work.projectsLabel} accent="violet" />
                     {PROJECT_ENTRIES.map((entry, i) => (
                         <ProjectEntryCard key={entry.name} entry={entry} index={i} />
                     ))}

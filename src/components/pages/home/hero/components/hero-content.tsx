@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import { SITE } from '@/content/site'
 
 const container = {
     hidden: { opacity: 0 },
@@ -24,13 +25,15 @@ export function HeroContent() {
         >
             {/* Section label */}
             <motion.p variants={item} className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground/50">
-                [01] — intro
+                {SITE.home.hero.label}
             </motion.p>
 
             {/* Name */}
             <motion.div variants={item}>
                 <h1 className="font-hand font-bold tracking-tight leading-[1.05] text-5xl sm:text-6xl md:text-5xl lg:text-7xl">
-                    Nandan<br />Patel.
+                    {SITE.home.hero.heading.split('\n').map((line, i, arr) => (
+                        <span key={i}>{line}{i < arr.length - 1 && <br />}</span>
+                    ))}
                 </h1>
             </motion.div>
 
@@ -38,40 +41,39 @@ export function HeroContent() {
             <motion.div variants={item} className="flex items-center gap-2">
                 <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
                 <span className="font-mono text-xs text-muted-foreground uppercase tracking-[0.18em]">
-                    available for work
+                    {SITE.home.hero.status}
                 </span>
             </motion.div>
 
             {/* Tagline */}
             <motion.p variants={item} className="text-muted-foreground text-base sm:text-lg leading-relaxed">
-                Software engineer building fast systems,
-                elegant UIs, and open-source tools.
+                {SITE.home.hero.tagline}
             </motion.p>
 
             {/* Currently building */}
             <motion.div variants={item} className="flex items-center gap-2 font-mono text-xs bg-muted/60 border rounded-md px-3 py-2 w-fit">
                 <span className="text-primary/60">~/</span>
                 <span className="text-muted-foreground">building</span>
-                <span className="text-primary font-medium">personal-api</span>
+                <span className="text-primary font-medium">{SITE.home.hero.building.project1}</span>
                 <span className="text-muted-foreground/30">+</span>
-                <span className="text-primary font-medium">this site</span>
+                <span className="text-primary font-medium">{SITE.home.hero.building.project2}</span>
             </motion.div>
 
             {/* CTAs */}
             <motion.div variants={item} className="flex flex-wrap gap-3 pt-1">
                 <Link to="/projects" className={buttonVariants({ size: 'default' })}>
-                    View Projects
+                    {SITE.home.hero.cta.primary}
                     <ArrowRight className="ml-1.5 size-3.5" />
                 </Link>
                 <Link to="/blog" className={buttonVariants({ variant: 'outline', size: 'default' })}>
-                    Read Blog
+                    {SITE.home.hero.cta.secondary}
                 </Link>
             </motion.div>
 
             {/* Social */}
             <motion.div variants={item} className="flex items-center gap-3 pt-0.5">
                 <a
-                    href="https://github.com/nandanjp"
+                    href={SITE.identity.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className={cn(
@@ -80,14 +82,14 @@ export function HeroContent() {
                     )}
                 >
                     <GitHubIcon className="size-3.5 shrink-0" />
-                    nandanjp
+                    {SITE.identity.github}
                 </a>
                 <span className="text-border text-xs">·</span>
                 <a
-                    href="mailto:nandan.jp17@gmail.com"
+                    href={`mailto:${SITE.identity.email}`}
                     className="font-mono text-xs text-muted-foreground hover:text-foreground transition-colors"
                 >
-                    nandan.jp17@gmail.com
+                    {SITE.identity.email}
                 </a>
             </motion.div>
         </motion.div>
