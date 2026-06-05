@@ -1,7 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { MusicPage } from '@/components/pages/music/music-page/music-page'
 
-export const Route = createFileRoute('/_layout/music')({ component: MusicRoute })
+export const Route = createFileRoute('/_layout/music')({
+    component: MusicRoute,
+    head: () => ({ meta: [{ title: 'Music — Nandan Patel' }, { name: 'description', content: "Top tracks and what's on heavy rotation." }] }),
+})
 
 function MusicRoute() {
     return (

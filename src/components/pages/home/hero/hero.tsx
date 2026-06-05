@@ -1,6 +1,8 @@
+import { lazy, Suspense } from 'react'
 import { ClientOnly } from '@/components/client-only'
 import { HeroContent } from './components/hero-content'
-import { BedroomScene } from './components/bedroom-scene'
+
+const BedroomScene = lazy(() => import('./components/bedroom-scene').then(m => ({ default: m.BedroomScene })))
 
 export function Hero() {
     return (
@@ -21,9 +23,11 @@ export function Hero() {
                         </span>
                     </div>
                     <div className="h-[260px] sm:h-[300px] md:h-auto md:aspect-square">
-                        <ClientOnly>
-                            <BedroomScene />
-                        </ClientOnly>
+                        <Suspense fallback={null}>
+                            <ClientOnly>
+                                <BedroomScene />
+                            </ClientOnly>
+                        </Suspense>
                     </div>
                 </div>
 

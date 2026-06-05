@@ -1,7 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { BlogList } from '@/components/pages/blog/blog-list/blog-list'
 
-export const Route = createFileRoute('/_layout/blog')({ component: BlogRoute })
+export const Route = createFileRoute('/_layout/blog')({
+    component: BlogRoute,
+    head: () => ({ meta: [{ title: 'Blog — Nandan Patel' }, { name: 'description', content: 'Writing on systems design, Go, TypeScript, Kubernetes, and web development.' }] }),
+})
 
 function BlogRoute() {
     return (

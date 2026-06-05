@@ -1,0 +1,16 @@
+{
+    "name": "Nandan Patel",
+    "short_name": "Nandan",
+    "description": "Software engineer building fast systems, elegant UIs, and open-source tools.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#38bdf8",
+    "icons": [
+        {
+            "src": "/favicon.ico",
+            "sizes": "48x48",
+            "type": "image/x-icon"
+        }
+    ]
+}

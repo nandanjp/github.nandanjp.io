@@ -64,6 +64,7 @@ export function MobileNav() {
                             <div className="flex h-14 items-center justify-between border-b border-foreground/8 px-4 sm:px-6">
                                 <Link
                                     to="/"
+                                    aria-label="Home"
                                     onClick={() => setOpen(false)}
                                     className="flex size-9 items-center justify-center rounded-[22%] bg-sky-400 hover:bg-sky-500 transition-colors"
                                 >

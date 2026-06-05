@@ -15,6 +15,18 @@ export default defineConfig({
     server: {
         port: 3000
     },
+    build: {
+        rollupOptions: {
+            output: {
+                manualChunks(id) {
+                    if (id.includes('node_modules/three') || id.includes('node_modules/three-stdlib') || id.includes('@react-three/fiber') || id.includes('@react-three/drei')) {
+                        return 'three-vendor'
+                    }
+                    return undefined
+                }
+            }
+        }
+    },
     plugins: [
         devtools(),
         netlify(),

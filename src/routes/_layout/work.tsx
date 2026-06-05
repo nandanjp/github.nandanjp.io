@@ -2,7 +2,10 @@ import { createFileRoute } from '@tanstack/react-router'
 import { WorkPage } from '@/components/pages/work/work-page'
 import { SITE } from '@/content/site'
 
-export const Route = createFileRoute('/_layout/work')({ component: WorkRoute })
+export const Route = createFileRoute('/_layout/work')({
+    component: WorkRoute,
+    head: () => ({ meta: [{ title: 'Work — Nandan Patel' }, { name: 'description', content: 'Work experience and projects.' }] }),
+})
 
 function WorkRoute() {
     return (

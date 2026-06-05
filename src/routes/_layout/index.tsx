@@ -6,7 +6,10 @@ import { GraphicsSection } from '@/components/pages/home/graphics/graphics-secti
 import { InterestsSection } from '@/components/pages/home/interests/interests-section'
 import { CtaSection } from '@/components/pages/home/cta-section'
 
-export const Route = createFileRoute('/_layout/')({ component: HomePage })
+export const Route = createFileRoute('/_layout/')({
+    component: HomePage,
+    head: () => ({ meta: [{ title: 'Nandan Patel — Software Engineer' }, { name: 'description', content: 'Software engineer building fast systems, elegant UIs, and open-source tools.' }] }),
+})
 
 function HomePage() {
     return (

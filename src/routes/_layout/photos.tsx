@@ -1,7 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { PhotoGallery } from '@/components/pages/photos/photo-gallery/photo-gallery'
 
-export const Route = createFileRoute('/_layout/photos')({ component: PhotosRoute })
+export const Route = createFileRoute('/_layout/photos')({
+    component: PhotosRoute,
+    head: () => ({ meta: [{ title: 'Photos — Nandan Patel' }, { name: 'description', content: 'A personal photo gallery.' }] }),
+})
 
 function PhotosRoute() {
     return (

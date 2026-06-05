@@ -3,34 +3,29 @@ import {
     Link,
     Outlet,
     Scripts,
-    createRootRouteWithContext,
+    createRootRoute,
 } from '@tanstack/react-router'
 import appCSS from '../styles.css?url'
-import type { TRPCRouter } from '@/integrations/trpc/router'
-import type { QueryClient } from '@tanstack/react-query'
-import type { TRPCOptionsProxy } from '@trpc/tanstack-react-query'
 
 import TanStackQueryProvider from '@/integrations/tanstack-query/root-provider'
 import { buttonVariants } from '@/components/ui/button'
 
-interface MyRouterContext {
-    queryClient: QueryClient
-    trpc: TRPCOptionsProxy<TRPCRouter>
-}
-
 const THEME_INIT_SCRIPT = `(function(){try{var stored=window.localStorage.getItem('theme');var mode=(stored==='light'||stored==='dark'||stored==='auto')?stored:'auto';var prefersDark=window.matchMedia('(prefers-color-scheme: dark)').matches;var resolved=mode==='auto'?(prefersDark?'dark':'light'):mode;var root=document.documentElement;root.classList.remove('light','dark');root.classList.add(resolved);if(mode==='auto'){root.removeAttribute('data-theme')}else{root.setAttribute('data-theme',mode)}root.style.colorScheme=resolved;}catch(e){}})();`
 
-export const Route = createRootRouteWithContext<MyRouterContext>()({
+export const Route = createRootRoute({
     head: () => ({
         meta: [
             { charSet: 'utf-8' },
-            {
-                name: 'viewport',
-                content: 'width=device-width, initial-scale=1'
-            },
-            { rel: 'icon', href: '/favicon.ico' }
+            { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+            { title: 'Nandan Patel' },
+            { name: 'description', content: 'Software engineer building fast systems, elegant UIs, and open-source tools.' },
+            { name: 'theme-color', content: '#38bdf8' },
         ],
-        links: [{ rel: 'stylesheet', href: appCSS }]
+        links: [
+            { rel: 'stylesheet', href: appCSS },
+            { rel: 'icon', href: '/favicon.ico' },
+            { rel: 'manifest', href: '/manifest.json' },
+        ],
     }),
     component: RootComponent,
     notFoundComponent: NotFoundPage,

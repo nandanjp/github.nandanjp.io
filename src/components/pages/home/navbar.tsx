@@ -12,6 +12,7 @@ export function Navbar() {
                 {/* Logo — squircle with blue background */}
                 <Link
                     to="/"
+                    aria-label="Home"
                     className="flex size-9 shrink-0 items-center justify-center rounded-[22%] bg-sky-400 hover:bg-sky-500 transition-colors"
                 >
                     <GhibliIcon className="size-6" />
