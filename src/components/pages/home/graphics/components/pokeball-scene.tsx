@@ -15,9 +15,10 @@ function PlayerRoomModel() {
 export function PokeballScene() {
     return (
         <Canvas
+            frameloop="demand"
             camera={{ position: [3, 2.5, 7], fov: 42 }}
-            gl={{ alpha: true, antialias: true }}
-            dpr={[1, 1.5]}
+            gl={{ alpha: true, antialias: false, powerPreference: 'high-performance' }}
+            dpr={[0.8, 1]}
         >
             <Suspense fallback={null}>
                 <ambientLight intensity={1.2} />
@@ -32,12 +33,8 @@ export function PokeballScene() {
                     dampingFactor={0.06}
                     minDistance={4}
                     maxDistance={14}
-                    autoRotate
-                    autoRotateSpeed={0.8}
                 />
             </Suspense>
         </Canvas>
     )
 }
-
-useGLTF.preload('/models/pokemon-player-room.glb')

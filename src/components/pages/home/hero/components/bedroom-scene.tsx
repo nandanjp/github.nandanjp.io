@@ -15,9 +15,10 @@ function BedroomModel() {
 export function BedroomScene() {
     return (
         <Canvas
+            frameloop="demand"
             camera={{ position: [3, 2, 5], fov: 45 }}
-            gl={{ alpha: true, antialias: true }}
-            dpr={[1, 1.5]}
+            gl={{ alpha: true, antialias: false, powerPreference: 'high-performance' }}
+            dpr={[0.8, 1]}
         >
             <Suspense fallback={null}>
                 <ambientLight intensity={1.5} />
@@ -33,12 +34,8 @@ export function BedroomScene() {
                     maxDistance={10}
                     minPolarAngle={Math.PI / 8}
                     maxPolarAngle={Math.PI / 2}
-                    autoRotate
-                    autoRotateSpeed={0.6}
                 />
             </Suspense>
         </Canvas>
     )
 }
-
-useGLTF.preload('/models/bedroom.glb')
