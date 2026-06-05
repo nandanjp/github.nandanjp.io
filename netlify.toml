@@ -1,0 +1,18 @@
+[build]
+command = "pnpm build"
+publish = "dist/client"
+
+[build.environment]
+NODE_VERSION = "20"
+
+[images]
+remote_images = [
+    "https://avatars\\.githubusercontent\\.com/.*",
+    "https://i\\.scdn\\.co/.*",
+    "https://photos\\.nandan-hl\\.dev/.*"
+]
+
+[dev]
+command = "pnpm dev"
+targetPort = 3000
+port = 8888

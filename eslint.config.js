@@ -1,0 +1,19 @@
+// @ts-check
+
+import { tanstackConfig } from '@tanstack/eslint-config'
+
+export default [
+    ...tanstackConfig,
+    {
+        rules: {
+            'import/no-cycle': 'error',
+            'import/order': 'error',
+            'sort-imports': 'error',
+            '@typescript-eslint/array-type': 'off',
+            '@typescript-eslint/require-await': 'off'
+        }
+    },
+    {
+        ignores: ['eslint.config.js', 'prettier.config.js']
+    }
+]

@@ -1,0 +1,28 @@
+export const meta = {
+    title: 'Hello, World',
+    date: '2025-06-01',
+    summary: 'First post — why I built this site and what I plan to write about.',
+    tags: ['meta', 'personal']
+}
+
+Building a personal site from scratch is one of those projects that sits on the to-do list forever. You tell yourself you'll get to it *after* the next side project, but the next side project always arrives first.
+
+So here it is. Finally shipped.
+
+## Why now?
+
+I've been meaning to have a dedicated space for writing that isn't buried in a GitHub README or a Notion doc nobody else can see. Not Twitter threads. Not LinkedIn posts. Just a place to think out loud, publish half-formed ideas, and occasionally document something technical that took me way too long to figure out.
+
+## What to expect
+
+Mostly technical writing — systems design, Go, TypeScript, Kubernetes, the occasional deep-dive into something I had to reverse-engineer. Probably some photography notes too, since I've been shooting more lately.
+
+I won't commit to a posting cadence because every time I do, I break it immediately. But I'll write when I have something worth saying.
+
+## The stack
+
+The site itself is built with **TanStack Start** (Vite-based SSR), **React Three Fiber** for the particle field on the homepage, **Tailwind** + **shadcn/ui** for components, and a small **Go API** running on my homelab that serves photos, music, and GitHub stats.
+
+Everything is self-hosted — no Vercel, no managed services I don't own. The images go through Netlify's image CDN for resizing and WebP conversion, but the originals live in a MinIO bucket on my homelab.
+
+More on the architecture in a future post.

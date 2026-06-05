@@ -1,11 +1,16 @@
-const options = {
-  arrowParens: 'avoid',
-  singleQuote: true,
-  bracketSpacing: true,
-  endOfLine: 'lf',
-  semi: false,
-  tabWidth: 2,
-  trailingComma: 'none'
+// @ts-check
+
+/** @type {import('prettier').Config} */
+
+const config = {
+    semi: false,
+    singleQuote: true,
+    trailingComma: 'none',
+    arrowParens: 'avoid',
+    bracketSpacing: true,
+    endOfLine: 'lf',
+    tabWidth: 4,
+    printWidth: 80
 }
 
-module.exports = options
+export default config
