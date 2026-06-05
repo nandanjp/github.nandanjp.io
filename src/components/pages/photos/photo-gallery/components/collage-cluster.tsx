@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
-import { Skeleton } from '@/components/ui/skeleton'
 import type { Photo } from '@/lib/api'
 
 const STRIP_THEMES = [
@@ -45,9 +44,12 @@ function CollagePolaroid({ photo, index, pileIndex, marginLeft, onClick }: Colla
     const theme = STRIP_THEMES[pileIndex]
     const label = `#${String(index + 1).padStart(3, '0')}`
 
+    const thumb = import.meta.env.DEV
+        ? photo.url
+        : `/.netlify/images?url=${encodeURIComponent(photo.url)}&w=30&h=23&fit=cover&f=webp`
     const src = import.meta.env.DEV
         ? photo.url
-        : `/.netlify/images?url=${encodeURIComponent(photo.url)}&w=400&fit=cover&f=webp`
+        : `/.netlify/images?url=${encodeURIComponent(photo.url)}&w=400&h=300&fit=cover&f=webp`
 
     return (
         <motion.div
@@ -63,14 +65,22 @@ function CollagePolaroid({ photo, index, pileIndex, marginLeft, onClick }: Colla
             <div className="rounded-[3px] overflow-hidden bg-white dark:bg-zinc-900 shadow-[0_4px_18px_rgba(0,0,0,0.15)] dark:shadow-[0_4px_18px_rgba(0,0,0,0.5)]">
                 <div className="p-2 pb-1.5">
                     <div className="relative aspect-[4/3] overflow-hidden rounded-[1px] bg-muted">
-                        {!loaded && <Skeleton className="absolute inset-0 rounded-none" />}
+                        <img
+                            src={thumb}
+                            alt=""
+                            aria-hidden
+                            className={cn(
+                                'absolute inset-0 h-full w-full object-cover object-center blur-sm scale-105 transition-opacity duration-500',
+                                loaded ? 'opacity-0' : 'opacity-100',
+                            )}
+                        />
                         <img
                             src={src}
                             alt={label}
                             loading="lazy"
                             onLoad={() => setLoaded(true)}
                             className={cn(
-                                'absolute inset-0 h-full w-full object-cover transition-opacity duration-500',
+                                'absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-500',
                                 loaded ? 'opacity-100' : 'opacity-0',
                             )}
                         />

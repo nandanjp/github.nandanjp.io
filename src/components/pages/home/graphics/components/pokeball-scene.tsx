@@ -7,7 +7,7 @@ function PlayerRoomModel() {
     const clone = useMemo(() => scene.clone(), [scene])
     return (
         <Center>
-            <primitive object={clone} scale={1.6} dispose={null} />
+            <primitive object={clone} scale={0.5} dispose={null} />
         </Center>
     )
 }
@@ -15,7 +15,7 @@ function PlayerRoomModel() {
 export function PokeballScene() {
     return (
         <Canvas
-            camera={{ position: [3, 2.5, 5], fov: 45 }}
+            camera={{ position: [3, 2.5, 7], fov: 42 }}
             gl={{ alpha: true, antialias: true }}
             dpr={[1, 1.5]}
         >
@@ -30,8 +30,8 @@ export function PokeballScene() {
                     enablePan={false}
                     enableDamping
                     dampingFactor={0.06}
-                    minDistance={3}
-                    maxDistance={12}
+                    minDistance={4}
+                    maxDistance={14}
                     autoRotate
                     autoRotateSpeed={0.8}
                 />
