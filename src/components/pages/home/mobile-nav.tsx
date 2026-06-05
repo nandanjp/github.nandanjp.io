@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom'
 import { Link } from '@tanstack/react-router'
 import { AnimatePresence, motion } from 'framer-motion'
 import { GhibliIcon } from '@/components/icons/ghibli'
+import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { SITE } from '@/content/site'
 
@@ -26,11 +27,13 @@ export function MobileNav() {
     return (
         <>
             {/* Hamburger */}
-            <button
+            <Button
+                variant="ghost"
+                size="icon-lg"
                 onClick={() => setOpen(v => !v)}
                 aria-label={open ? 'Close menu' : 'Open menu'}
                 aria-expanded={open}
-                className="relative flex h-9 w-9 flex-col items-center justify-center gap-[5px] rounded-md hover:bg-accent/60 transition-colors"
+                className="relative flex-col gap-[5px]"
             >
                 <span className={cn(
                     'block h-px w-5 bg-foreground transition-all duration-300 origin-center',
@@ -44,7 +47,7 @@ export function MobileNav() {
                     'block h-px w-5 bg-foreground transition-all duration-300 origin-center',
                     open && '-translate-y-[6px] -rotate-45',
                 )} />
-            </button>
+            </Button>
 
             {mounted && createPortal(
                 <AnimatePresence>
@@ -70,15 +73,17 @@ export function MobileNav() {
                                 >
                                     <GhibliIcon className="size-6" />
                                 </Link>
-                                <button
+                                <Button
+                                    variant="ghost"
+                                    size="icon-lg"
                                     onClick={() => setOpen(false)}
                                     aria-label="Close menu"
-                                    className="flex h-9 w-9 flex-col items-center justify-center gap-[5px] rounded-md hover:bg-accent/60 transition-colors"
+                                    className="flex-col gap-[5px]"
                                 >
                                     <span className="block h-px w-5 bg-foreground translate-y-[6px] rotate-45 origin-center" />
                                     <span className="block h-px w-5 bg-foreground opacity-0" />
                                     <span className="block h-px w-5 bg-foreground -translate-y-[6px] -rotate-45 origin-center" />
-                                </button>
+                                </Button>
                             </div>
 
                             {/* Nav links */}

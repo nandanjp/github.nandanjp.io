@@ -265,7 +265,7 @@ export function ArtistExplorer({ tracks }: { tracks: Track[] }) {
 
             <div className="px-4 pt-4 pb-2">
                 <Select value={selected ?? ''} onValueChange={v => setSelected(v || null)}>
-                    <SelectTrigger className="w-full sm:w-64 font-mono text-xs h-8">
+                    <SelectTrigger className="w-full sm:w-64 font-mono text-xs h-8" aria-label="Select an artist">
                         <SelectValue placeholder="Select an artist…" />
                     </SelectTrigger>
                     <SelectContent>

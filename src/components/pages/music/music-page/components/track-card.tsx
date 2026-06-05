@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { formatDuration } from '@/lib/utils'
 import type { Track } from '@/lib/api'
+import { Button } from '@/components/ui/button'
 import { getArtistColor } from './artist-color'
 
 function TrackWaveform() {
@@ -57,9 +58,9 @@ export function TrackCard({ track, index, isPlaying, progress, onPlay, onStop }:
             {/* Track # / waveform / play button */}
             <div className="w-8 shrink-0 flex items-center justify-center">
                 {isPlaying ? (
-                    <button onClick={e => { e.stopPropagation(); onStop() }} aria-label="Stop" className="flex items-center justify-center">
+                    <Button variant="ghost" size="icon-sm" onClick={e => { e.stopPropagation(); onStop() }} aria-label="Stop" className="hover:bg-transparent">
                         <TrackWaveform />
-                    </button>
+                    </Button>
                 ) : (
                     <>
                         <span className={cn(
@@ -69,13 +70,15 @@ export function TrackCard({ track, index, isPlaying, progress, onPlay, onStop }:
                             {String(index + 1).padStart(2, '0')}
                         </span>
                         {hasPreview && (
-                            <button
+                            <Button
+                                variant="ghost"
+                                size="icon-sm"
                                 onClick={e => { e.stopPropagation(); onPlay(track) }}
                                 aria-label="Play preview"
-                                className="hidden group-hover:flex items-center justify-center text-foreground"
+                                className="hidden group-hover:flex hover:bg-transparent text-foreground"
                             >
                                 <Play className="size-3.5 fill-current" />
-                            </button>
+                            </Button>
                         )}
                     </>
                 )}
@@ -121,13 +124,15 @@ export function TrackCard({ track, index, isPlaying, progress, onPlay, onStop }:
             {/* Duration + controls */}
             <div className="flex items-center gap-2.5 shrink-0">
                 {isPlaying && (
-                    <button
+                    <Button
+                        variant="ghost"
+                        size="icon-sm"
                         onClick={e => { e.stopPropagation(); onStop() }}
                         aria-label="Stop"
-                        className="text-muted-foreground hover:text-foreground transition-colors"
+                        className="text-muted-foreground hover:text-foreground hover:bg-transparent"
                     >
                         <Pause className="size-3.5" />
-                    </button>
+                    </Button>
                 )}
                 <span className={cn(
                     'font-mono text-xs tabular-nums w-8 text-right transition-colors',

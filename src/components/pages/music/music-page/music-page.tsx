@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Pause } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useMusic } from '@/hooks/use-music'
 import {
@@ -168,13 +169,15 @@ export function MusicPage() {
                             <span className="font-mono text-xs text-muted-foreground tabular-nums shrink-0">
                                 0:{String(Math.round((1 - progress) * 30)).padStart(2, '0')}
                             </span>
-                            <button
+                            <Button
+                                variant="ghost"
+                                size="icon-sm"
                                 onClick={handleStop}
-                                className="text-muted-foreground hover:text-foreground transition-colors shrink-0"
                                 aria-label="Stop"
+                                className="text-muted-foreground hover:text-foreground shrink-0"
                             >
                                 <Pause className="size-4" />
-                            </button>
+                            </Button>
                         </div>
                         {/* Banner progress bar */}
                         <div className="h-[2px] bg-foreground/8 rounded-full mb-4 overflow-hidden">
