@@ -38,6 +38,9 @@ export function PhotoLightbox({
         return () => window.removeEventListener('keydown', handleKey)
     }, [onClose, onPrev, onNext])
 
+    const thumbUrl = import.meta.env.DEV
+        ? photo.url
+        : `/.netlify/images?url=${encodeURIComponent(photo.url)}&w=60&f=webp`
     const netlifyUrl = import.meta.env.DEV
         ? photo.url
         : `/.netlify/images?url=${encodeURIComponent(photo.url)}&w=1400&f=webp`
@@ -78,7 +81,7 @@ export function PhotoLightbox({
                 <Button
                     variant="ghost"
                     size="icon"
-                    className="absolute left-4 top-1/2 -translate-y-1/2 text-white/60 hover:text-white hover:bg-white/10 disabled:opacity-20"
+                    className="absolute left-4 top-1/2 -translate-y-1/2 z-10 text-white/60 hover:text-white hover:bg-white/10 disabled:opacity-20"
                     onClick={e => { e.stopPropagation(); onPrev() }}
                     disabled={currentIndex === 0}
                 >
@@ -90,6 +93,17 @@ export function PhotoLightbox({
                     className="relative flex items-center justify-center"
                     onClick={e => e.stopPropagation()}
                 >
+                    {/* Blur-up thumbnail shown while full image loads */}
+                    <img
+                        key={`thumb-${photo.key}`}
+                        src={thumbUrl}
+                        alt=""
+                        aria-hidden
+                        className={cn(
+                            'absolute max-h-[85vh] max-w-[88vw] rounded-lg object-contain blur-xl scale-105 transition-opacity duration-300',
+                            imgLoaded ? 'opacity-0' : 'opacity-100',
+                        )}
+                    />
                     {!imgLoaded && (
                         <Loader2 className="absolute size-8 animate-spin text-white/30" />
                     )}
@@ -109,7 +123,7 @@ export function PhotoLightbox({
                 <Button
                     variant="ghost"
                     size="icon"
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-white/60 hover:text-white hover:bg-white/10 disabled:opacity-20"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 z-10 text-white/60 hover:text-white hover:bg-white/10 disabled:opacity-20"
                     onClick={e => { e.stopPropagation(); onNext() }}
                     disabled={currentIndex === total - 1}
                 >

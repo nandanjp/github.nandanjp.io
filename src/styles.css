@@ -135,12 +135,17 @@
     }
 }
 
-/* ── rehype-pretty-code dual-theme visibility ─────────────────────────────── */
-/* Light mode: show github-light, hide github-dark */
-[data-theme='github-dark'] { display: none; }
-/* Dark mode: show github-dark, hide github-light */
-.dark [data-theme='github-dark'] { display: block; }
-.dark [data-theme='github-light'] { display: none; }
+/* ── rehype-pretty-code 0.14.x dual-theme (CSS variable approach) ─────────── */
+/* v0.14 emits ONE block with data-theme="github-dark github-light" and       */
+/* --shiki-light / --shiki-dark CSS vars per span — no display toggling.      */
+code[data-theme*=' '],
+code[data-theme*=' '] span {
+    color: var(--shiki-light);
+}
+.dark code[data-theme*=' '],
+.dark code[data-theme*=' '] span {
+    color: var(--shiki-dark);
+}
 
 /* rehype-pretty-code inline code */
 [data-rehype-pretty-code-figure] code {

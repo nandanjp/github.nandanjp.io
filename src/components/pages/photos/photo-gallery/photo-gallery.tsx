@@ -24,13 +24,24 @@ export function PhotoGallery() {
         ? photos.findIndex(p => p.key === lightboxPhoto.key)
         : -1
 
+    function prefetchPhoto(url: string) {
+        if (import.meta.env.DEV) return
+        const img = new Image()
+        img.src = `/.netlify/images?url=${encodeURIComponent(url)}&w=1400&f=webp`
+    }
+
     function handlePrev() {
-        if (currentIndex > 0) setLightboxPhoto(photos[currentIndex - 1]!)
+        if (currentIndex > 0) {
+            setLightboxPhoto(photos[currentIndex - 1]!)
+            if (currentIndex - 2 >= 0) prefetchPhoto(photos[currentIndex - 2]!.url)
+        }
     }
 
     function handleNext() {
-        if (currentIndex < photos.length - 1)
+        if (currentIndex < photos.length - 1) {
             setLightboxPhoto(photos[currentIndex + 1]!)
+            if (currentIndex + 2 < photos.length) prefetchPhoto(photos[currentIndex + 2]!.url)
+        }
     }
 
     if (isLoading) return <PhotoGallerySkeleton />

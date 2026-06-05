@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
-import { Skeleton } from '@/components/ui/skeleton'
 import type { Photo } from '@/lib/api'
 
 const STRIP_THEMES = [
@@ -26,6 +25,9 @@ export function PhotoCard({ photo, index, onClick }: PhotoCardProps) {
     const theme = STRIP_THEMES[index % STRIP_THEMES.length]
     const rotation = ROTATIONS[index % ROTATIONS.length]
 
+    const thumb = import.meta.env.DEV
+        ? photo.url
+        : `/.netlify/images?url=${encodeURIComponent(photo.url)}&w=30&fit=cover&f=webp`
     const src = import.meta.env.DEV
         ? photo.url
         : `/.netlify/images?url=${encodeURIComponent(photo.url)}&w=600&fit=cover&f=webp`
@@ -53,16 +55,23 @@ export function PhotoCard({ photo, index, onClick }: PhotoCardProps) {
                 {/* Photo area with thin border */}
                 <div className="p-2 pb-1.5">
                     <div className="relative aspect-[4/3] overflow-hidden rounded-[1px] bg-muted">
-                        {!loaded && (
-                            <Skeleton className="absolute inset-0 rounded-none" />
-                        )}
+                        {/* Blur-up thumbnail: shown immediately, fades out once full image loads */}
+                        <img
+                            src={thumb}
+                            alt=""
+                            aria-hidden
+                            className={cn(
+                                'absolute inset-0 h-full w-full object-cover object-center blur-sm scale-105 transition-opacity duration-500',
+                                loaded ? 'opacity-0' : 'opacity-100',
+                            )}
+                        />
                         <img
                             src={src}
                             alt={label}
                             loading="lazy"
                             onLoad={() => setLoaded(true)}
                             className={cn(
-                                'absolute inset-0 h-full w-full object-cover transition-all duration-500',
+                                'absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-500',
                                 loaded ? 'opacity-100' : 'opacity-0',
                             )}
                         />

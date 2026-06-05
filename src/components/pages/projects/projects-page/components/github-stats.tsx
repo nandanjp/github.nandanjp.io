@@ -12,7 +12,7 @@ export function GitHubStatsCard({ stats }: GitHubStatsCardProps) {
     const total = stats.languages.reduce((acc, l) => acc + l.count, 0)
     const avatarSrc = import.meta.env.DEV
         ? stats.avatar_url
-        : `/.netlify/images?url=${encodeURIComponent(stats.avatar_url)}&w=96&fit=cover&f=webp`
+        : `/.netlify/images?url=${encodeURIComponent(stats.avatar_url)}&w=96&h=96&fit=cover&f=webp`
 
     return (
         <div className="rounded-xl border bg-card/40 overflow-hidden shadow-sm">
@@ -39,7 +39,7 @@ export function GitHubStatsCard({ stats }: GitHubStatsCardProps) {
                     <img
                         src={avatarSrc}
                         alt={stats.name}
-                        className="size-12 rounded-full object-cover shrink-0"
+                        className="size-12 rounded-full object-cover object-center shrink-0"
                     />
                     <div className="min-w-0 flex-1">
                         <p className="font-hand font-bold text-xl leading-tight">{stats.name}</p>

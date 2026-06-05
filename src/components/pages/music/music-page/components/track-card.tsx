@@ -39,7 +39,7 @@ export function TrackCard({ track, index, isPlaying, progress, onPlay, onStop }:
     const c = getArtistColor(track.artists[0])
     const albumArtSrc = import.meta.env.DEV
         ? track.album_art_url
-        : `/.netlify/images?url=${encodeURIComponent(track.album_art_url)}&w=128&fit=cover&f=webp`
+        : `/.netlify/images?url=${encodeURIComponent(track.album_art_url)}&w=128&h=128&fit=cover&f=webp`
 
     return (
         <motion.div
@@ -48,15 +48,16 @@ export function TrackCard({ track, index, isPlaying, progress, onPlay, onStop }:
             transition={{ duration: 0.3, delay: (index % 8) * 0.04, ease: [0.22, 1, 0.36, 1] }}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
+            onClick={() => window.open(track.external_url, '_blank', 'noopener,noreferrer')}
             className={cn(
-                'group relative flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors cursor-default',
+                'group relative flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors cursor-pointer',
                 isPlaying || hovered ? c.activeBg : '',
             )}
         >
             {/* Track # / waveform / play button */}
             <div className="w-8 shrink-0 flex items-center justify-center">
                 {isPlaying ? (
-                    <button onClick={onStop} aria-label="Stop" className="flex items-center justify-center">
+                    <button onClick={e => { e.stopPropagation(); onStop() }} aria-label="Stop" className="flex items-center justify-center">
                         <TrackWaveform />
                     </button>
                 ) : (
@@ -69,7 +70,7 @@ export function TrackCard({ track, index, isPlaying, progress, onPlay, onStop }:
                         </span>
                         {hasPreview && (
                             <button
-                                onClick={() => onPlay(track)}
+                                onClick={e => { e.stopPropagation(); onPlay(track) }}
                                 aria-label="Play preview"
                                 className="hidden group-hover:flex items-center justify-center text-foreground"
                             >
@@ -84,7 +85,7 @@ export function TrackCard({ track, index, isPlaying, progress, onPlay, onStop }:
             <img
                 src={albumArtSrc}
                 alt={track.album_name}
-                className="size-16 rounded-lg object-cover shrink-0 shadow-sm"
+                className="size-16 rounded-lg object-cover object-center shrink-0 shadow-sm"
             />
 
             {/* Track info */}
@@ -121,7 +122,7 @@ export function TrackCard({ track, index, isPlaying, progress, onPlay, onStop }:
             <div className="flex items-center gap-2.5 shrink-0">
                 {isPlaying && (
                     <button
-                        onClick={onStop}
+                        onClick={e => { e.stopPropagation(); onStop() }}
                         aria-label="Stop"
                         className="text-muted-foreground/50 hover:text-foreground transition-colors"
                     >

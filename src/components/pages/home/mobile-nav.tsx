@@ -58,10 +58,13 @@ export function MobileNav() {
                     {open && (
                         <motion.div
                             key="mobile-menu"
-                            initial={{ opacity: 0, x: '100%' }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: '100%' }}
-                            transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+                            variants={{
+                                hidden: { opacity: 0, x: '100%', transition: { duration: 0.28, delay: 0.14, ease: [0.4, 0, 0.6, 1] } },
+                                visible: { opacity: 1, x: 0, transition: { duration: 0.32, ease: [0.22, 1, 0.36, 1] } },
+                            }}
+                            initial="hidden"
+                            animate="visible"
+                            exit="hidden"
                             className="fixed inset-0 z-[60] flex flex-col bg-background"
                         >
                             {/* Header — mirrors the navbar exactly */}
