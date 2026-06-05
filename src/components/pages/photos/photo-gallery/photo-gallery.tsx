@@ -1,15 +1,33 @@
 import { useState } from 'react'
 import { usePhotos } from '@/hooks/use-photos'
 import { Skeleton } from '@/components/ui/skeleton'
+import { cn } from '@/lib/utils'
 import type { Photo } from '@/lib/api'
 import { PhotoGrid } from './components/photo-grid'
 import { PhotoLightbox } from './components/photo-lightbox'
+
+const STRIP_THEMES = [
+    'bg-sky-100/80 dark:bg-sky-950/40',
+    'bg-violet-100/80 dark:bg-violet-950/40',
+    'bg-emerald-100/80 dark:bg-emerald-950/40',
+    'bg-rose-100/80 dark:bg-rose-950/40',
+    'bg-amber-100/80 dark:bg-amber-950/40',
+    'bg-teal-100/80 dark:bg-teal-950/40',
+]
 
 function PhotoGallerySkeleton() {
     return (
         <div className="gap-4 lg:gap-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {Array.from({ length: 8 }).map((_, i) => (
-                <Skeleton key={i} className="w-full aspect-[4/3] rounded-xl" />
+                <div
+                    key={i}
+                    className="rounded-[3px] overflow-hidden bg-white dark:bg-zinc-900 shadow-[0_3px_14px_rgba(0,0,0,0.13)] dark:shadow-[0_3px_14px_rgba(0,0,0,0.45)]"
+                >
+                    <div className="p-2 pb-1.5">
+                        <Skeleton className="w-full aspect-[4/3] rounded-[1px]" />
+                    </div>
+                    <div className={cn('h-8', STRIP_THEMES[i % STRIP_THEMES.length])} />
+                </div>
             ))}
         </div>
     )

@@ -1,4 +1,4 @@
-import { X, ChevronLeft, ChevronRight, Loader2 } from 'lucide-react'
+import { X, ChevronLeft, ChevronRight } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { cn } from '@/lib/utils'
@@ -104,9 +104,6 @@ export function PhotoLightbox({
                             imgLoaded ? 'opacity-0' : 'opacity-100',
                         )}
                     />
-                    {!imgLoaded && (
-                        <Loader2 className="absolute size-8 animate-spin text-white/30" />
-                    )}
                     <motion.img
                         key={photo.key}
                         initial={{ opacity: 0, scale: 0.97 }}

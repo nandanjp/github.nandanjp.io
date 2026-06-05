@@ -27,10 +27,10 @@ export function PhotoCard({ photo, index, onClick }: PhotoCardProps) {
 
     const thumb = import.meta.env.DEV
         ? photo.url
-        : `/.netlify/images?url=${encodeURIComponent(photo.url)}&w=30&fit=cover&f=webp`
+        : `/.netlify/images?url=${encodeURIComponent(photo.url)}&w=30&h=23&fit=cover&f=webp`
     const src = import.meta.env.DEV
         ? photo.url
-        : `/.netlify/images?url=${encodeURIComponent(photo.url)}&w=600&fit=cover&f=webp`
+        : `/.netlify/images?url=${encodeURIComponent(photo.url)}&w=600&h=450&fit=cover&f=webp`
 
     const label = `#${String(index + 1).padStart(3, '0')}`
 
