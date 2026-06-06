@@ -6,8 +6,8 @@ export function Hero() {
     const rawUrl = SITE.identity.profileImageUrl
 
     return (
-        <section className="relative flex min-h-[calc(100vh-3.5rem)] items-center">
-            <div className="mx-auto grid w-full max-w-xl grid-cols-1 items-center gap-4 px-4 py-14 sm:px-6 md:max-w-6xl md:grid-cols-2 md:gap-6 md:px-8 lg:py-20">
+        <section className="relative flex items-center">
+            <div className="mx-auto grid w-full max-w-xl grid-cols-1 items-center gap-4 px-4 py-10 sm:px-6 md:max-w-6xl md:grid-cols-2 md:gap-6 md:px-8 lg:py-14">
                 <HeroContent />
 
                 <div className="bg-card/40 mx-auto w-full max-w-md overflow-hidden rounded-xl border shadow-sm">
@@ -23,11 +23,11 @@ export function Hero() {
                         {rawUrl && (
                             <BlurImage
                                 src={rawUrl}
-                                width={600}
-                                height={900}
+                                width={200}
+                                height={300}
                                 alt="Nandan Patel"
                                 priority
-                                sizes="(max-width: 768px) calc(100vw - 2rem), 448px"
+                                sizes="200px"
                                 className="object-center"
                             />
                         )}

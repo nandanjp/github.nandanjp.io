@@ -2,6 +2,7 @@ import { ExternalLink } from 'lucide-react'
 import { motion } from 'framer-motion'
 import type { Track } from '@/lib/api'
 import { BlurImage } from '@/components/ui/blur-image'
+import { SubLabel } from '@/components/ui/typography'
 
 interface AlbumSceneProps {
     tracks: Track[]
@@ -65,9 +66,7 @@ export function AlbumScene({ tracks }: AlbumSceneProps) {
 
     return (
         <div className="flex flex-col gap-3">
-            <p className="text-muted-foreground font-mono text-xs tracking-[0.18em] uppercase">
-                {albums.length} albums
-            </p>
+            <SubLabel>{albums.length} albums</SubLabel>
 
             {/* Horizontal scroll shelf */}
             <div

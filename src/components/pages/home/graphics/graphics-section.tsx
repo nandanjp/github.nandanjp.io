@@ -3,6 +3,7 @@ import { motion, useInView } from 'framer-motion'
 import { TechBadge } from '../about/components/tech-badge'
 import { SITE } from '@/content/site'
 import { ClientOnly } from '@/components/client-only'
+import { SectionHeading, SectionLabel } from '@/components/ui/typography'
 
 const PokeballScene = lazy(() =>
     import('./components/pokeball-scene').then(m => ({
@@ -123,10 +124,8 @@ export function GraphicsSection() {
                     animate={inView ? 'show' : 'hidden'}
                     className="flex flex-col gap-5"
                 >
-                    <p className="text-muted-foreground font-mono text-xs tracking-[0.22em] uppercase">
-                        {SITE.home.graphics.label}
-                    </p>
-                    <h2 className="font-hand text-4xl leading-[1.1] font-bold tracking-tight sm:text-5xl">
+                    <SectionLabel>{SITE.home.graphics.label}</SectionLabel>
+                    <SectionHeading className="leading-[1.1]">
                         {SITE.home.graphics.heading
                             .split('\n')
                             .map((line, i, arr) => (
@@ -135,7 +134,7 @@ export function GraphicsSection() {
                                     {i < arr.length - 1 && <br />}
                                 </span>
                             ))}
-                    </h2>
+                    </SectionHeading>
                     <div className="text-muted-foreground space-y-3 text-sm leading-relaxed sm:text-base">
                         {SITE.home.graphics.body.map((p, i) => (
                             <p key={i}>{p}</p>

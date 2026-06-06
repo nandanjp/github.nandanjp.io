@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { SITE } from '@/content/site'
+import { SectionHeading, SectionLabel } from '@/components/ui/typography'
 
 export function CtaSection() {
     const ref = useRef<HTMLDivElement>(null)
@@ -16,12 +17,10 @@ export function CtaSection() {
                     className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between"
                 >
                     <div>
-                        <p className="text-muted-foreground mb-4 font-mono text-xs tracking-[0.22em] uppercase">
-                            {SITE.home.cta.label}
-                        </p>
-                        <h2 className="font-hand text-4xl font-bold tracking-tight sm:text-5xl">
+                        <SectionLabel className="mb-4">{SITE.home.cta.label}</SectionLabel>
+                        <SectionHeading>
                             {SITE.home.cta.heading}
-                        </h2>
+                        </SectionHeading>
                     </div>
 
                     <div className="flex shrink-0 flex-wrap items-center gap-3">

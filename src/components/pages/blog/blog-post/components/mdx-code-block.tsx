@@ -32,9 +32,9 @@ export function MdxCodeBlock({
     return (
         <div
             data-theme={theme}
-            className="not-prose border-border my-6 rounded-xl border bg-[#0d1117] shadow-sm"
+            className="not-prose border-border my-6 rounded-xl border bg-[#f6f8fa] shadow-sm dark:bg-[#0d1117]"
         >
-            <div className="border-border/50 relative flex items-center justify-between border-b bg-white/3 px-4 py-2">
+            <div className="border-border/50 relative flex items-center justify-between border-b bg-black/5 px-4 py-2 dark:bg-white/3">
                 <span className="text-muted-foreground/70 font-mono text-xs tracking-wider uppercase">
                     {language ?? 'code'}
                 </span>

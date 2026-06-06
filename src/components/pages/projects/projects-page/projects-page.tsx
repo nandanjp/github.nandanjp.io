@@ -6,6 +6,7 @@ import { ContributionGraph } from './components/contribution-graph'
 import type { GitHubRepo } from '@/lib/api'
 import { useGitHubRepos, useGitHubStats } from '@/hooks/use-github'
 import { Skeleton } from '@/components/ui/skeleton'
+import { SectionHeading, SectionLabel, SubLabel } from '@/components/ui/typography'
 
 const LANGUAGE_COLORS: Record<string, string> = {
     TypeScript: '#3178c6',
@@ -81,9 +82,7 @@ function ActivityCardContent({ repos }: { repos: GitHubRepo[] }) {
                 </div>
 
                 {/* Recent activity list */}
-                <p className="text-muted-foreground mb-2 font-mono text-xs tracking-[0.18em] uppercase">
-                    recent activity
-                </p>
+                <SubLabel className="mb-2">recent activity</SubLabel>
                 <div className="flex flex-col gap-1.5">
                     {recent.map(repo => (
                         <a
@@ -202,12 +201,10 @@ export function ProjectsPage() {
                     className="flex flex-col gap-5"
                 >
                     <div>
-                        <p className="text-muted-foreground mb-2 font-mono text-xs tracking-[0.22em] uppercase">
-                            featured repositories
-                        </p>
-                        <h2 className="font-hand text-3xl font-bold tracking-tight sm:text-4xl">
+                        <SectionLabel className="mb-2">featured repositories</SectionLabel>
+                        <SectionHeading className="text-3xl sm:text-4xl">
                             Recent Work.
-                        </h2>
+                        </SectionHeading>
                     </div>
                     <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                         {repos.map((repo, i) => (

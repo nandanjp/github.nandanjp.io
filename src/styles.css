@@ -165,8 +165,8 @@ pre::-webkit-scrollbar-track {
     background: transparent;
 }
 pre::-webkit-scrollbar-thumb {
-    @apply rounded-full bg-white/10;
+    @apply rounded-full bg-black/15 dark:bg-white/10;
 }
 pre::-webkit-scrollbar-thumb:hover {
-    @apply bg-white/20;
+    @apply bg-black/25 dark:bg-white/20;
 }

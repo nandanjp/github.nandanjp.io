@@ -3,6 +3,7 @@ import { LanguageBar } from './components/language-bar'
 import type { GitHubStats } from '@/lib/api'
 import { cn, formatCompactNumber } from '@/lib/utils'
 import { BlurImage } from '@/components/ui/blur-image'
+import { SubLabel } from '@/components/ui/typography'
 
 interface GitHubStatsCardProps {
     stats: GitHubStats
@@ -89,9 +90,7 @@ export function GitHubStatsCard({ stats }: GitHubStatsCardProps) {
                 {/* Top Languages */}
                 {stats.languages.length > 0 && (
                     <div className="mt-5">
-                        <p className="text-muted-foreground mb-3 font-mono text-xs tracking-[0.18em] uppercase">
-                            Top Languages
-                        </p>
+                        <SubLabel className="mb-3">Top Languages</SubLabel>
                         <div className="flex flex-col gap-2.5">
                             {stats.languages.slice(0, 5).map(lang => (
                                 <LanguageBar

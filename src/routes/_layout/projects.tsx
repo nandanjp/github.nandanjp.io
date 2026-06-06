@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { ProjectsPage } from '@/components/pages/projects/projects-page/projects-page'
+import { PageHeading, SectionLabel } from '@/components/ui/typography'
 
 export const Route = createFileRoute('/_layout/projects')({
     component: ProjectsRoute,
@@ -18,12 +19,10 @@ function ProjectsRoute() {
     return (
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 md:px-8">
             <section className="mb-10 border-b pt-16 pb-10">
-                <p className="text-muted-foreground mb-4 font-mono text-xs tracking-[0.22em] uppercase">
-                    [projects] — built &amp; shipped
-                </p>
-                <h1 className="font-hand mb-3 text-5xl leading-[1.05] font-bold tracking-tight sm:text-6xl">
+                <SectionLabel className="mb-4">[projects] — built &amp; shipped</SectionLabel>
+                <PageHeading className="mb-3">
                     Things I've Built.
-                </h1>
+                </PageHeading>
                 <p className="text-muted-foreground text-sm sm:text-base">
                     Open-source work and side projects. Stats pulled live from
                     GitHub.

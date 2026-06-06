@@ -1,7 +1,9 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
+import { ExternalLink } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { SITE } from '@/content/site'
+import { SectionHeading, SectionLabel, SubLabel } from '@/components/ui/typography'
 
 const HAND_FONT = "'Caveat Variable', cursive"
 
@@ -96,78 +98,173 @@ const ARROWS: { d: string }[] = [
 const DEPLOYED_APPS = [
     {
         ...SITE.home.architecture.deployedApps[0],
-        rotate: -1.6,
-        bg: 'bg-sky-100/80   dark:bg-sky-950/40',
-        border: 'border-sky-300/60 dark:border-sky-700/50',
-        text: 'text-sky-800    dark:text-sky-200',
-        sub: 'text-sky-500/70 dark:text-sky-400/60'
+        href: 'https://nandanjp.io',
+        bg: 'bg-sky-50/80 dark:bg-sky-950/30',
+        headerBg: 'bg-sky-100/60 dark:bg-sky-950/60',
+        border: 'border-sky-200/70 dark:border-sky-800/40',
+        muted: 'text-sky-500/70 dark:text-sky-400/50',
+        pill: 'bg-sky-200/70 dark:bg-sky-800/50',
+        bar: 'bg-sky-300/50 dark:bg-sky-700/40',
+        accent: 'bg-sky-400/80 dark:bg-sky-500/60',
+        urlBg: 'bg-white/60 dark:bg-sky-900/40'
     },
     {
         ...SITE.home.architecture.deployedApps[1],
-        rotate: 1.2,
-        bg: 'bg-rose-100/80   dark:bg-rose-950/40',
-        border: 'border-rose-300/60 dark:border-rose-700/50',
-        text: 'text-rose-800    dark:text-rose-200',
-        sub: 'text-rose-500/70 dark:text-rose-400/60'
+        href: 'https://vault.nandan-hl.dev',
+        bg: 'bg-rose-50/80 dark:bg-rose-950/30',
+        headerBg: 'bg-rose-100/60 dark:bg-rose-950/60',
+        border: 'border-rose-200/70 dark:border-rose-800/40',
+        muted: 'text-rose-500/70 dark:text-rose-400/50',
+        pill: 'bg-rose-200/70 dark:bg-rose-800/50',
+        bar: 'bg-rose-300/50 dark:bg-rose-700/40',
+        accent: 'bg-rose-400/80 dark:bg-rose-500/60',
+        urlBg: 'bg-white/60 dark:bg-rose-900/40'
     },
     {
         ...SITE.home.architecture.deployedApps[2],
-        rotate: -0.8,
-        bg: 'bg-emerald-100/80   dark:bg-emerald-950/40',
-        border: 'border-emerald-300/60 dark:border-emerald-700/50',
-        text: 'text-emerald-800    dark:text-emerald-200',
-        sub: 'text-emerald-500/70 dark:text-emerald-400/60'
+        href: 'https://dramalist.nandan-hl.dev',
+        bg: 'bg-emerald-50/80 dark:bg-emerald-950/30',
+        headerBg: 'bg-emerald-100/60 dark:bg-emerald-950/60',
+        border: 'border-emerald-200/70 dark:border-emerald-800/40',
+        muted: 'text-emerald-500/70 dark:text-emerald-400/50',
+        pill: 'bg-emerald-200/70 dark:bg-emerald-800/50',
+        bar: 'bg-emerald-300/50 dark:bg-emerald-700/40',
+        accent: 'bg-emerald-400/80 dark:bg-emerald-500/60',
+        urlBg: 'bg-white/60 dark:bg-emerald-900/40'
     }
-] as const
+]
+
+type AppCard = (typeof DEPLOYED_APPS)[number]
+
+function PersonalSitePreview({ app }: { app: AppCard }) {
+    return (
+        <div className="space-y-2 p-3">
+            <div className="flex items-center justify-between">
+                <div className={cn('h-2.5 w-16 rounded-sm', app.accent)} />
+                <div className="flex items-center gap-1.5">
+                    <div className={cn('h-2 w-8 rounded-sm', app.bar)} />
+                    <div className={cn('h-2 w-11 rounded-sm', app.bar)} />
+                    <div className={cn('h-2 w-7 rounded-sm', app.bar)} />
+                </div>
+            </div>
+            <div className={cn('h-px', app.bar)} />
+            <div className="flex gap-3">
+                <div className="flex-1 space-y-1.5">
+                    <div className={cn('h-4 w-24 rounded-sm', app.accent)} />
+                    <div className={cn('h-2.5 w-32 rounded-sm', app.bar)} />
+                    <div className={cn('h-2 w-20 rounded-sm', app.pill)} />
+                    <div className="flex gap-1.5 pt-0.5">
+                        <div className={cn('h-4 w-16 rounded-sm', app.accent)} />
+                        <div className={cn('h-4 w-11 rounded-sm border', app.pill, app.border)} />
+                    </div>
+                </div>
+                <div className={cn('h-16 w-12 shrink-0 rounded-md', app.pill)} />
+            </div>
+        </div>
+    )
+}
+
+function VaultPreview({ app }: { app: AppCard }) {
+    return (
+        <div className="space-y-2 p-3">
+            <div className="flex gap-2">
+                <div className={cn('h-5 flex-1 rounded-md border', app.urlBg, app.border)} />
+                <div className={cn('h-5 w-14 rounded-md', app.accent)} />
+            </div>
+            <div className="grid grid-cols-3 gap-1.5">
+                {[1, 0.8, 0.65, 0.9, 0.55, 0.75].map((opacity, i) => (
+                    <div
+                        key={i}
+                        className={cn('aspect-square rounded', app.accent)}
+                        style={{ opacity }}
+                    />
+                ))}
+            </div>
+        </div>
+    )
+}
+
+function DramalistPreview({ app }: { app: AppCard }) {
+    const items = [
+        { badge: app.accent },
+        { badge: app.bar },
+        { badge: app.pill }
+    ]
+    const widths = ['w-28', 'w-20', 'w-24']
+    return (
+        <div className="space-y-2 p-3">
+            <div className="flex items-center justify-between">
+                <div className="flex gap-1">
+                    <div className={cn('h-4 w-8 rounded-sm', app.accent)} />
+                    <div className={cn('h-4 w-14 rounded-sm', app.bar)} />
+                    <div className={cn('h-4 w-12 rounded-sm', app.pill)} />
+                </div>
+                <div className={cn('h-4 w-10 rounded-sm', app.pill)} />
+            </div>
+            <div className="space-y-1.5">
+                {items.map((item, i) => (
+                    <div key={i} className="flex items-center justify-between gap-2">
+                        <div className={cn('h-2 shrink-0 rounded-sm', widths[i], app.bar)} />
+                        <div className={cn('h-3.5 w-14 shrink-0 rounded opacity-75', item.badge)} />
+                    </div>
+                ))}
+            </div>
+        </div>
+    )
+}
 
 function DeployedApps() {
     return (
         <div className="flex flex-col gap-2.5">
-            <p className="text-muted-foreground font-mono text-xs tracking-[0.18em] uppercase">
-                {SITE.home.architecture.deploymentsLabel}
-            </p>
-            <div className="flex flex-wrap gap-2.5">
-                {DEPLOYED_APPS.map(app => (
-                    <motion.div
+            <SubLabel>{SITE.home.architecture.deploymentsLabel}</SubLabel>
+            <div className="flex flex-col gap-3">
+                {DEPLOYED_APPS.map((app, i) => (
+                    <motion.a
                         key={app.name}
-                        style={{ rotate: `${app.rotate}deg` }}
+                        href={app.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         whileHover={{
-                            scale: 1.05,
-                            y: -3,
-                            transition: {
-                                type: 'spring',
-                                stiffness: 320,
-                                damping: 22
-                            }
+                            y: -2,
+                            transition: { type: 'spring', stiffness: 320, damping: 22 }
                         }}
                         className={cn(
-                            'flex cursor-default items-center gap-2.5 rounded-lg border-2 border-dashed px-3 py-2',
+                            'block w-full overflow-hidden rounded-xl border shadow-sm',
+                            'transition-shadow hover:shadow-md',
                             app.bg,
                             app.border
                         )}
                     >
-                        <span className="text-xl leading-none">
-                            {app.emoji}
-                        </span>
-                        <div>
-                            <p
+                        {/* Browser chrome */}
+                        <div
+                            className={cn(
+                                'flex items-center gap-2 border-b px-3 py-2',
+                                app.headerBg,
+                                app.border
+                            )}
+                        >
+                            <div className="flex shrink-0 items-center gap-1">
+                                <span className="size-2 rounded-full bg-red-400/70" />
+                                <span className="size-2 rounded-full bg-yellow-400/70" />
+                                <span className="size-2 rounded-full bg-green-400/70" />
+                            </div>
+                            <div
                                 className={cn(
-                                    'font-hand text-sm leading-tight font-bold',
-                                    app.text
+                                    'flex flex-1 items-center gap-1.5 overflow-hidden rounded-md px-2 py-0.5 font-mono text-[10px]',
+                                    app.urlBg,
+                                    app.muted
                                 )}
                             >
-                                {app.name}
-                            </p>
-                            <p
-                                className={cn(
-                                    'font-mono text-xs leading-tight',
-                                    app.sub
-                                )}
-                            >
-                                {app.url}
-                            </p>
+                                <span className="shrink-0 leading-none">{app.emoji}</span>
+                                <span className={cn('truncate', app.muted)}>{app.url}</span>
+                            </div>
+                            <ExternalLink className={cn('size-3 shrink-0', app.muted)} />
                         </div>
-                    </motion.div>
+                        {/* App-specific mock content */}
+                        {i === 0 && <PersonalSitePreview app={app} />}
+                        {i === 1 && <VaultPreview app={app} />}
+                        {i === 2 && <DramalistPreview app={app} />}
+                    </motion.a>
                 ))}
             </div>
         </div>
@@ -341,12 +438,10 @@ export function ArchitectureSection() {
             >
                 {/* Text */}
                 <div className="flex flex-col gap-5">
-                    <p className="text-muted-foreground font-mono text-xs tracking-[0.22em] uppercase">
-                        {SITE.home.architecture.label}
-                    </p>
-                    <h2 className="font-hand text-4xl font-bold tracking-tight sm:text-5xl">
+                    <SectionLabel>{SITE.home.architecture.label}</SectionLabel>
+                    <SectionHeading>
                         {SITE.home.architecture.heading}
-                    </h2>
+                    </SectionHeading>
                     <p className="text-muted-foreground text-sm sm:text-base">
                         {SITE.home.architecture.body}
                     </p>

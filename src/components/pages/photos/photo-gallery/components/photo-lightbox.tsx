@@ -99,7 +99,7 @@ export function PhotoLightbox({
                         alt=""
                         aria-hidden
                         className={cn(
-                            'absolute max-h-[85vh] max-w-[88vw] scale-105 rounded-lg object-contain blur-xl transition-opacity duration-300',
+                            'absolute max-h-[78vh] max-w-[min(520px,85vw)] scale-105 rounded-lg object-contain blur-xl transition-opacity duration-300',
                             imgLoaded ? 'opacity-0' : 'opacity-100'
                         )}
                     />
@@ -111,15 +111,15 @@ export function PhotoLightbox({
                     >
                         <Image
                             src={photo.url}
-                            width={1400}
-                            aspectRatio={4 / 3}
+                            width={250}
+                            height={375}
                             layout="constrained"
                             cdn={netlifyCdn}
                             alt={`Photo ${currentIndex + 1}`}
-                            sizes="88vw"
+                            sizes="250px"
                             onLoad={() => setImgLoaded(true)}
                             className={cn(
-                                'max-h-[85vh] max-w-[88vw] rounded-lg object-contain shadow-2xl transition-opacity duration-300',
+                                'max-h-[78vh] max-w-[min(520px,85vw)] rounded-lg shadow-2xl transition-opacity duration-300',
                                 imgLoaded ? 'opacity-100' : 'opacity-0'
                             )}
                         />

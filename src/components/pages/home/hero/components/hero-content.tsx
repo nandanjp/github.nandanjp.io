@@ -28,10 +28,11 @@ export function HeroContent() {
             variants={container}
             initial="hidden"
             animate="show"
-            className="flex flex-col gap-5"
+            className="flex flex-col gap-3"
         >
             {/* Section label */}
             <motion.p
+                aria-hidden="true"
                 variants={item}
                 className="text-muted-foreground font-mono text-xs tracking-[0.22em] uppercase"
             >
@@ -83,7 +84,7 @@ export function HeroContent() {
             </motion.div>
 
             {/* CTAs */}
-            <motion.div variants={item} className="flex flex-wrap gap-3 pt-1">
+            <motion.div variants={item} className="flex flex-wrap gap-3">
                 <Link
                     to="/projects"
                     className={buttonVariants({ size: 'default' })}
@@ -105,7 +106,7 @@ export function HeroContent() {
             {/* Social */}
             <motion.div
                 variants={item}
-                className="flex items-center gap-3 pt-0.5"
+                className="flex items-center gap-3"
             >
                 <a
                     href={SITE.identity.githubUrl}

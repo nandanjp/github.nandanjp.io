@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { Link } from '@tanstack/react-router'
 import { SITE } from '@/content/site'
+import { SectionHeading, SectionLabel } from '@/components/ui/typography'
 
 const ENTRIES = SITE.home.interests.entries
 
@@ -166,10 +167,8 @@ export function InterestsSection() {
                     transition={{ duration: 0.5 }}
                     className="mb-10"
                 >
-                    <p className="text-muted-foreground mb-4 font-mono text-xs tracking-[0.22em] uppercase">
-                        {SITE.home.interests.label}
-                    </p>
-                    <h2 className="font-hand text-4xl font-bold tracking-tight sm:text-5xl">
+                    <SectionLabel className="mb-4">{SITE.home.interests.label}</SectionLabel>
+                    <SectionHeading>
                         {SITE.home.interests.heading
                             .split('\n')
                             .map((line, i, arr) => (
@@ -178,7 +177,7 @@ export function InterestsSection() {
                                     {i < arr.length - 1 && <br />}
                                 </span>
                             ))}
-                    </h2>
+                    </SectionHeading>
                     <p className="text-muted-foreground mt-3 max-w-lg text-sm sm:text-base">
                         {SITE.home.interests.sub}
                     </p>

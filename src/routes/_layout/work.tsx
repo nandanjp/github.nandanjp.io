@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { WorkPage } from '@/components/pages/work/work-page'
 import { SITE } from '@/content/site'
+import { PageHeading, SectionLabel } from '@/components/ui/typography'
 
 export const Route = createFileRoute('/_layout/work')({
     component: WorkRoute,
@@ -16,12 +17,10 @@ function WorkRoute() {
     return (
         <div className="mx-auto w-full max-w-3xl px-4 sm:px-6 md:px-8">
             <section className="mb-10 border-b pt-16 pb-10">
-                <p className="text-muted-foreground mb-4 font-mono text-xs tracking-[0.22em] uppercase">
-                    {SITE.work.label}
-                </p>
-                <h1 className="font-hand mb-3 text-5xl leading-[1.05] font-bold tracking-tight sm:text-6xl">
+                <SectionLabel className="mb-4">{SITE.work.label}</SectionLabel>
+                <PageHeading className="mb-3">
                     {SITE.work.heading}
-                </h1>
+                </PageHeading>
                 <p className="text-muted-foreground text-sm sm:text-base">
                     {SITE.work.sub}
                 </p>
