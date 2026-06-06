@@ -56,7 +56,7 @@ export function BlurImage({
                 src={src}
                 width={width}
                 height={height}
-                layout="constrained"
+                layout="fullWidth"
                 cdn={netlifyCdn}
                 fetchPriority={fp}
                 alt={alt}

@@ -19,12 +19,12 @@ export function Hero() {
                             profile.jpg
                         </span>
                     </div>
-                    <div className="bg-muted/20 relative aspect-3/4 md:aspect-2/3">
+                    <div className="bg-muted/20 relative aspect-square">
                         {rawUrl && (
                             <BlurImage
                                 src={rawUrl}
                                 width={200}
-                                height={300}
+                                height={200}
                                 alt="Nandan Patel"
                                 priority
                                 sizes="200px"
