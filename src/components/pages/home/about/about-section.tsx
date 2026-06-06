@@ -169,7 +169,7 @@ export function AboutSection() {
                 variants={container}
                 initial="hidden"
                 animate={inView ? 'show' : 'hidden'}
-                className="mx-auto grid max-w-5xl grid-cols-1 gap-8 px-4 sm:px-6 md:grid-cols-2 md:gap-12 md:px-8"
+                className="mx-auto grid max-w-6xl grid-cols-1 gap-8 px-4 sm:px-6 md:grid-cols-2 md:gap-12 md:px-8"
             >
                 {/* Bio */}
                 <motion.div variants={item} className="flex flex-col gap-6">

@@ -20,6 +20,7 @@ export function BlurImage({
     height,
     alt,
     className,
+    priority,
     ...props
 }: BlurImageProps) {
     const [loaded, setLoaded] = useState(false)
@@ -34,12 +35,17 @@ export function BlurImage({
             ? netlifyTransformer(src, { width: 20 })
             : src
 
+    // Translate unpic's `priority` to the standard HTML fetchpriority attribute
+    // rather than forwarding it — unpic v1 leaks it to the DOM <img> otherwise.
+    const fp = priority ? ('high' as const) : undefined
+
     return (
         <>
             <img
                 src={thumbSrc}
                 alt=""
                 aria-hidden
+                fetchPriority={fp}
                 className={cn(
                     'absolute inset-0 h-full w-full scale-105 object-cover object-center blur-sm transition-opacity duration-500',
                     loaded ? 'opacity-0' : 'opacity-100'
@@ -52,6 +58,7 @@ export function BlurImage({
                 height={height}
                 layout="constrained"
                 cdn={netlifyCdn}
+                fetchPriority={fp}
                 alt={alt}
                 onLoad={() => setLoaded(true)}
                 className={cn(

@@ -17,7 +17,7 @@ export const Route = createFileRoute('/_layout/blog')({
 
 function BlogRoute() {
     return (
-        <div className="mx-auto w-full max-w-2xl px-6 sm:px-8 md:px-10">
+        <div className="mx-auto w-full max-w-3xl px-4 sm:px-6 md:px-8">
             <section className="mb-10 border-b pt-16 pb-10">
                 <p className="text-muted-foreground mb-4 font-mono text-xs tracking-[0.22em] uppercase">
                     [blog] — thoughts &amp; writing

@@ -8,7 +8,7 @@ import { SITE } from '@/content/site'
 export function Navbar() {
     return (
         <header className="bg-background/80 border-foreground/8 sticky inset-0 z-50 border-b backdrop-blur-2xl">
-            <div className="mx-auto flex h-14 max-w-5xl items-center justify-between gap-4 px-4 sm:px-6 md:px-8">
+            <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6 md:px-8">
                 {/* Logo — squircle with blue background */}
                 <Link
                     to="/"

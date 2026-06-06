@@ -8,7 +8,7 @@ export function CtaSection() {
 
     return (
         <section ref={ref} className="border-t py-12 lg:py-16">
-            <div className="mx-auto max-w-5xl px-4 sm:px-6 md:px-8">
+            <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={inView ? { opacity: 1, y: 0 } : {}}

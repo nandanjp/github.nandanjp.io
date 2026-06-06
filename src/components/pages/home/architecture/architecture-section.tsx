@@ -337,7 +337,7 @@ export function ArchitectureSection() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                className="mx-auto grid max-w-5xl grid-cols-1 items-start gap-6 px-4 sm:px-6 md:grid-cols-[1fr_1.4fr] md:gap-10 md:px-8"
+                className="mx-auto grid max-w-6xl grid-cols-1 items-start gap-6 px-4 sm:px-6 md:grid-cols-[1fr_1.4fr] md:gap-10 md:px-8"
             >
                 {/* Text */}
                 <div className="flex flex-col gap-5">

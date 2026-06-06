@@ -14,7 +14,7 @@ export const Route = createFileRoute('/_layout/work')({
 
 function WorkRoute() {
     return (
-        <div className="mx-auto w-full max-w-5xl px-4 sm:px-6 md:px-8">
+        <div className="mx-auto w-full max-w-3xl px-4 sm:px-6 md:px-8">
             <section className="mb-10 border-b pt-16 pb-10">
                 <p className="text-muted-foreground mb-4 font-mono text-xs tracking-[0.22em] uppercase">
                     {SITE.work.label}
@@ -26,7 +26,7 @@ function WorkRoute() {
                     {SITE.work.sub}
                 </p>
             </section>
-            <div className="mx-auto max-w-2xl pb-16">
+            <div className="pb-16">
                 <WorkPage />
             </div>
         </div>

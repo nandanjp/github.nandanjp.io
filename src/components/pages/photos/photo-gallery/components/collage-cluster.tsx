@@ -70,14 +70,14 @@ function CollagePolaroid({
         >
             <div className="overflow-hidden rounded-[3px] bg-white shadow-[0_4px_18px_rgba(0,0,0,0.15)] dark:bg-zinc-900 dark:shadow-[0_4px_18px_rgba(0,0,0,0.5)]">
                 <div className="p-2 pb-1.5">
-                    <div className="bg-muted relative aspect-4/3 overflow-hidden rounded-[1px]">
+                    <div className="bg-muted relative aspect-2/3 overflow-hidden rounded-[1px]">
                         <BlurImage
                             src={photo.url}
-                            width={400}
-                            height={300}
+                            width={160}
+                            height={240}
                             alt={label}
                             loading="lazy"
-                            sizes="(max-width: 640px) 36vw, 160px"
+                            sizes="(max-width: 640px) 36vw, 130px"
                             className="object-center"
                         />
                     </div>

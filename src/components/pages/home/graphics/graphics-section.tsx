@@ -87,7 +87,7 @@ export function GraphicsSection() {
 
     return (
         <section ref={ref} className="border-t py-20 lg:py-28">
-            <div className="mx-auto grid max-w-5xl grid-cols-1 items-center gap-6 px-4 sm:px-6 md:grid-cols-2 md:gap-10 md:px-8">
+            <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-6 px-4 sm:px-6 md:grid-cols-2 md:gap-10 md:px-8">
                 {/* Canvas — top on mobile, left on desktop */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}

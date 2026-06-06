@@ -24,8 +24,8 @@ function AlbumCard({ track }: { track: Track }) {
             <div className="relative size-27 overflow-hidden rounded-lg shadow-md">
                 <BlurImage
                     src={track.album_art_url}
-                    width={216}
-                    height={216}
+                    width={160}
+                    height={160}
                     alt={track.album_name}
                     sizes="108px"
                     draggable={false}

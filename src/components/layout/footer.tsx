@@ -6,7 +6,7 @@ import { SITE } from '@/content/site'
 export function Footer() {
     return (
         <footer className="bg-background/80 mt-auto border-t">
-            <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6 md:px-8">
+            <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 md:px-8">
                 <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
                     {/* Brand */}
                     <div className="flex flex-col gap-3">

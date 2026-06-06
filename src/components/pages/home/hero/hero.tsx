@@ -7,7 +7,7 @@ export function Hero() {
 
     return (
         <section className="relative flex min-h-[calc(100vh-3.5rem)] items-center">
-            <div className="mx-auto grid w-full max-w-xl grid-cols-1 items-center gap-6 px-4 py-14 sm:px-6 md:max-w-7xl md:grid-cols-2 md:gap-8 md:px-8 lg:gap-12 lg:py-20">
+            <div className="mx-auto grid w-full max-w-xl grid-cols-1 items-center gap-4 px-4 py-14 sm:px-6 md:max-w-6xl md:grid-cols-2 md:gap-6 md:px-8 lg:py-20">
                 <HeroContent />
 
                 <div className="bg-card/40 mx-auto w-full max-w-md overflow-hidden rounded-xl border shadow-sm">

@@ -9,11 +9,13 @@ import rehypePrettyCode from 'rehype-pretty-code'
 import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
 import { defineConfig } from 'vitest/config'
-import viteTsConfigPaths from 'vite-tsconfig-paths'
 
 export default defineConfig({
     server: {
         port: 3000
+    },
+    resolve: {
+        tsconfigPaths: true
     },
     build: {
         sourcemap: true,
@@ -36,9 +38,6 @@ export default defineConfig({
     plugins: [
         devtools(),
         netlify(),
-        viteTsConfigPaths({
-            projects: ['./tsconfig.json']
-        }),
         tailwindcss(),
         {
             enforce: 'pre',

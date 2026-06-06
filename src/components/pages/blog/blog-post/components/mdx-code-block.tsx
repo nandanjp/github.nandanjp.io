@@ -18,15 +18,23 @@ export function MdxCodeBlock({
     const preRef = useRef<HTMLPreElement>(null)
 
     function getCode() {
-        return preRef.current?.querySelector('code')?.innerText ?? ''
+        if (!preRef.current) return ''
+        const lines = preRef.current.querySelectorAll('[data-line], .line')
+        if (lines.length > 0) {
+            return Array.from(lines)
+                .map(l => l.textContent ?? '')
+                .join('\n')
+        }
+        const code = preRef.current.querySelector('code')
+        return code?.innerText ?? preRef.current.innerText ?? ''
     }
 
     return (
         <div
             data-theme={theme}
-            className="not-prose border-border my-6 overflow-hidden rounded-xl border bg-[#0d1117] shadow-sm"
+            className="not-prose border-border my-6 rounded-xl border bg-[#0d1117] shadow-sm"
         >
-            <div className="border-border/50 flex items-center justify-between border-b bg-white/[0.03] px-4 py-2">
+            <div className="border-border/50 relative flex items-center justify-between border-b bg-white/3 px-4 py-2">
                 <span className="text-muted-foreground/70 font-mono text-xs tracking-wider uppercase">
                     {language ?? 'code'}
                 </span>
@@ -37,7 +45,7 @@ export function MdxCodeBlock({
                 data-language={language}
                 data-theme={theme}
                 className={cn(
-                    'overflow-x-auto p-5 text-[13px] leading-relaxed',
+                    'overflow-x-auto py-5 pl-5 [&>code]:block [&>code]:min-w-max [&>code]:pr-5 text-[13px] leading-relaxed',
                     className
                 )}
                 {...props}

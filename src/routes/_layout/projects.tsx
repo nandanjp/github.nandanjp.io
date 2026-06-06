@@ -16,7 +16,7 @@ export const Route = createFileRoute('/_layout/projects')({
 
 function ProjectsRoute() {
     return (
-        <div className="mx-auto w-full max-w-5xl px-4 sm:px-6 md:px-8">
+        <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 md:px-8">
             <section className="mb-10 border-b pt-16 pb-10">
                 <p className="text-muted-foreground mb-4 font-mono text-xs tracking-[0.22em] uppercase">
                     [projects] — built &amp; shipped

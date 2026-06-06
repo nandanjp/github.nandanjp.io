@@ -16,7 +16,7 @@ export const Route = createFileRoute('/_layout/music')({
 
 function MusicRoute() {
     return (
-        <div className="mx-auto w-full max-w-2xl px-6 pb-16 sm:px-8 md:px-10">
+        <div className="mx-auto w-full max-w-3xl px-4 pb-16 sm:px-6 md:px-8">
             <section className="mb-10 border-b pt-16 pb-10">
                 <p className="text-muted-foreground mb-4 font-mono text-xs tracking-[0.22em] uppercase">
                     [music] — on repeat
@@ -25,8 +25,7 @@ function MusicRoute() {
                     On Rotation.
                 </h1>
                 <p className="text-muted-foreground text-sm sm:text-base">
-                    What I've been listening to. Click the album art to hear a
-                    preview.
+                    What I've been listening to lately.
                 </p>
             </section>
             <MusicPage />

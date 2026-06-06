@@ -45,8 +45,8 @@ export function TrackCard({ track, index }: TrackCardProps) {
             <div className="relative size-16 shrink-0 overflow-hidden rounded-lg shadow-sm">
                 <BlurImage
                     src={track.album_art_url}
-                    width={128}
-                    height={128}
+                    width={96}
+                    height={96}
                     alt={track.album_name}
                     sizes="64px"
                     className="object-center"

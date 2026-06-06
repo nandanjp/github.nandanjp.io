@@ -66,10 +66,10 @@ export function PhotoCard({ photo, index, onClick }: PhotoCardProps) {
             {/* Polaroid paper */}
             <div className="overflow-hidden rounded-[3px] bg-white shadow-[0_3px_14px_rgba(0,0,0,0.13)] dark:bg-zinc-900 dark:shadow-[0_3px_14px_rgba(0,0,0,0.45)]">
                 <div className="p-2 pb-1.5">
-                    <div className="bg-muted relative aspect-4/3 overflow-hidden rounded-[1px]">
+                    <div className="bg-muted relative aspect-2/3 overflow-hidden rounded-[1px]">
                         <BlurImage
                             src={photo.url}
-                            width={600}
+                            width={300}
                             height={450}
                             alt={label}
                             loading="lazy"

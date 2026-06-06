@@ -5,7 +5,7 @@ import {
     Scripts,
     createRootRoute
 } from '@tanstack/react-router'
-import appCSS from '../styles.css?url'
+import '../styles.css'
 
 import TanStackQueryProvider from '@/integrations/tanstack-query/root-provider'
 import { buttonVariants } from '@/components/ui/button'
@@ -29,7 +29,6 @@ export const Route = createRootRoute({
             { name: 'theme-color', content: '#38bdf8' }
         ],
         links: [
-            { rel: 'stylesheet', href: appCSS },
             { rel: 'icon', href: '/favicon.ico', sizes: 'any' },
             {
                 rel: 'icon',
@@ -44,7 +43,7 @@ export const Route = createRootRoute({
                 href: '/favicon-16x16.png'
             },
             { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
-            { rel: 'manifest', href: '/manifest.json' }
+            { rel: 'manifest', href: '/site.webmanifest' }
         ]
     }),
     component: RootComponent,

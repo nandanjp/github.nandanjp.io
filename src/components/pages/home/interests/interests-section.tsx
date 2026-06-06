@@ -157,7 +157,7 @@ export function InterestsSection() {
 
     return (
         <section ref={ref} className="border-t py-14 lg:py-20">
-            <div className="mx-auto max-w-5xl px-4 sm:px-6 md:px-8">
+            <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={

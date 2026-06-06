@@ -14,7 +14,7 @@ function LayoutRoute() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.15, ease: 'easeOut' }}
-                    style={{ display: 'contents' }}
+                    className="flex flex-1 flex-col"
                 >
                     <Outlet />
                 </motion.div>
