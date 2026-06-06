@@ -24,7 +24,7 @@ export function Hero() {
 
                 <HeroContent />
 
-                <div className="rounded-xl border bg-card/40 overflow-hidden shadow-sm max-w-sm mx-auto w-full">
+                <div className="rounded-xl border bg-card/40 overflow-hidden shadow-sm max-w-md mx-auto w-full">
                     <div className="flex items-center gap-1.5 px-4 py-2.5 border-b bg-muted/40">
                         <span className="size-2.5 rounded-full bg-red-400/70" />
                         <span className="size-2.5 rounded-full bg-yellow-400/70" />
