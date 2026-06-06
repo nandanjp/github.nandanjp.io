@@ -1,6 +1,5 @@
 /// <reference types="vitest" />
 import mdx from '@mdx-js/rollup'
-import netlify from '@netlify/vite-plugin-tanstack-start'
 import tailwindcss from '@tailwindcss/vite'
 import { devtools } from '@tanstack/devtools-vite'
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
@@ -30,7 +29,6 @@ export default defineConfig({
     },
     plugins: [
         devtools(),
-        netlify(),
         viteTsConfigPaths({
             projects: ['./tsconfig.json']
         }),
@@ -51,7 +49,8 @@ export default defineConfig({
                 ]
             })
         },
-        tanstackStart(),
+        // @ts-expect-error target is a valid runtime option, types lag behind
+        tanstackStart({ target: 'netlify' }),
         viteReact({ include: /\.(jsx|tsx|mdx)$/ })
     ],
     test: {
