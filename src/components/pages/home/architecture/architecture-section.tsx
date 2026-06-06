@@ -3,7 +3,11 @@ import { motion, useInView } from 'framer-motion'
 import { ExternalLink } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { SITE } from '@/content/site'
-import { SectionHeading, SectionLabel, SubLabel } from '@/components/ui/typography'
+import {
+    SectionHeading,
+    SectionLabel,
+    SubLabel
+} from '@/components/ui/typography'
 
 const HAND_FONT = "'Caveat Variable', cursive"
 
@@ -154,11 +158,21 @@ function PersonalSitePreview({ app }: { app: AppCard }) {
                     <div className={cn('h-2.5 w-32 rounded-sm', app.bar)} />
                     <div className={cn('h-2 w-20 rounded-sm', app.pill)} />
                     <div className="flex gap-1.5 pt-0.5">
-                        <div className={cn('h-4 w-16 rounded-sm', app.accent)} />
-                        <div className={cn('h-4 w-11 rounded-sm border', app.pill, app.border)} />
+                        <div
+                            className={cn('h-4 w-16 rounded-sm', app.accent)}
+                        />
+                        <div
+                            className={cn(
+                                'h-4 w-11 rounded-sm border',
+                                app.pill,
+                                app.border
+                            )}
+                        />
                     </div>
                 </div>
-                <div className={cn('h-16 w-12 shrink-0 rounded-md', app.pill)} />
+                <div
+                    className={cn('h-16 w-12 shrink-0 rounded-md', app.pill)}
+                />
             </div>
         </div>
     )
@@ -168,11 +182,17 @@ function VaultPreview({ app }: { app: AppCard }) {
     return (
         <div className="space-y-2 p-3">
             <div className="flex gap-2">
-                <div className={cn('h-5 flex-1 rounded-md border', app.urlBg, app.border)} />
-                <div className={cn('h-5 w-14 rounded-md', app.accent)} />
+                <div
+                    className={cn(
+                        'h-4 flex-1 rounded-md border',
+                        app.urlBg,
+                        app.border
+                    )}
+                />
+                <div className={cn('h-4 w-14 rounded-md', app.accent)} />
             </div>
             <div className="grid grid-cols-3 gap-1.5">
-                {[1, 0.8, 0.65, 0.9, 0.55, 0.75].map((opacity, i) => (
+                {[1, 0.8, 0.65].map((opacity, i) => (
                     <div
                         key={i}
                         className={cn('aspect-square rounded', app.accent)}
@@ -203,9 +223,23 @@ function DramalistPreview({ app }: { app: AppCard }) {
             </div>
             <div className="space-y-1.5">
                 {items.map((item, i) => (
-                    <div key={i} className="flex items-center justify-between gap-2">
-                        <div className={cn('h-2 shrink-0 rounded-sm', widths[i], app.bar)} />
-                        <div className={cn('h-3.5 w-14 shrink-0 rounded opacity-75', item.badge)} />
+                    <div
+                        key={i}
+                        className="flex items-center justify-between gap-2"
+                    >
+                        <div
+                            className={cn(
+                                'h-2 shrink-0 rounded-sm',
+                                widths[i],
+                                app.bar
+                            )}
+                        />
+                        <div
+                            className={cn(
+                                'h-3.5 w-14 shrink-0 rounded opacity-75',
+                                item.badge
+                            )}
+                        />
                     </div>
                 ))}
             </div>
@@ -226,7 +260,11 @@ function DeployedApps() {
                         rel="noopener noreferrer"
                         whileHover={{
                             y: -2,
-                            transition: { type: 'spring', stiffness: 320, damping: 22 }
+                            transition: {
+                                type: 'spring',
+                                stiffness: 320,
+                                damping: 22
+                            }
                         }}
                         className={cn(
                             'block w-full overflow-hidden rounded-xl border shadow-sm',
@@ -255,10 +293,16 @@ function DeployedApps() {
                                     app.muted
                                 )}
                             >
-                                <span className="shrink-0 leading-none">{app.emoji}</span>
-                                <span className={cn('truncate', app.muted)}>{app.url}</span>
+                                <span className="shrink-0 leading-none">
+                                    {app.emoji}
+                                </span>
+                                <span className={cn('truncate', app.muted)}>
+                                    {app.url}
+                                </span>
                             </div>
-                            <ExternalLink className={cn('size-3 shrink-0', app.muted)} />
+                            <ExternalLink
+                                className={cn('size-3 shrink-0', app.muted)}
+                            />
                         </div>
                         {/* App-specific mock content */}
                         {i === 0 && <PersonalSitePreview app={app} />}

@@ -49,7 +49,7 @@ export function PhotoGallery() {
         : -1
 
     function prefetchPhoto(url: string) {
-        const src = netlifyTransformer?.(url, { width: 1400 }) ?? url
+        const src = netlifyTransformer?.(url, { width: 500 }) ?? url
         const img = new window.Image()
         img.src = src
     }

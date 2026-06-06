@@ -23,11 +23,11 @@ export function Hero() {
                         {rawUrl && (
                             <BlurImage
                                 src={rawUrl}
-                                width={200}
-                                height={200}
+                                width={448}
+                                height={448}
                                 alt="Nandan Patel"
                                 priority
-                                sizes="200px"
+                                sizes="(max-width: 448px) 100vw, 448px"
                                 className="object-center"
                             />
                         )}

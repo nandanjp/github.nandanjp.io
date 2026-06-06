@@ -73,11 +73,11 @@ function CollagePolaroid({
                     <div className="bg-muted relative aspect-square overflow-hidden rounded-[1px]">
                         <BlurImage
                             src={photo.url}
-                            width={120}
-                            height={120}
+                            width={200}
+                            height={200}
                             alt={label}
                             loading="lazy"
-                            sizes="120px"
+                            sizes="200px"
                             className="object-center"
                         />
                     </div>

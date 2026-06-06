@@ -60,7 +60,7 @@ export function PhotoCard({ photo, index, onClick }: PhotoCardProps) {
                 transition: { type: 'spring', stiffness: 280, damping: 20 }
             }}
             style={{ rotate: `${rotation}deg` }}
-            className="cursor-pointer rounded-[3px]"
+            className="w-full max-w-[280px] cursor-pointer rounded-[3px]"
             onClick={() => onClick(photo)}
         >
             {/* Polaroid paper */}
@@ -69,11 +69,11 @@ export function PhotoCard({ photo, index, onClick }: PhotoCardProps) {
                     <div className="bg-muted relative aspect-square overflow-hidden rounded-[1px]">
                         <BlurImage
                             src={photo.url}
-                            width={150}
-                            height={150}
+                            width={280}
+                            height={280}
                             alt={label}
                             loading="lazy"
-                            sizes="150px"
+                            sizes="280px"
                             className="object-center"
                         />
                     </div>
