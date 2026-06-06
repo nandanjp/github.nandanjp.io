@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { usePhotos } from '@/hooks/use-photos'
+import { netlifyTransformer } from '@/lib/image'
 import { Skeleton } from '@/components/ui/skeleton'
 import { cn } from '@/lib/utils'
 import type { Photo } from '@/lib/api'
@@ -43,9 +44,9 @@ export function PhotoGallery() {
         : -1
 
     function prefetchPhoto(url: string) {
-        if (import.meta.env.DEV) return
-        const img = new Image()
-        img.src = `/.netlify/images?url=${encodeURIComponent(url)}&w=1400&f=webp`
+        const src = netlifyTransformer?.({ url, width: 1400 }) ?? url
+        const img = new window.Image()
+        img.src = src
     }
 
     function handlePrev() {

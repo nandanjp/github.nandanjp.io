@@ -1,8 +1,10 @@
 import { X, ChevronLeft, ChevronRight } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useEffect, useState } from 'react'
+import { Image } from '@unpic/react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
+import { netlifyTransformer } from '@/lib/image'
 import type { Photo } from '@/lib/api'
 
 interface PhotoLightboxProps {
@@ -25,7 +27,6 @@ export function PhotoLightbox({
     onNext,
 }: PhotoLightboxProps) {
     const [imgLoaded, setImgLoaded] = useState(false)
-
     useEffect(() => { setImgLoaded(false) }, [photo.key])
 
     useEffect(() => {
@@ -38,13 +39,7 @@ export function PhotoLightbox({
         return () => window.removeEventListener('keydown', handleKey)
     }, [onClose, onPrev, onNext])
 
-    const thumbUrl = import.meta.env.DEV
-        ? photo.url
-        : `/.netlify/images?url=${encodeURIComponent(photo.url)}&w=60&f=webp`
-    const netlifyUrl = import.meta.env.DEV
-        ? photo.url
-        : `/.netlify/images?url=${encodeURIComponent(photo.url)}&w=1400&f=webp`
-
+    const thumbUrl = netlifyTransformer?.({ url: photo.url, width: 60 }) ?? photo.url
     const progressPct = ((currentIndex + 1) / total) * 100
     const useDots = total <= MAX_DOTS
 
@@ -93,7 +88,6 @@ export function PhotoLightbox({
                     className="relative flex items-center justify-center"
                     onClick={e => e.stopPropagation()}
                 >
-                    {/* Blur-up thumbnail shown while full image loads */}
                     <img
                         key={`thumb-${photo.key}`}
                         src={thumbUrl}
@@ -104,16 +98,26 @@ export function PhotoLightbox({
                             imgLoaded ? 'opacity-0' : 'opacity-100',
                         )}
                     />
-                    <motion.img
+                    <motion.div
                         key={photo.key}
-                        initial={{ opacity: 0, scale: 0.97 }}
-                        animate={{ opacity: imgLoaded ? 1 : 0, scale: imgLoaded ? 1 : 0.97 }}
+                        initial={{ scale: 0.97 }}
+                        animate={{ scale: imgLoaded ? 1 : 0.97 }}
                         transition={{ duration: 0.25 }}
-                        src={netlifyUrl}
-                        alt={`Photo ${currentIndex + 1}`}
-                        onLoad={() => setImgLoaded(true)}
-                        className="max-h-[85vh] max-w-[88vw] rounded-lg object-contain shadow-2xl"
-                    />
+                    >
+                        <Image
+                            src={photo.url}
+                            width={1400}
+                            layout="constrained"
+                            transformer={netlifyTransformer}
+                            alt={`Photo ${currentIndex + 1}`}
+                            sizes="88vw"
+                            onLoad={() => setImgLoaded(true)}
+                            className={cn(
+                                'max-h-[85vh] max-w-[88vw] rounded-lg object-contain shadow-2xl transition-opacity duration-300',
+                                imgLoaded ? 'opacity-100' : 'opacity-0',
+                            )}
+                        />
+                    </motion.div>
                 </div>
 
                 {/* Next */}

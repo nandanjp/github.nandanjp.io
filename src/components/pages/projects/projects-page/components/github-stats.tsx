@@ -1,6 +1,6 @@
-import { useState } from 'react'
 import { Star, BookOpen, Users, ExternalLink } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { BlurImage } from '@/components/ui/blur-image'
 import { formatCompactNumber } from '@/lib/utils'
 import type { GitHubStats } from '@/lib/api'
 import { LanguageBar } from './components/language-bar'
@@ -10,14 +10,7 @@ interface GitHubStatsCardProps {
 }
 
 export function GitHubStatsCard({ stats }: GitHubStatsCardProps) {
-    const [avatarLoaded, setAvatarLoaded] = useState(false)
     const total = stats.languages.reduce((acc, l) => acc + l.count, 0)
-    const avatarThumb = import.meta.env.DEV
-        ? stats.avatar_url
-        : `/.netlify/images?url=${encodeURIComponent(stats.avatar_url)}&w=10&h=10&fit=cover&f=webp`
-    const avatarSrc = import.meta.env.DEV
-        ? stats.avatar_url
-        : `/.netlify/images?url=${encodeURIComponent(stats.avatar_url)}&w=96&h=96&fit=cover&f=webp`
 
     return (
         <div className="rounded-xl border bg-card/40 overflow-hidden shadow-sm">
@@ -42,23 +35,13 @@ export function GitHubStatsCard({ stats }: GitHubStatsCardProps) {
                 {/* Profile row */}
                 <div className="flex items-start gap-3">
                     <div className="relative size-12 rounded-full overflow-hidden shrink-0">
-                        <img
-                            src={avatarThumb}
-                            alt=""
-                            aria-hidden
-                            className={cn(
-                                'absolute inset-0 h-full w-full object-cover object-center blur-sm scale-105 transition-opacity duration-500',
-                                avatarLoaded ? 'opacity-0' : 'opacity-100',
-                            )}
-                        />
-                        <img
-                            src={avatarSrc}
+                        <BlurImage
+                            src={stats.avatar_url}
+                            width={96}
+                            height={96}
                             alt={stats.name}
-                            onLoad={() => setAvatarLoaded(true)}
-                            className={cn(
-                                'absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-500',
-                                avatarLoaded ? 'opacity-100' : 'opacity-0',
-                            )}
+                            sizes="48px"
+                            className="object-center"
                         />
                     </div>
                     <div className="min-w-0 flex-1">

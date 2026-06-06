@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
+import { Image } from '@unpic/react'
+import { netlifyTransformer } from '@/lib/image'
 import { Pause } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -145,10 +147,12 @@ export function MusicPage() {
                         className="overflow-hidden"
                     >
                         <div className="rounded-xl border bg-card/60 backdrop-blur-sm px-4 py-3 flex items-center gap-3 mb-2">
-                            <img
-                                src={import.meta.env.DEV
-                                    ? playingTrack.album_art_url
-                                    : `/.netlify/images?url=${encodeURIComponent(playingTrack.album_art_url)}&w=80&fit=cover&f=webp`}
+                            <Image
+                                src={playingTrack.album_art_url}
+                                width={80}
+                                height={80}
+                                layout="fixed"
+                                transformer={netlifyTransformer}
                                 alt={playingTrack.album_name}
                                 className="size-10 rounded-lg object-cover shrink-0"
                             />

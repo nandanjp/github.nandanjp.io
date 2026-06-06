@@ -1,22 +1,9 @@
-import { useState } from 'react'
-import { cn } from '@/lib/utils'
 import { SITE } from '@/content/site'
+import { BlurImage } from '@/components/ui/blur-image'
 import { HeroContent } from './components/hero-content'
 
 export function Hero() {
-    const [loaded, setLoaded] = useState(false)
-
     const rawUrl = SITE.identity.profileImageUrl
-    const thumb = import.meta.env.DEV
-        ? rawUrl
-        : rawUrl
-            ? `/.netlify/images?url=${encodeURIComponent(rawUrl)}&w=20&h=30&fit=cover&f=webp`
-            : null
-    const src = import.meta.env.DEV
-        ? rawUrl
-        : rawUrl
-            ? `/.netlify/images?url=${encodeURIComponent(rawUrl)}&w=600&h=900&fit=cover&f=webp`
-            : null
 
     return (
         <section className="relative min-h-[calc(100vh-3.5rem)] flex items-center">
@@ -33,27 +20,16 @@ export function Hero() {
                             profile.jpg
                         </span>
                     </div>
-                    <div className="relative aspect-[3/4] md:aspect-[2/3] bg-muted/20">
-                        {thumb && (
-                            <img
-                                src={thumb}
-                                alt=""
-                                aria-hidden
-                                className={cn(
-                                    'absolute inset-0 h-full w-full object-cover object-center blur-sm scale-105 transition-opacity duration-500',
-                                    loaded ? 'opacity-0' : 'opacity-100',
-                                )}
-                            />
-                        )}
-                        {src && (
-                            <img
-                                src={src}
+                    <div className="relative aspect-3/4 md:aspect-2/3 bg-muted/20">
+                        {rawUrl && (
+                            <BlurImage
+                                src={rawUrl}
+                                width={600}
+                                height={900}
                                 alt="Nandan Patel"
-                                onLoad={() => setLoaded(true)}
-                                className={cn(
-                                    'absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-500',
-                                    loaded ? 'opacity-100' : 'opacity-0',
-                                )}
+                                priority
+                                sizes="(max-width: 768px) calc(100vw - 2rem), 448px"
+                                className="object-center"
                             />
                         )}
                     </div>

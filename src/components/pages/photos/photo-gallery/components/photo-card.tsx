@@ -1,6 +1,6 @@
-import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
+import { BlurImage } from '@/components/ui/blur-image'
 import type { Photo } from '@/lib/api'
 
 const STRIP_THEMES = [
@@ -21,17 +21,8 @@ interface PhotoCardProps {
 }
 
 export function PhotoCard({ photo, index, onClick }: PhotoCardProps) {
-    const [loaded, setLoaded] = useState(false)
     const theme = STRIP_THEMES[index % STRIP_THEMES.length]
     const rotation = ROTATIONS[index % ROTATIONS.length]
-
-    const thumb = import.meta.env.DEV
-        ? photo.url
-        : `/.netlify/images?url=${encodeURIComponent(photo.url)}&w=30&h=23&fit=cover&f=webp`
-    const src = import.meta.env.DEV
-        ? photo.url
-        : `/.netlify/images?url=${encodeURIComponent(photo.url)}&w=600&h=450&fit=cover&f=webp`
-
     const label = `#${String(index + 1).padStart(3, '0')}`
 
     return (
@@ -52,28 +43,16 @@ export function PhotoCard({ photo, index, onClick }: PhotoCardProps) {
         >
             {/* Polaroid paper */}
             <div className="rounded-[3px] overflow-hidden bg-white dark:bg-zinc-900 shadow-[0_3px_14px_rgba(0,0,0,0.13)] dark:shadow-[0_3px_14px_rgba(0,0,0,0.45)]">
-                {/* Photo area with thin border */}
                 <div className="p-2 pb-1.5">
-                    <div className="relative aspect-[4/3] overflow-hidden rounded-[1px] bg-muted">
-                        {/* Blur-up thumbnail: shown immediately, fades out once full image loads */}
-                        <img
-                            src={thumb}
-                            alt=""
-                            aria-hidden
-                            className={cn(
-                                'absolute inset-0 h-full w-full object-cover object-center blur-sm scale-105 transition-opacity duration-500',
-                                loaded ? 'opacity-0' : 'opacity-100',
-                            )}
-                        />
-                        <img
-                            src={src}
+                    <div className="relative aspect-4/3 overflow-hidden rounded-[1px] bg-muted">
+                        <BlurImage
+                            src={photo.url}
+                            width={600}
+                            height={450}
                             alt={label}
                             loading="lazy"
-                            onLoad={() => setLoaded(true)}
-                            className={cn(
-                                'absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-500',
-                                loaded ? 'opacity-100' : 'opacity-0',
-                            )}
+                            sizes="(max-width: 640px) calc(50vw - 2rem), 300px"
+                            className="object-center"
                         />
                     </div>
                 </div>
