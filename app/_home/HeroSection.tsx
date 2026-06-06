@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { BlurImage } from '@/components/ui/blur-image'
+import { MacCard } from '@/components/ui/mac-card'
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import { Icon } from '@/components/Icon'
@@ -117,13 +118,7 @@ export function HeroSection() {
                 </motion.div>
 
                 {/* Profile image card */}
-                <div className="bg-card/40 mx-auto w-full max-w-md overflow-hidden rounded-xl border shadow-sm">
-                    <div className="bg-muted/40 flex items-center gap-1.5 border-b px-4 py-2.5">
-                        <span className="size-2.5 rounded-full bg-red-400/70" />
-                        <span className="size-2.5 rounded-full bg-yellow-400/70" />
-                        <span className="size-2.5 rounded-full bg-green-400/70" />
-                        <span className="text-muted-foreground ml-auto font-mono text-xs">profile.jpg</span>
-                    </div>
+                <MacCard title="profile.jpg" className="bg-card/40 mx-auto w-full max-w-md rounded-xl border shadow-sm">
                     <div className="bg-muted/20 relative aspect-square">
                         {profileImageUrl && (
                             <BlurImage
@@ -138,7 +133,7 @@ export function HeroSection() {
                             />
                         )}
                     </div>
-                </div>
+                </MacCard>
             </div>
         </section>
     )

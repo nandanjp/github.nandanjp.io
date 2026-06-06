@@ -10,7 +10,7 @@ import {
     SelectTrigger,
     SelectValue
 } from '@/components/ui/select'
-import { MonoText } from '@/components/ui/typography'
+import { MacCard } from '@/components/ui/mac-card'
 
 const GRAPH_FONT = 'var(--font-mono), monospace'
 const CX = 240
@@ -318,14 +318,11 @@ export function ArtistExplorer({ tracks }: { tracks: Track[] }) {
     const selectedAlbums = selected ? [...artistAlbumMap.get(selected)!.values()] : []
 
     return (
-        <div className="border-foreground/20 overflow-hidden rounded-2xl border border-dashed">
-            <div className="border-foreground/15 bg-muted/20 flex items-center gap-1.5 border-b border-dashed px-4 py-2.5">
-                <span className="size-2.5 rounded-full bg-red-400/70" />
-                <span className="size-2.5 rounded-full bg-yellow-400/70" />
-                <span className="size-2.5 rounded-full bg-green-400/70" />
-                <MonoText className="ml-auto">artist-explorer.excalidraw</MonoText>
-            </div>
-
+        <MacCard
+            title="artist-explorer.excalidraw"
+            className="border-foreground/20 rounded-2xl border border-dashed"
+            headerClassName="bg-muted/20 border-foreground/15 border-dashed"
+        >
             <div className="px-4 pt-4 pb-2">
                 <Select value={selected ?? ''} onValueChange={v => setSelected(v || null)}>
                     <SelectTrigger
@@ -375,6 +372,6 @@ export function ArtistExplorer({ tracks }: { tracks: Track[] }) {
                     </motion.p>
                 )}
             </AnimatePresence>
-        </div>
+        </MacCard>
     )
 }

@@ -1,5 +1,6 @@
 import { Circle, Clock, GitBranch, Package } from 'lucide-react'
 import { CardHeading, MonoText, SubLabel } from '@/components/ui/typography'
+import { MacWindowHeader } from '@/components/ui/mac-card'
 import { Card, CardContent } from '@/components/ui/card'
 import { relativeTime } from '@/lib/utils'
 import { LANGUAGE_COLORS } from './language-colors'
@@ -26,12 +27,7 @@ export function ActivityCard({ repos }: ActivityCardProps) {
     return (
         <Card className="bg-card/40 flex h-full flex-col py-0 shadow-sm">
             {/* macOS window chrome */}
-            <div className="bg-muted/40 flex items-center gap-1.5 border-b px-4 py-2.5">
-                <span className="size-2.5 rounded-full bg-red-400/70" />
-                <span className="size-2.5 rounded-full bg-yellow-400/70" />
-                <span className="size-2.5 rounded-full bg-green-400/70" />
-                <MonoText className="ml-auto">activity.svg</MonoText>
-            </div>
+            <MacWindowHeader title="activity.svg" />
 
             <CardContent className="flex flex-1 flex-col p-4 sm:p-5">
                 <ContributionGraph repos={repos} />

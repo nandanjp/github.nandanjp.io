@@ -1,4 +1,5 @@
 import { BookOpen, ExternalLink, Star, Users } from 'lucide-react'
+import { MacWindowHeader } from '@/components/ui/mac-card'
 import { cn, formatCompactNumber } from '@/lib/utils'
 import { CardHeading, MonoText, BodyText, SubLabel } from '@/components/ui/typography'
 import { Card, CardContent } from '@/components/ui/card'
@@ -36,20 +37,19 @@ export function GitHubStatsCard({ stats }: GitHubStatsCardProps) {
     return (
         <Card className="bg-card/40 py-0 shadow-sm">
             {/* macOS window chrome */}
-            <div className="bg-muted/40 flex items-center gap-1.5 border-b px-4 py-2.5">
-                <span className="size-2.5 rounded-full bg-red-400/70" />
-                <span className="size-2.5 rounded-full bg-yellow-400/70" />
-                <span className="size-2.5 rounded-full bg-green-400/70" />
-                <a
-                    href={`https://github.com/${stats.username}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-muted-foreground hover:text-muted-foreground/80 ml-auto flex items-center gap-1 font-mono text-xs transition-colors"
-                >
-                    github.profile
-                    <ExternalLink className="size-3" />
-                </a>
-            </div>
+            <MacWindowHeader
+                title={
+                    <a
+                        href={`https://github.com/${stats.username}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-foreground/80 inline-flex items-center gap-1 transition-colors"
+                    >
+                        github.profile
+                        <ExternalLink className="size-3" />
+                    </a>
+                }
+            />
 
             <CardContent className="p-5">
                 {/* Profile row */}

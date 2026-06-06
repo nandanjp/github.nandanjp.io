@@ -7,6 +7,7 @@ import type { BlogPost } from '@/lib/blog'
 import { formatDate } from '@/lib/utils'
 import { CardHeading, MonoText } from '@/components/ui/typography'
 import { cn } from '@/lib/utils'
+import { MacWindowHeader } from '@/components/ui/mac-card'
 
 const THEMES = [
     {
@@ -86,18 +87,10 @@ export function BlogCard({ post, index }: BlogCardProps) {
                 )}
             >
                 {/* Window chrome */}
-                <div
-                    className={cn(
-                        'flex items-center gap-1.5 border-b px-4 py-2.5',
-                        theme.chrome,
-                        theme.border
-                    )}
-                >
-                    <span className="size-2.5 rounded-full bg-red-400/70" />
-                    <span className="size-2.5 rounded-full bg-yellow-400/70" />
-                    <span className="size-2.5 rounded-full bg-green-400/70" />
-                    <MonoText className="ml-auto">{post.slug}.mdx</MonoText>
-                </div>
+                <MacWindowHeader
+                    title={`${post.slug}.mdx`}
+                    className={cn(theme.chrome, theme.border)}
+                />
 
                 {/* Body */}
                 <div className="p-5 sm:p-6">

@@ -5,6 +5,7 @@ import { motion, useInView } from 'framer-motion'
 import Link from 'next/link'
 import { SITE } from '@/content/site'
 import { SectionLabel, SectionHeading } from '@/components/ui/typography'
+import { MacCard } from '@/components/ui/mac-card'
 
 const ENTRIES = SITE.home.interests.entries
 
@@ -64,16 +65,7 @@ function EntryOutput({ entry }: { entry: Entry }) {
 
 function BeyondCodeTerminal({ inView }: { inView: boolean }) {
     return (
-        <div className="bg-card/40 overflow-hidden rounded-xl border shadow-sm">
-            <div className="bg-muted/40 flex items-center gap-1.5 border-b px-4 py-2.5">
-                <span className="size-2.5 rounded-full bg-red-400/70" />
-                <span className="size-2.5 rounded-full bg-yellow-400/70" />
-                <span className="size-2.5 rounded-full bg-green-400/70" />
-                <span className="text-muted-foreground ml-auto font-mono text-xs">
-                    {SITE.home.interests.filename}
-                </span>
-            </div>
-
+        <MacCard title={SITE.home.interests.filename} className="bg-card/40 rounded-xl border shadow-sm">
             <div className="relative">
                 <svg className="pointer-events-none absolute inset-0 h-full w-full" aria-hidden>
                     <defs>
@@ -120,7 +112,7 @@ function BeyondCodeTerminal({ inView }: { inView: boolean }) {
                     </motion.div>
                 </div>
             </div>
-        </div>
+        </MacCard>
     )
 }
 

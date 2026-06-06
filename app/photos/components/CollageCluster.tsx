@@ -66,7 +66,7 @@ function CollagePolaroid({ photo, index, pileIndex, marginLeft, onClick }: Colla
                             src={photo.url}
                             alt={label}
                             fill
-                            sizes="(max-width: 768px) 20vw, 200px"
+                            sizes="(max-width: 768px) 36vw, 280px"
                             draggable={false}
                             loading="eager"
                             fetchPriority="high"

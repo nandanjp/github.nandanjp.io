@@ -6,6 +6,7 @@ import { ExternalLink } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { SITE } from '@/content/site'
 import { SectionLabel, SectionHeading, SubLabel } from '@/components/ui/typography'
+import { MacCard } from '@/components/ui/mac-card'
 
 const HAND_FONT = 'var(--font-hand), cursive'
 
@@ -253,19 +254,11 @@ export function ArchitectureSection() {
                     <DeployedApps />
                 </div>
 
-                <div className="bg-card/40 overflow-hidden rounded-xl border shadow-sm">
-                    <div className="bg-muted/40 flex items-center gap-1.5 border-b px-4 py-2.5">
-                        <span className="size-2.5 rounded-full bg-red-400/70" />
-                        <span className="size-2.5 rounded-full bg-yellow-400/70" />
-                        <span className="size-2.5 rounded-full bg-green-400/70" />
-                        <span className="text-muted-foreground ml-auto font-mono text-xs">
-                            {SITE.home.architecture.filename}
-                        </span>
-                    </div>
+                <MacCard title={SITE.home.architecture.filename} className="bg-card/40 rounded-xl border shadow-sm">
                     <div className="p-4 sm:p-6">
                         <ArchitectureDiagram />
                     </div>
-                </div>
+                </MacCard>
             </motion.div>
         </section>
     )

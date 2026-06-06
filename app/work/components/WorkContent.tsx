@@ -3,7 +3,8 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { SITE } from '@/content/site'
-import { BodyText, CardHeading, MonoText } from '@/components/ui/typography'
+import { BodyText, CardHeading } from '@/components/ui/typography'
+import { MacWindowHeader } from '@/components/ui/mac-card'
 import { cn } from '@/lib/utils'
 import { WorkEntryCard } from './WorkEntryCard'
 import { ProjectEntryCard } from './ProjectEntryCard'
@@ -41,12 +42,10 @@ export function WorkContent() {
             className="bg-card/30 border-foreground/20 overflow-hidden rounded-2xl border border-dashed shadow-sm"
         >
             {/* Mac chrome */}
-            <div className="bg-muted/20 border-foreground/15 flex items-center gap-1.5 border-b border-dashed px-4 py-2.5">
-                <span className="size-2.5 rounded-full bg-red-400/70" />
-                <span className="size-2.5 rounded-full bg-yellow-400/70" />
-                <span className="size-2.5 rounded-full bg-green-400/70" />
-                <MonoText className="ml-auto">{SITE.work.filename}</MonoText>
-            </div>
+            <MacWindowHeader
+                title={SITE.work.filename}
+                className="bg-muted/20 border-foreground/15 border-dashed"
+            />
 
             <div className="relative">
                 <svg

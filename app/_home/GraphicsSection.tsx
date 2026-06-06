@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic'
 import { TechBadge } from './TechBadge'
 import { SITE } from '@/content/site'
 import { SectionLabel, SectionHeading } from '@/components/ui/typography'
+import { MacCard } from '@/components/ui/mac-card'
 
 const PokeballScene = dynamic(() => import('./PokeballScene').then(mod => ({ default: mod.PokeballScene })), {
     ssr: false,
@@ -48,19 +49,11 @@ export function GraphicsSection() {
                     transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
                     className="order-first lg:order-first"
                 >
-                    <div className="bg-card/40 overflow-hidden rounded-xl border shadow-sm">
-                        <div className="bg-muted/40 flex items-center gap-1.5 border-b px-4 py-2.5">
-                            <span className="size-2.5 rounded-full bg-red-400/70" />
-                            <span className="size-2.5 rounded-full bg-yellow-400/70" />
-                            <span className="size-2.5 rounded-full bg-green-400/70" />
-                            <span className="text-muted-foreground ml-auto font-mono text-xs">
-                                {SITE.home.graphics.filename}
-                            </span>
-                        </div>
+                    <MacCard title={SITE.home.graphics.filename} className="bg-card/40 rounded-xl border shadow-sm">
                         <div className="h-[260px] sm:h-[300px] md:aspect-square md:h-auto">
                             <PokeballScene />
                         </div>
-                    </div>
+                    </MacCard>
                 </motion.div>
 
                 {/* Text */}

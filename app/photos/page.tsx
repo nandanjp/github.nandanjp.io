@@ -13,7 +13,8 @@ export const metadata: Metadata = {
 }
 
 export default async function PhotosPage() {
-    const { photos } = await api.photos.list()
+    const result = await Promise.allSettled([api.photos.list()])
+    const photos = result[0].status === 'fulfilled' ? result[0].value.photos : []
 
     return (
         <div className="mx-auto w-full max-w-6xl px-4 pb-16 sm:px-6 md:px-8">
@@ -23,7 +24,7 @@ export default async function PhotosPage() {
                 <BodyText>{SITE.photos.sub}</BodyText>
             </section>
             <Suspense fallback={<PhotoGallerySkeleton />}>
-                <PhotoGallery photos={photos ?? []} />
+                <PhotoGallery photos={photos} />
             </Suspense>
         </div>
     )

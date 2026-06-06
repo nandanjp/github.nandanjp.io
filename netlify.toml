@@ -4,6 +4,7 @@ publish = ".next"
 
 [build.environment]
 NODE_VERSION = "20"
+NEXT_PUBLIC_PERSONAL_API_URL = "https://personal-api.nandan-hl.dev"
 
 [images]
 remote_images = [

@@ -23,25 +23,25 @@ export function Footer() {
 
                     {/* Nav + Socials */}
                     <div className="flex flex-col gap-4 sm:items-end">
-                        <nav className="flex flex-wrap gap-x-5 gap-y-1.5">
+                        <nav className="flex flex-wrap gap-x-4 gap-y-0">
                             {SITE.nav.links.map(link => (
                                 <Link
                                     key={link.path}
                                     href={link.path}
-                                    className="text-muted-foreground hover:text-foreground text-sm transition-colors"
+                                    className="text-muted-foreground hover:text-foreground inline-flex min-h-[48px] items-center text-sm transition-colors"
                                 >
                                     {link.label}
                                 </Link>
                             ))}
                         </nav>
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center">
                             {SITE.identity.githubUrl && (
                                 <a
                                     href={SITE.identity.githubUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     aria-label="GitHub"
-                                    className="text-muted-foreground hover:text-foreground transition-colors"
+                                    className="text-muted-foreground hover:text-foreground inline-flex size-12 items-center justify-center rounded-md transition-colors"
                                 >
                                     <Icon.GitHub className="size-4" />
                                 </a>
@@ -49,7 +49,7 @@ export function Footer() {
                             <a
                                 href={`mailto:${SITE.identity.email}`}
                                 aria-label="Email"
-                                className="text-muted-foreground hover:text-foreground transition-colors"
+                                className="text-muted-foreground hover:text-foreground inline-flex size-12 items-center justify-center rounded-md transition-colors"
                             >
                                 <Mail className="size-4" />
                             </a>

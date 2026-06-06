@@ -13,7 +13,8 @@ export const metadata: Metadata = {
 }
 
 export default async function MusicPage() {
-    const { tracks } = await api.music.list()
+    const result = await Promise.allSettled([api.music.list()])
+    const tracks = result[0].status === 'fulfilled' ? result[0].value.tracks : []
 
     return (
         <div className="mx-auto w-full max-w-3xl px-4 pb-16 sm:px-6 md:px-8">
@@ -23,7 +24,7 @@ export default async function MusicPage() {
                 <BodyText>{SITE.music.sub}</BodyText>
             </section>
             <Suspense fallback={<TrackGridSkeleton />}>
-                <MusicContent tracks={tracks ?? []} />
+                <MusicContent tracks={tracks} />
             </Suspense>
         </div>
     )
