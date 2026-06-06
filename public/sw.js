@@ -3,7 +3,7 @@ const CACHE = 'nandanjp-v1'
 // Static asset extensions worth caching
 const STATIC_RE = /\.(?:js|css|woff2?|png|jpg|jpeg|svg|ico|webp|gif)$/i
 
-self.addEventListener('install', event => {
+self.addEventListener('install', () => {
     // Activate immediately without waiting for old tabs to close
     self.skipWaiting()
 })
@@ -11,9 +11,14 @@ self.addEventListener('install', event => {
 self.addEventListener('activate', event => {
     // Remove caches from previous versions
     event.waitUntil(
-        caches.keys().then(keys =>
-            Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
-        ).then(() => self.clients.claim())
+        caches
+            .keys()
+            .then(keys =>
+                Promise.all(
+                    keys.filter(k => k !== CACHE).map(k => caches.delete(k))
+                )
+            )
+            .then(() => self.clients.claim())
     )
 })
 
@@ -26,9 +31,7 @@ self.addEventListener('fetch', event => {
 
     // Network-first for HTML navigations — lets SSR always win when online
     if (request.mode === 'navigate') {
-        event.respondWith(
-            fetch(request).catch(() => caches.match(request))
-        )
+        event.respondWith(fetch(request).catch(() => caches.match(request)))
         return
     }
 

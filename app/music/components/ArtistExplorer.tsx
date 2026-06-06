@@ -1,0 +1,380 @@
+'use client'
+
+import { useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
+import type { Track } from '@/lib/api'
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue
+} from '@/components/ui/select'
+import { MonoText } from '@/components/ui/typography'
+
+const GRAPH_FONT = 'var(--font-mono), monospace'
+const CX = 240
+const RADIUS = 118
+const NODE_R = 20
+const SQ_RX = NODE_R * 0.25
+const SQ_RX_BORDER = (NODE_R + 2) * 0.25
+
+function getAngles(n: number): number[] {
+    switch (n) {
+        case 2:
+            return [0, 180]
+        case 3:
+            return [90, 210, 330]
+        case 4:
+            return [45, 135, 225, 315]
+        default:
+            return Array.from({ length: n }, (_, i) => 90 + (i / n) * 360)
+    }
+}
+
+function toSVG(deg: number, cy: number): { x: number; y: number } {
+    const rad = (deg * Math.PI) / 180
+    return {
+        x: CX + RADIUS * Math.cos(rad),
+        y: cy - RADIUS * Math.sin(rad)
+    }
+}
+
+function computeLayout(n: number): { viewBox: string; cy: number } {
+    if (n <= 1) return { viewBox: '0 0 480 100', cy: 50 }
+
+    const TOP_PAD = NODE_R + 12
+    const BOT_PAD = NODE_R + 28
+
+    const yOffsets = getAngles(n).map(a => -Math.sin((a * Math.PI) / 180) * RADIUS)
+    const minOff = Math.min(...yOffsets) - TOP_PAD
+    const maxOff = Math.max(...yOffsets) + BOT_PAD
+
+    const OUTER = 10
+    const cy = OUTER - minOff
+    const height = Math.ceil(cy + maxOff + OUTER)
+
+    return { viewBox: `0 0 480 ${height}`, cy }
+}
+
+function SvgDefs({ nodes }: { nodes: { x: number; y: number }[] }) {
+    return (
+        <defs>
+            <pattern id="music-dots" width="20" height="20" patternUnits="userSpaceOnUse">
+                <circle cx="1" cy="1" r="1" className="fill-foreground" opacity="0.07" />
+            </pattern>
+            <filter id="music-rough" x="-10%" y="-10%" width="120%" height="120%">
+                <feTurbulence
+                    type="fractalNoise"
+                    baseFrequency="0.045"
+                    numOctaves="4"
+                    seed="9"
+                    result="noise"
+                />
+                <feDisplacementMap
+                    in="SourceGraphic"
+                    in2="noise"
+                    scale="1.4"
+                    xChannelSelector="R"
+                    yChannelSelector="G"
+                />
+            </filter>
+            {nodes.map((n, i) => (
+                <clipPath key={i} id={`mc-${i}`}>
+                    <rect
+                        x={n.x - NODE_R}
+                        y={n.y - NODE_R}
+                        width={NODE_R * 2}
+                        height={NODE_R * 2}
+                        rx={SQ_RX}
+                        ry={SQ_RX}
+                    />
+                </clipPath>
+            ))}
+        </defs>
+    )
+}
+
+function ArtistGraph({ artistName, albums }: { artistName: string; albums: Track[] }) {
+    const albumCount = albums.length
+    if (albumCount === 0) return null
+
+    const displayName = artistName.length > 20 ? artistName.slice(0, 19) + '…' : artistName
+
+    if (albumCount === 1) {
+        const track = albums[0]
+        const albumCX = 160
+        const albumCY = 50
+        const albumLabel =
+            track.album_name.length > 18
+                ? track.album_name.slice(0, 17) + '…'
+                : track.album_name
+
+        return (
+            <svg viewBox="0 0 480 100" width="100%" style={{ fontFamily: GRAPH_FONT }}>
+                <defs>
+                    <pattern id="music-dots" width="20" height="20" patternUnits="userSpaceOnUse">
+                        <circle cx="1" cy="1" r="1" className="fill-foreground" opacity="0.07" />
+                    </pattern>
+                    <filter id="music-rough" x="-10%" y="-10%" width="120%" height="120%">
+                        <feTurbulence
+                            type="fractalNoise"
+                            baseFrequency="0.045"
+                            numOctaves="4"
+                            seed="9"
+                            result="noise"
+                        />
+                        <feDisplacementMap
+                            in="SourceGraphic"
+                            in2="noise"
+                            scale="1.4"
+                            xChannelSelector="R"
+                            yChannelSelector="G"
+                        />
+                    </filter>
+                    <clipPath id="mc-0">
+                        <rect
+                            x={albumCX - NODE_R}
+                            y={albumCY - NODE_R}
+                            width={NODE_R * 2}
+                            height={NODE_R * 2}
+                            rx={SQ_RX}
+                            ry={SQ_RX}
+                        />
+                    </clipPath>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#music-dots)" />
+                <line
+                    x1={albumCX + NODE_R + 5}
+                    y1={albumCY}
+                    x2={albumCX + NODE_R + 30}
+                    y2={albumCY}
+                    className="stroke-foreground/20"
+                    strokeWidth="1.5"
+                    strokeDasharray="5 4"
+                    filter="url(#music-rough)"
+                />
+                <motion.g
+                    style={{ transformOrigin: `${albumCX}px ${albumCY}px`, cursor: 'pointer' }}
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ type: 'spring', stiffness: 320, damping: 22 }}
+                    onClick={() =>
+                        window.open(track.external_url, '_blank', 'noopener,noreferrer')
+                    }
+                >
+                    <rect
+                        x={albumCX - NODE_R - 2}
+                        y={albumCY - NODE_R - 2}
+                        width={(NODE_R + 2) * 2}
+                        height={(NODE_R + 2) * 2}
+                        rx={SQ_RX_BORDER}
+                        ry={SQ_RX_BORDER}
+                        className="fill-card stroke-foreground/30"
+                        strokeWidth="1.5"
+                        filter="url(#music-rough)"
+                    />
+                    <image
+                        href={track.album_art_url}
+                        x={albumCX - NODE_R}
+                        y={albumCY - NODE_R}
+                        width={NODE_R * 2}
+                        height={NODE_R * 2}
+                        clipPath="url(#mc-0)"
+                    />
+                </motion.g>
+                <text
+                    x={albumCX + NODE_R + 38}
+                    y={albumCY - 7}
+                    textAnchor="start"
+                    dominantBaseline="middle"
+                    fontSize="16"
+                    fontWeight="700"
+                    className="fill-foreground"
+                    style={{ fontFamily: GRAPH_FONT }}
+                >
+                    {displayName}
+                </text>
+                <text
+                    x={albumCX + NODE_R + 38}
+                    y={albumCY + 12}
+                    textAnchor="start"
+                    dominantBaseline="middle"
+                    fontSize="12"
+                    className="fill-muted-foreground"
+                    style={{ fontFamily: GRAPH_FONT }}
+                >
+                    {albumLabel}
+                </text>
+            </svg>
+        )
+    }
+
+    const { viewBox, cy: centerY } = computeLayout(albumCount)
+    const angles = getAngles(albumCount)
+    const nodes = albums.map((track, index) => ({ track, ...toSVG(angles[index], centerY) }))
+
+    return (
+        <svg
+            viewBox={viewBox}
+            width="100%"
+            aria-label={`${artistName} album graph`}
+            style={{ fontFamily: GRAPH_FONT }}
+        >
+            <SvgDefs nodes={nodes} />
+            <rect width="100%" height="100%" fill="url(#music-dots)" />
+            {nodes.map((node, index) => (
+                <line
+                    key={index}
+                    x1={CX}
+                    y1={centerY}
+                    x2={node.x}
+                    y2={node.y}
+                    className="stroke-foreground/20"
+                    strokeWidth="1.5"
+                    strokeDasharray="5 4"
+                    filter="url(#music-rough)"
+                />
+            ))}
+            {nodes.map((node, index) => {
+                const albumLabel =
+                    node.track.album_name.length > 14
+                        ? node.track.album_name.slice(0, 13) + '…'
+                        : node.track.album_name
+                return (
+                    <motion.g
+                        key={node.track.album_art_url}
+                        style={{
+                            transformOrigin: `${node.x}px ${node.y}px`,
+                            cursor: 'pointer'
+                        }}
+                        whileHover={{ scale: 1.15 }}
+                        transition={{ type: 'spring', stiffness: 320, damping: 22 }}
+                        onClick={() =>
+                            window.open(node.track.external_url, '_blank', 'noopener,noreferrer')
+                        }
+                    >
+                        <rect
+                            x={node.x - NODE_R - 2}
+                            y={node.y - NODE_R - 2}
+                            width={(NODE_R + 2) * 2}
+                            height={(NODE_R + 2) * 2}
+                            rx={SQ_RX_BORDER}
+                            ry={SQ_RX_BORDER}
+                            className="fill-card stroke-foreground/30"
+                            strokeWidth="1.5"
+                            filter="url(#music-rough)"
+                        />
+                        <image
+                            href={node.track.album_art_url}
+                            x={node.x - NODE_R}
+                            y={node.y - NODE_R}
+                            width={NODE_R * 2}
+                            height={NODE_R * 2}
+                            clipPath={`url(#mc-${index})`}
+                        />
+                        <text
+                            x={node.x}
+                            y={node.y + NODE_R + 20}
+                            textAnchor="middle"
+                            fontSize="10"
+                            className="fill-muted-foreground"
+                            style={{ fontFamily: GRAPH_FONT }}
+                        >
+                            {albumLabel}
+                        </text>
+                    </motion.g>
+                )
+            })}
+            <text
+                x={CX}
+                y={centerY}
+                textAnchor="middle"
+                dominantBaseline="middle"
+                fontSize="15"
+                fontWeight="700"
+                className="fill-foreground"
+                style={{ fontFamily: GRAPH_FONT }}
+            >
+                {displayName}
+            </text>
+        </svg>
+    )
+}
+
+export function ArtistExplorer({ tracks }: { tracks: Track[] }) {
+    const [selected, setSelected] = useState<string | null>(null)
+
+    const artistAlbumMap = new Map<string, Map<string, Track>>()
+    for (const track of tracks) {
+        for (const artist of track.artists) {
+            if (!artistAlbumMap.has(artist)) artistAlbumMap.set(artist, new Map())
+            const albumMap = artistAlbumMap.get(artist)!
+            if (!albumMap.has(track.album_art_url)) albumMap.set(track.album_art_url, track)
+        }
+    }
+    const artists = [...artistAlbumMap.keys()].sort(
+        (a, b) => artistAlbumMap.get(b)!.size - artistAlbumMap.get(a)!.size
+    )
+    const selectedAlbums = selected ? [...artistAlbumMap.get(selected)!.values()] : []
+
+    return (
+        <div className="border-foreground/20 overflow-hidden rounded-2xl border border-dashed">
+            <div className="border-foreground/15 bg-muted/20 flex items-center gap-1.5 border-b border-dashed px-4 py-2.5">
+                <span className="size-2.5 rounded-full bg-red-400/70" />
+                <span className="size-2.5 rounded-full bg-yellow-400/70" />
+                <span className="size-2.5 rounded-full bg-green-400/70" />
+                <MonoText className="ml-auto">artist-explorer.excalidraw</MonoText>
+            </div>
+
+            <div className="px-4 pt-4 pb-2">
+                <Select value={selected ?? ''} onValueChange={v => setSelected(v || null)}>
+                    <SelectTrigger
+                        className="h-8 w-full font-mono text-xs sm:w-64"
+                        aria-label="Select an artist"
+                    >
+                        <SelectValue placeholder="Select an artist…" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        {artists.map(name => {
+                            const count = artistAlbumMap.get(name)!.size
+                            return (
+                                <SelectItem key={name} value={name} className="font-mono text-xs">
+                                    {name}
+                                    <span className="ml-1.5 opacity-40">
+                                        {count} album{count !== 1 ? 's' : ''}
+                                    </span>
+                                </SelectItem>
+                            )
+                        })}
+                    </SelectContent>
+                </Select>
+            </div>
+
+            <AnimatePresence mode="wait">
+                {selected ? (
+                    <motion.div
+                        key={selected}
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -4 }}
+                        transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                        className="px-4 pb-4"
+                    >
+                        <ArtistGraph artistName={selected} albums={selectedAlbums} />
+                    </motion.div>
+                ) : (
+                    <motion.p
+                        key="hint"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.15 }}
+                        className="font-hand text-muted-foreground/25 py-8 text-center text-sm"
+                    >
+                        pick an artist to see their albums
+                    </motion.p>
+                )}
+            </AnimatePresence>
+        </div>
+    )
+}

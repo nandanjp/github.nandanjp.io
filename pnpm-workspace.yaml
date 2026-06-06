@@ -1,7 +1,8 @@
 allowBuilds:
-    '@parcel/watcher': true
-    esbuild: true
-    msgpackr-extract: true
-    msw: true
-    sharp: true
-    unrs-resolver: true
+  esbuild: true
+  msw: true
+  sharp: true
+  unrs-resolver: false
+ignoredBuiltDependencies:
+  - sharp
+  - unrs-resolver
