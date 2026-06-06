@@ -1,6 +1,6 @@
-import type { Photo } from '@/lib/api'
 import { CollageCluster } from './collage-cluster'
 import { PhotoCard } from './photo-card'
+import type { Photo } from '@/lib/api'
 
 interface PhotoGridProps {
     photos: Photo[]
@@ -14,7 +14,7 @@ export function PhotoGrid({ photos, onPhotoClick }: PhotoGridProps) {
     const gridPhotos = photos.slice(COLLAGE_SIZE)
 
     return (
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:gap-8">
             {collagePhotos.length === COLLAGE_SIZE && (
                 <CollageCluster
                     photos={collagePhotos}

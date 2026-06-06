@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { api } from './api'
 
 const mockFetch = vi.fn()
@@ -24,7 +24,11 @@ function errResponse(status: number) {
 
 describe('api.photos.list', () => {
     it('returns photos on success', async () => {
-        const payload = { photos: [{ key: 'a.jpg', url: 'https://example.com/a.jpg', size: 1000 }] }
+        const payload = {
+            photos: [
+                { key: 'a.jpg', url: 'https://example.com/a.jpg', size: 1000 }
+            ]
+        }
         mockFetch.mockReturnValueOnce(okResponse(payload))
         const result = await api.photos.list()
         expect(result).toEqual(payload)

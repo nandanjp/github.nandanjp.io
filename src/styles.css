@@ -3,7 +3,7 @@
 @import '@fontsource-variable/jetbrains-mono';
 @import '@fontsource-variable/caveat';
 @import '@fontsource-variable/nunito';
-@plugin "@tailwindcss/typography";
+@plugin '@tailwindcss/typography';
 
 @custom-variant dark (&:is(.dark *));
 

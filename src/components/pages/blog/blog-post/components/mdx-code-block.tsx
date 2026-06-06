@@ -1,7 +1,7 @@
 import { useRef } from 'react'
+import { CopyButton } from './copy-button'
 import type { ComponentPropsWithoutRef } from 'react'
 import { cn } from '@/lib/utils'
-import { CopyButton } from './copy-button'
 
 interface MdxCodeBlockProps extends ComponentPropsWithoutRef<'pre'> {
     'data-language'?: string
@@ -24,10 +24,10 @@ export function MdxCodeBlock({
     return (
         <div
             data-theme={theme}
-            className="not-prose my-6 overflow-hidden rounded-xl border border-border bg-[#0d1117] shadow-sm"
+            className="not-prose border-border my-6 overflow-hidden rounded-xl border bg-[#0d1117] shadow-sm"
         >
-            <div className="flex items-center justify-between border-b border-border/50 bg-white/[0.03] px-4 py-2">
-                <span className="font-mono text-xs text-muted-foreground/70 uppercase tracking-wider">
+            <div className="border-border/50 flex items-center justify-between border-b bg-white/[0.03] px-4 py-2">
+                <span className="text-muted-foreground/70 font-mono text-xs tracking-wider uppercase">
                     {language ?? 'code'}
                 </span>
                 <CopyButton getText={getCode} />

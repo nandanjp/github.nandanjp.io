@@ -1,7 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { BlogPost } from '@/components/pages/blog/blog-post/blog-post'
 
-export const Route = createFileRoute('/_layout/blog_/$blogId')({ component: BlogPostRoute })
+export const Route = createFileRoute('/_layout/blog_/$blogId')({
+    component: BlogPostRoute
+})
 
 function BlogPostRoute() {
     const { blogId } = Route.useParams()

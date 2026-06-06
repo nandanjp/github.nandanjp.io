@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Copy, Check } from 'lucide-react'
+import { Check, Copy } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
@@ -27,7 +27,9 @@ export function CopyButton({ getText, className }: CopyButtonProps) {
             aria-label={copied ? 'Copied' : 'Copy code'}
             className={cn(
                 'font-mono transition-all duration-200',
-                copied ? 'text-green-500' : 'text-muted-foreground hover:text-foreground',
+                copied
+                    ? 'text-green-500'
+                    : 'text-muted-foreground hover:text-foreground',
                 className
             )}
         >

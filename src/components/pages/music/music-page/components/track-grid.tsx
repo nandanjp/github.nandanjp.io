@@ -1,16 +1,12 @@
-import type { Track } from '@/lib/api'
 import { TrackCard } from './track-card'
+import type { Track } from '@/lib/api'
 
 interface TrackGridProps {
     tracks: Track[]
     startIndex: number
-    playingId: string | null
-    progress: number
-    onPlay: (track: Track) => void
-    onStop: () => void
 }
 
-export function TrackGrid({ tracks, startIndex, playingId, progress, onPlay, onStop }: TrackGridProps) {
+export function TrackGrid({ tracks, startIndex }: TrackGridProps) {
     return (
         <div className="flex flex-col gap-3">
             {tracks.map((track, i) => (
@@ -18,10 +14,6 @@ export function TrackGrid({ tracks, startIndex, playingId, progress, onPlay, onS
                     key={track.id}
                     track={track}
                     index={startIndex + i}
-                    isPlaying={playingId === track.id}
-                    progress={playingId === track.id ? progress : 0}
-                    onPlay={onPlay}
-                    onStop={onStop}
                 />
             ))}
         </div>

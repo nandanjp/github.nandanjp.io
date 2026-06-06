@@ -13,10 +13,9 @@ export type BlogModule = {
     meta: BlogMeta
 }
 
-const contentModules = import.meta.glob<BlogModule>(
-    '../content/blog/*.mdx',
-    { eager: true }
-)
+const contentModules = import.meta.glob<BlogModule>('../content/blog/*.mdx', {
+    eager: true
+})
 
 const sampleModules = import.meta.glob<BlogModule>(
     '../../sample-data/blog/*.mdx',
@@ -24,7 +23,10 @@ const sampleModules = import.meta.glob<BlogModule>(
 )
 
 function pathToSlug(path: string): string {
-    return path.split('/').pop()!.replace(/\.mdx$/, '')
+    return path
+        .split('/')
+        .pop()!
+        .replace(/\.mdx$/, '')
 }
 
 const allModules: Record<string, BlogModule> = {
@@ -51,16 +53,21 @@ export type BlogPost = {
 function estimateReadingTime(mod: BlogModule): number {
     // Render to string is not available at this layer; estimate from summary length
     // as a rough proxy. A real implementation would parse MDX source word count.
-    const words = (mod.meta.summary ?? '').split(/\s+/).length
+    const words = mod.meta.summary.split(/\s+/).length
     return Math.max(1, Math.ceil(words / 200) + 2)
 }
 
 export function getAllPosts(): BlogPost[] {
     return Object.entries(allModules)
-        .map(([slug, mod]) => ({ slug, meta: mod.meta, readingTime: estimateReadingTime(mod) }))
+        .map(([slug, mod]) => ({
+            slug,
+            meta: mod.meta,
+            readingTime: estimateReadingTime(mod)
+        }))
         .sort(
             (a, b) =>
-                new Date(b.meta.date).getTime() - new Date(a.meta.date).getTime()
+                new Date(b.meta.date).getTime() -
+                new Date(a.meta.date).getTime()
         )
 }
 

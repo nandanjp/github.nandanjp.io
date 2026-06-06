@@ -1,7 +1,8 @@
 export const meta = {
     title: 'How I Ship Backend Systems on My Homelab',
     date: '2026-06-05',
-    summary: 'The end-to-end process I follow to go from a backend idea to a running Kubernetes deployment on my homelab, with concrete examples at each step.',
+    summary:
+        'The end-to-end process I follow to go from a backend idea to a running Kubernetes deployment on my homelab, with concrete examples at each step.',
     tags: ['go', 'kubernetes', 'homelab', 'backend']
 }
 
@@ -26,63 +27,63 @@ I write the manifests before the service code. This forces clarity on resource l
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: notes-api
-  namespace: default
+    name: notes-api
+    namespace: default
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: notes-api
-  template:
-    metadata:
-      labels:
-        app: notes-api
-    spec:
-      containers:
-        - name: api
-          image: ghcr.io/nandanjp/notes-api:latest
-          imagePullPolicy: Always
-          ports:
-            - containerPort: 8080
-          env:
-            - name: PORT
-              value: "8080"
-            - name: DATABASE_URL
-              valueFrom:
-                secretKeyRef:
-                  name: notes-secrets
-                  key: database-url
-          resources:
-            requests:
-              cpu: 25m
-              memory: 32Mi
-            limits:
-              cpu: 200m
-              memory: 128Mi
-          readinessProbe:
-            httpGet:
-              path: /health
-              port: 8080
-            initialDelaySeconds: 5
-            periodSeconds: 10
-          livenessProbe:
-            httpGet:
-              path: /health
-              port: 8080
-            initialDelaySeconds: 10
-            periodSeconds: 30
+    replicas: 1
+    selector:
+        matchLabels:
+            app: notes-api
+    template:
+        metadata:
+            labels:
+                app: notes-api
+        spec:
+            containers:
+                - name: api
+                  image: ghcr.io/nandanjp/notes-api:latest
+                  imagePullPolicy: Always
+                  ports:
+                      - containerPort: 8080
+                  env:
+                      - name: PORT
+                        value: '8080'
+                      - name: DATABASE_URL
+                        valueFrom:
+                            secretKeyRef:
+                                name: notes-secrets
+                                key: database-url
+                  resources:
+                      requests:
+                          cpu: 25m
+                          memory: 32Mi
+                      limits:
+                          cpu: 200m
+                          memory: 128Mi
+                  readinessProbe:
+                      httpGet:
+                          path: /health
+                          port: 8080
+                      initialDelaySeconds: 5
+                      periodSeconds: 10
+                  livenessProbe:
+                      httpGet:
+                          path: /health
+                          port: 8080
+                      initialDelaySeconds: 10
+                      periodSeconds: 30
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: notes-api
-  namespace: default
+    name: notes-api
+    namespace: default
 spec:
-  selector:
-    app: notes-api
-  ports:
-    - port: 8080
-      targetPort: 8080
+    selector:
+        app: notes-api
+    ports:
+        - port: 8080
+          targetPort: 8080
 ```
 
 The `readinessProbe` and `livenessProbe` are non-negotiable. Without them, Kubernetes will route traffic to a pod that is still starting up or has silently crashed.
@@ -159,27 +160,27 @@ And a GitHub Actions workflow that builds and pushes on every merge to `main`:
 ```yaml
 name: Build and Push
 on:
-  push:
-    branches: [main]
+    push:
+        branches: [main]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
 
-      - uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+            - uses: docker/login-action@v3
+              with:
+                  registry: ghcr.io
+                  username: ${{ github.actor }}
+                  password: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: docker/build-push-action@v5
-        with:
-          push: true
-          tags: |
-            ghcr.io/nandanjp/notes-api:latest
-            ghcr.io/nandanjp/notes-api:${{ github.sha }}
+            - uses: docker/build-push-action@v5
+              with:
+                  push: true
+                  tags: |
+                      ghcr.io/nandanjp/notes-api:latest
+                      ghcr.io/nandanjp/notes-api:${{ github.sha }}
 ```
 
 Tagging with both `latest` and the commit SHA means I can roll back to any previous image if something goes wrong in prod.
@@ -198,17 +199,17 @@ For public services I add a Traefik `IngressRoute`. Traffic enters via a Cloudfl
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
-  name: notes-api
-  namespace: default
+    name: notes-api
+    namespace: default
 spec:
-  entryPoints:
-    - websecure
-  routes:
-    - match: Host(`notes-api.nandan-hl.dev`)
-      kind: Rule
-      services:
-        - name: notes-api
-          port: 8080
+    entryPoints:
+        - websecure
+    routes:
+        - match: Host(`notes-api.nandan-hl.dev`)
+          kind: Rule
+          services:
+              - name: notes-api
+                port: 8080
 ```
 
 Internal services stay as `ClusterIP` and are only reachable within the cluster. No ingress needed for those.
@@ -219,27 +220,27 @@ Before touching the homelab I test everything locally with `docker-compose`. The
 
 ```yaml
 services:
-  api:
-    build: .
-    ports:
-      - "8080:8080"
-    environment:
-      PORT: "8080"
-      DATABASE_URL: postgres://postgres:postgres@db:5432/notes
-    depends_on:
-      db:
-        condition: service_healthy
+    api:
+        build: .
+        ports:
+            - '8080:8080'
+        environment:
+            PORT: '8080'
+            DATABASE_URL: postgres://postgres:postgres@db:5432/notes
+        depends_on:
+            db:
+                condition: service_healthy
 
-  db:
-    image: postgres:16-alpine
-    environment:
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: notes
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
+    db:
+        image: postgres:16-alpine
+        environment:
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_DB: notes
+        healthcheck:
+            test: ['CMD-SHELL', 'pg_isready -U postgres']
+            interval: 5s
+            timeout: 5s
+            retries: 5
 ```
 
 Once it works locally, I deploy to the homelab and stress it with real traffic. Things that pass locally reliably fail in unexpected ways in production, usually around connection pooling, timeouts under load, or resource limits being hit. That is expected. The homelab is production but it is also a learning environment, and fixing those failures is most of the fun.

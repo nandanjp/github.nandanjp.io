@@ -2,13 +2,26 @@ import { useCallback, useState } from 'react'
 import { Image } from '@unpic/react'
 import type { ImageProps } from '@unpic/react'
 import { cn } from '@/lib/utils'
-import { netlifyTransformer } from '@/lib/image'
+import { netlifyCdn, netlifyTransformer } from '@/lib/image'
 
 // Renders inside an existing relative+overflow-hidden container (fills it absolutely).
 // Handles the blur-up crossfade, cached-image detection, and unpic srcset/CDN transforms.
-type BlurImageProps = Omit<ImageProps, 'transformer' | 'background' | 'layout'>
+type BlurImageProps = Omit<
+    ImageProps,
+    'background' | 'layout' | 'width' | 'height' | 'aspectRatio'
+> & {
+    width: number
+    height: number
+}
 
-export function BlurImage({ src, width, height, alt, className, ...props }: BlurImageProps) {
+export function BlurImage({
+    src,
+    width,
+    height,
+    alt,
+    className,
+    ...props
+}: BlurImageProps) {
     const [loaded, setLoaded] = useState(false)
 
     // If already in browser cache, onLoad fires before React attaches the listener
@@ -16,9 +29,10 @@ export function BlurImage({ src, width, height, alt, className, ...props }: Blur
         if (img?.complete) setLoaded(true)
     }, [])
 
-    const thumbSrc = typeof src === 'string' && netlifyTransformer
-        ? netlifyTransformer({ url: src, width: 20 })
-        : (src as string)
+    const thumbSrc =
+        typeof src === 'string' && netlifyTransformer
+            ? netlifyTransformer(src, { width: 20 })
+            : src
 
     return (
         <>
@@ -27,8 +41,8 @@ export function BlurImage({ src, width, height, alt, className, ...props }: Blur
                 alt=""
                 aria-hidden
                 className={cn(
-                    'absolute inset-0 h-full w-full object-cover object-center blur-sm scale-105 transition-opacity duration-500',
-                    loaded ? 'opacity-0' : 'opacity-100',
+                    'absolute inset-0 h-full w-full scale-105 object-cover object-center blur-sm transition-opacity duration-500',
+                    loaded ? 'opacity-0' : 'opacity-100'
                 )}
             />
             <Image
@@ -37,13 +51,13 @@ export function BlurImage({ src, width, height, alt, className, ...props }: Blur
                 width={width}
                 height={height}
                 layout="constrained"
-                transformer={netlifyTransformer}
+                cdn={netlifyCdn}
                 alt={alt}
                 onLoad={() => setLoaded(true)}
                 className={cn(
                     'absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-500',
                     loaded ? 'opacity-100' : 'opacity-0',
-                    className,
+                    className
                 )}
                 {...props}
             />

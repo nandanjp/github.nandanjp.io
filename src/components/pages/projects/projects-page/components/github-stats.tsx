@@ -1,9 +1,8 @@
-import { Star, BookOpen, Users, ExternalLink } from 'lucide-react'
-import { cn } from '@/lib/utils'
-import { BlurImage } from '@/components/ui/blur-image'
-import { formatCompactNumber } from '@/lib/utils'
-import type { GitHubStats } from '@/lib/api'
+import { BookOpen, ExternalLink, Star, Users } from 'lucide-react'
 import { LanguageBar } from './components/language-bar'
+import type { GitHubStats } from '@/lib/api'
+import { cn, formatCompactNumber } from '@/lib/utils'
+import { BlurImage } from '@/components/ui/blur-image'
 
 interface GitHubStatsCardProps {
     stats: GitHubStats
@@ -13,9 +12,9 @@ export function GitHubStatsCard({ stats }: GitHubStatsCardProps) {
     const total = stats.languages.reduce((acc, l) => acc + l.count, 0)
 
     return (
-        <div className="rounded-xl border bg-card/40 overflow-hidden shadow-sm">
+        <div className="bg-card/40 overflow-hidden rounded-xl border shadow-sm">
             {/* macOS window chrome */}
-            <div className="flex items-center gap-1.5 px-4 py-2.5 border-b bg-muted/40">
+            <div className="bg-muted/40 flex items-center gap-1.5 border-b px-4 py-2.5">
                 <span className="size-2.5 rounded-full bg-red-400/70" />
                 <span className="size-2.5 rounded-full bg-yellow-400/70" />
                 <span className="size-2.5 rounded-full bg-green-400/70" />
@@ -23,7 +22,7 @@ export function GitHubStatsCard({ stats }: GitHubStatsCardProps) {
                     href={`https://github.com/${stats.username}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="ml-auto flex items-center gap-1 font-mono text-xs text-muted-foreground hover:text-muted-foreground/80 transition-colors"
+                    className="text-muted-foreground hover:text-muted-foreground/80 ml-auto flex items-center gap-1 font-mono text-xs transition-colors"
                 >
                     github.profile
                     <ExternalLink className="size-3" />
@@ -34,7 +33,7 @@ export function GitHubStatsCard({ stats }: GitHubStatsCardProps) {
             <div className="p-5">
                 {/* Profile row */}
                 <div className="flex items-start gap-3">
-                    <div className="relative size-12 rounded-full overflow-hidden shrink-0">
+                    <div className="relative size-12 shrink-0 overflow-hidden rounded-full">
                         <BlurImage
                             src={stats.avatar_url}
                             width={96}
@@ -45,10 +44,14 @@ export function GitHubStatsCard({ stats }: GitHubStatsCardProps) {
                         />
                     </div>
                     <div className="min-w-0 flex-1">
-                        <p className="font-hand font-bold text-xl leading-tight">{stats.name}</p>
-                        <p className="font-mono text-xs text-muted-foreground">@{stats.username}</p>
+                        <p className="font-hand text-xl leading-tight font-bold">
+                            {stats.name}
+                        </p>
+                        <p className="text-muted-foreground font-mono text-xs">
+                            @{stats.username}
+                        </p>
                         {stats.bio && (
-                            <p className="text-sm text-muted-foreground line-clamp-2 mt-0.5">
+                            <p className="text-muted-foreground mt-0.5 line-clamp-2 text-sm">
                                 {stats.bio}
                             </p>
                         )}
@@ -56,31 +59,37 @@ export function GitHubStatsCard({ stats }: GitHubStatsCardProps) {
                 </div>
 
                 {/* Stats pills */}
-                <div className="grid grid-cols-3 gap-3 mt-4">
+                <div className="mt-4 grid grid-cols-3 gap-3">
                     <StatPill
-                        icon={<Star className="size-4 text-amber-500 dark:text-amber-400" />}
+                        icon={
+                            <Star className="size-4 text-amber-500 dark:text-amber-400" />
+                        }
                         label="Stars"
                         value={formatCompactNumber(stats.total_stars)}
-                        className="bg-amber-100/70 dark:bg-amber-950/30 border border-amber-200/60 dark:border-amber-800/30"
+                        className="border border-amber-200/60 bg-amber-100/70 dark:border-amber-800/30 dark:bg-amber-950/30"
                     />
                     <StatPill
-                        icon={<BookOpen className="size-4 text-sky-500 dark:text-sky-400" />}
+                        icon={
+                            <BookOpen className="size-4 text-sky-500 dark:text-sky-400" />
+                        }
                         label="Repos"
                         value={formatCompactNumber(stats.public_repos)}
-                        className="bg-sky-100/70 dark:bg-sky-950/30 border border-sky-200/60 dark:border-sky-800/30"
+                        className="border border-sky-200/60 bg-sky-100/70 dark:border-sky-800/30 dark:bg-sky-950/30"
                     />
                     <StatPill
-                        icon={<Users className="size-4 text-violet-500 dark:text-violet-400" />}
+                        icon={
+                            <Users className="size-4 text-violet-500 dark:text-violet-400" />
+                        }
                         label="Followers"
                         value={formatCompactNumber(stats.followers)}
-                        className="bg-violet-100/70 dark:bg-violet-950/30 border border-violet-200/60 dark:border-violet-800/30"
+                        className="border border-violet-200/60 bg-violet-100/70 dark:border-violet-800/30 dark:bg-violet-950/30"
                     />
                 </div>
 
                 {/* Top Languages */}
                 {stats.languages.length > 0 && (
                     <div className="mt-5">
-                        <p className="font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground mb-3">
+                        <p className="text-muted-foreground mb-3 font-mono text-xs tracking-[0.18em] uppercase">
                             Top Languages
                         </p>
                         <div className="flex flex-col gap-2.5">
@@ -104,7 +113,7 @@ function StatPill({
     icon,
     label,
     value,
-    className,
+    className
 }: {
     icon: React.ReactNode
     label: string
@@ -112,10 +121,17 @@ function StatPill({
     className?: string
 }) {
     return (
-        <div className={cn('flex flex-col items-center gap-1 rounded-lg p-3', className)}>
+        <div
+            className={cn(
+                'flex flex-col items-center gap-1 rounded-lg p-3',
+                className
+            )}
+        >
             <div>{icon}</div>
-            <p className="font-hand font-bold text-2xl leading-none">{value}</p>
-            <p className="font-mono text-xs text-muted-foreground/60">{label}</p>
+            <p className="font-hand text-2xl leading-none font-bold">{value}</p>
+            <p className="text-muted-foreground/60 font-mono text-xs">
+                {label}
+            </p>
         </div>
     )
 }

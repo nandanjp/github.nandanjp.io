@@ -1,4 +1,4 @@
-import { createFileRoute, Outlet, useLocation } from '@tanstack/react-router'
+import { Outlet, createFileRoute, useLocation } from '@tanstack/react-router'
 import { AnimatePresence, motion } from 'framer-motion'
 import { PageLayout } from '@/components/layout/page-layout'
 

@@ -1,6 +1,6 @@
 import { Suspense, useMemo } from 'react'
 import { Canvas } from '@react-three/fiber'
-import { useGLTF, OrbitControls, Center } from '@react-three/drei'
+import { Center, OrbitControls, useGLTF } from '@react-three/drei'
 
 function BedroomModel() {
     const { scene } = useGLTF('/models/bedroom.glb')
@@ -17,7 +17,11 @@ export function BedroomScene() {
         <Canvas
             frameloop="demand"
             camera={{ position: [3, 2, 5], fov: 45 }}
-            gl={{ alpha: true, antialias: false, powerPreference: 'high-performance' }}
+            gl={{
+                alpha: true,
+                antialias: false,
+                powerPreference: 'high-performance'
+            }}
             dpr={[0.8, 1]}
         >
             <Suspense fallback={null}>

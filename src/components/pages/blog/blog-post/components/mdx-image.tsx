@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import type { ComponentPropsWithoutRef } from 'react'
 import { Image } from '@unpic/react'
+import type { ComponentPropsWithoutRef } from 'react'
 import { cn } from '@/lib/utils'
-import { netlifyTransformer } from '@/lib/image'
+import { netlifyCdn } from '@/lib/image'
 
 type MdxImageProps = ComponentPropsWithoutRef<'img'>
 
@@ -10,19 +10,18 @@ export function MdxImage({ src, alt, className }: MdxImageProps) {
     const [errored, setErrored] = useState(false)
 
     return (
-        <figure className="my-8 not-prose">
-            <div className="relative overflow-hidden rounded-xl border border-border bg-muted">
+        <figure className="not-prose my-8">
+            <div className="border-border bg-muted relative overflow-hidden rounded-xl border">
                 {errored ? (
-                    <div className="flex h-48 items-center justify-center text-sm text-muted-foreground">
+                    <div className="text-muted-foreground flex h-48 items-center justify-center text-sm">
                         Image failed to load
                     </div>
                 ) : src ? (
                     <Image
                         src={src}
-                        width={1200}
                         layout="fullWidth"
+                        cdn={netlifyCdn}
                         background="auto"
-                        transformer={netlifyTransformer}
                         alt={alt ?? ''}
                         loading="lazy"
                         onError={() => setErrored(true)}
@@ -31,7 +30,7 @@ export function MdxImage({ src, alt, className }: MdxImageProps) {
                 ) : null}
             </div>
             {alt && (
-                <figcaption className="mt-2.5 text-center font-mono text-xs text-muted-foreground">
+                <figcaption className="text-muted-foreground mt-2.5 text-center font-mono text-xs">
                     {alt}
                 </figcaption>
             )}

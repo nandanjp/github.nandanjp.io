@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { motion, AnimatePresence, useAnimationControls } from 'framer-motion'
+import { AnimatePresence, motion, useAnimationControls } from 'framer-motion'
 import { Moon, Sun } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
@@ -9,7 +9,9 @@ type Theme = 'light' | 'dark'
 function getResolved(): Theme {
     if (typeof document === 'undefined') return 'light'
     // Read what the inline THEME_INIT_SCRIPT already applied to <html>
-    return document.documentElement.classList.contains('dark') ? 'dark' : 'light'
+    return document.documentElement.classList.contains('dark')
+        ? 'dark'
+        : 'light'
 }
 
 function apply(theme: Theme) {
@@ -41,7 +43,7 @@ export function ThemeToggle() {
         fillControls.set({ clipPath: 'circle(0% at 100% 0%)' })
         fillControls.start({
             clipPath: 'circle(150% at 100% 0%)',
-            transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] },
+            transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] }
         })
     }
 
@@ -74,8 +76,8 @@ export function ThemeToggle() {
                         key="moon"
                         className="relative z-10"
                         initial={{ opacity: 0, rotate: -45, scale: 0.5 }}
-                        animate={{ opacity: 1, rotate: 0,   scale: 1   }}
-                        exit={{    opacity: 0, rotate:  45, scale: 0.5 }}
+                        animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                        exit={{ opacity: 0, rotate: 45, scale: 0.5 }}
                         transition={{ duration: 0.15 }}
                     >
                         <Moon className="size-4 text-indigo-300" />
@@ -84,9 +86,9 @@ export function ThemeToggle() {
                     <motion.span
                         key="sun"
                         className="relative z-10"
-                        initial={{ opacity: 0, rotate:  45, scale: 0.5 }}
-                        animate={{ opacity: 1, rotate:  0,  scale: 1   }}
-                        exit={{    opacity: 0, rotate: -45, scale: 0.5 }}
+                        initial={{ opacity: 0, rotate: 45, scale: 0.5 }}
+                        animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                        exit={{ opacity: 0, rotate: -45, scale: 0.5 }}
                         transition={{ duration: 0.15 }}
                     >
                         <Sun className="size-4 text-amber-600" />

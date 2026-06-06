@@ -10,7 +10,8 @@ const config = {
     bracketSpacing: true,
     endOfLine: 'lf',
     tabWidth: 4,
-    printWidth: 80
+    printWidth: 80,
+    plugins: ['prettier-plugin-tailwindcss']
 }
 
 export default config

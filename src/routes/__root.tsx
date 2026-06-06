@@ -3,7 +3,7 @@ import {
     Link,
     Outlet,
     Scripts,
-    createRootRoute,
+    createRootRoute
 } from '@tanstack/react-router'
 import appCSS from '../styles.css?url'
 
@@ -16,19 +16,36 @@ export const Route = createRootRoute({
     head: () => ({
         meta: [
             { charSet: 'utf-8' },
-            { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+            {
+                name: 'viewport',
+                content: 'width=device-width, initial-scale=1'
+            },
             { title: 'Nandan Patel' },
-            { name: 'description', content: 'Software engineer building fast systems, elegant UIs, and open-source tools.' },
-            { name: 'theme-color', content: '#38bdf8' },
+            {
+                name: 'description',
+                content:
+                    'Software engineer building fast systems, elegant UIs, and open-source tools.'
+            },
+            { name: 'theme-color', content: '#38bdf8' }
         ],
         links: [
             { rel: 'stylesheet', href: appCSS },
             { rel: 'icon', href: '/favicon.ico', sizes: 'any' },
-            { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
-            { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },
+            {
+                rel: 'icon',
+                type: 'image/png',
+                sizes: '32x32',
+                href: '/favicon-32x32.png'
+            },
+            {
+                rel: 'icon',
+                type: 'image/png',
+                sizes: '16x16',
+                href: '/favicon-16x16.png'
+            },
             { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
-            { rel: 'manifest', href: '/manifest.json' },
-        ],
+            { rel: 'manifest', href: '/manifest.json' }
+        ]
     }),
     component: RootComponent,
     notFoundComponent: NotFoundPage,
@@ -42,10 +59,12 @@ function RootComponent() {
 function NotFoundPage() {
     return (
         <div className="flex flex-col items-center justify-center gap-4 py-32 text-center">
-            <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+            <p className="text-muted-foreground font-mono text-xs tracking-widest uppercase">
                 404
             </p>
-            <h1 className="text-3xl font-bold tracking-tight">Page not found</h1>
+            <h1 className="text-3xl font-bold tracking-tight">
+                Page not found
+            </h1>
             <p className="text-muted-foreground">
                 The page you're looking for doesn't exist.
             </p>
@@ -65,7 +84,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
                 />
                 <HeadContent />
             </head>
-            <body className="selection:bg-[rgba(79,184,178,0.24)] font-sans antialiased wrap-anywhere">
+            <body className="font-sans wrap-anywhere antialiased selection:bg-[rgba(79,184,178,0.24)]">
                 <TanStackQueryProvider>{children}</TanStackQueryProvider>
                 <Scripts />
             </body>

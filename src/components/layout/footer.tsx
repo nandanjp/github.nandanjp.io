@@ -5,16 +5,18 @@ import { SITE } from '@/content/site'
 
 export function Footer() {
     return (
-        <footer className="border-t bg-background/80 mt-auto">
-            <div className="mx-auto max-w-5xl px-4 sm:px-6 md:px-8 py-10">
+        <footer className="bg-background/80 mt-auto border-t">
+            <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6 md:px-8">
                 <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
                     {/* Brand */}
                     <div className="flex flex-col gap-3">
                         <div className="flex items-center gap-2.5">
-                            <GhibliIcon className="size-6 text-primary" />
-                            <span className="font-semibold tracking-tight">Nandan Patel</span>
+                            <GhibliIcon className="text-primary size-6" />
+                            <span className="font-semibold tracking-tight">
+                                Nandan Patel
+                            </span>
                         </div>
-                        <p className="text-xs text-muted-foreground whitespace-nowrap">
+                        <p className="text-muted-foreground text-xs whitespace-nowrap">
                             {SITE.footer.tagline}
                         </p>
                     </div>
@@ -26,7 +28,7 @@ export function Footer() {
                                 <Link
                                     key={link.path}
                                     to={link.path}
-                                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                                    className="text-muted-foreground hover:text-foreground text-sm transition-colors"
                                 >
                                     {link.label}
                                 </Link>
@@ -38,21 +40,20 @@ export function Footer() {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 aria-label="GitHub"
-                                className="text-muted-foreground transition-colors hover:text-foreground"
+                                className="text-muted-foreground hover:text-foreground transition-colors"
                             >
                                 <GitHubIcon className="size-4" />
                             </a>
                             <a
                                 href={`mailto:${SITE.identity.email}`}
                                 aria-label="Email"
-                                className="text-muted-foreground transition-colors hover:text-foreground"
+                                className="text-muted-foreground hover:text-foreground transition-colors"
                             >
                                 <MailIcon className="size-4" />
                             </a>
                         </div>
                     </div>
                 </div>
-
             </div>
         </footer>
     )

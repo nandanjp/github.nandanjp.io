@@ -1,5 +1,6 @@
 /// <reference types="vitest" />
 import mdx from '@mdx-js/rollup'
+import netlify from '@netlify/vite-plugin-tanstack-start'
 import tailwindcss from '@tailwindcss/vite'
 import { devtools } from '@tanstack/devtools-vite'
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
@@ -19,7 +20,12 @@ export default defineConfig({
         rollupOptions: {
             output: {
                 manualChunks(id) {
-                    if (id.includes('node_modules/three') || id.includes('node_modules/three-stdlib') || id.includes('@react-three/fiber') || id.includes('@react-three/drei')) {
+                    if (
+                        id.includes('node_modules/three') ||
+                        id.includes('node_modules/three-stdlib') ||
+                        id.includes('@react-three/fiber') ||
+                        id.includes('@react-three/drei')
+                    ) {
                         return 'three-vendor'
                     }
                     return undefined
@@ -29,6 +35,7 @@ export default defineConfig({
     },
     plugins: [
         devtools(),
+        netlify(),
         viteTsConfigPaths({
             projects: ['./tsconfig.json']
         }),
@@ -42,7 +49,10 @@ export default defineConfig({
                     [
                         rehypePrettyCode,
                         {
-                            theme: { dark: 'github-dark', light: 'github-light' },
+                            theme: {
+                                dark: 'github-dark',
+                                light: 'github-light'
+                            },
                             keepBackground: false
                         }
                     ]

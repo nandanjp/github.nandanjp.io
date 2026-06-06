@@ -1,10 +1,10 @@
 import { Link } from '@tanstack/react-router'
 import { ArrowLeft } from 'lucide-react'
+import { MdxContent } from './components/mdx-content'
 import { Badge } from '@/components/ui/badge'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import { getPost, formatDate } from '@/lib/blog'
-import { MdxContent } from './components/mdx-content'
+import { formatDate, getPost } from '@/lib/blog'
 
 interface BlogPostProps {
     slug: string
@@ -15,7 +15,7 @@ export function BlogPost({ slug }: BlogPostProps) {
 
     if (!mod) {
         return (
-            <div className="flex flex-col items-center gap-2 py-16 text-muted-foreground">
+            <div className="text-muted-foreground flex flex-col items-center gap-2 py-16">
                 <p className="text-lg font-medium">Post not found</p>
                 <Link
                     to="/blog"
@@ -36,7 +36,7 @@ export function BlogPost({ slug }: BlogPostProps) {
                 to="/blog"
                 className={cn(
                     buttonVariants({ variant: 'ghost', size: 'sm' }),
-                    '-ml-2 mb-8 flex w-fit items-center gap-1.5 text-muted-foreground'
+                    'text-muted-foreground mb-8 -ml-2 flex w-fit items-center gap-1.5'
                 )}
             >
                 <ArrowLeft className="size-4" />
@@ -47,7 +47,7 @@ export function BlogPost({ slug }: BlogPostProps) {
                 <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
                     {mod.meta.title}
                 </h1>
-                <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+                <div className="text-muted-foreground flex flex-wrap items-center gap-2 text-sm">
                     <time>{formatDate(mod.meta.date)}</time>
                     {mod.meta.tags?.map(tag => (
                         <Badge
@@ -60,11 +60,13 @@ export function BlogPost({ slug }: BlogPostProps) {
                     ))}
                 </div>
                 {mod.meta.summary && (
-                    <p className="text-base text-muted-foreground">{mod.meta.summary}</p>
+                    <p className="text-muted-foreground text-base">
+                        {mod.meta.summary}
+                    </p>
                 )}
             </header>
 
-            <hr className="mb-8 border-border" />
+            <hr className="border-border mb-8" />
 
             <MdxContent component={mod.default} />
         </div>

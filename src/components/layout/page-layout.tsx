@@ -8,9 +8,9 @@ interface PageLayoutProps {
 
 export function PageLayout({ children }: PageLayoutProps) {
     return (
-        <div className="flex flex-col min-h-screen">
+        <div className="flex min-h-screen flex-col">
             <Navbar />
-            <main className="flex flex-col flex-1">{children}</main>
+            <main className="flex flex-1 flex-col">{children}</main>
             <Footer />
         </div>
     )

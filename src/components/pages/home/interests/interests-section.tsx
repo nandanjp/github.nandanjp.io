@@ -9,13 +9,18 @@ function BlinkingCursor() {
     return (
         <motion.span
             animate={{ opacity: [1, 0] }}
-            transition={{ duration: 0.9, repeat: Infinity, repeatType: 'reverse', ease: 'linear' }}
-            className="inline-block w-[7px] h-[13px] bg-emerald-500 ml-1 align-middle rounded-sm"
+            transition={{
+                duration: 0.9,
+                repeat: Infinity,
+                repeatType: 'reverse',
+                ease: 'linear'
+            }}
+            className="ml-1 inline-block h-[13px] w-[7px] rounded-sm bg-emerald-500 align-middle"
         />
     )
 }
 
-type Entry = typeof ENTRIES[number]
+type Entry = (typeof ENTRIES)[number]
 
 function EntryOutput({ entry }: { entry: Entry }) {
     if (entry.type === 'languages') {
@@ -23,10 +28,14 @@ function EntryOutput({ entry }: { entry: Entry }) {
             <div className="flex flex-col gap-0.5 font-mono text-xs">
                 {SITE.home.interests.languages.map(lang => (
                     <span key={lang.label}>
-                        <span className="inline-block w-16 text-muted-foreground/60">{lang.label}</span>
+                        <span className="text-muted-foreground/60 inline-block w-16">
+                            {lang.label}
+                        </span>
                         <span className="text-foreground/80">{lang.level}</span>
                         {'note' in lang && (
-                            <span className="ml-2 text-muted-foreground text-xs">{lang.note}</span>
+                            <span className="text-muted-foreground ml-2 text-xs">
+                                {lang.note}
+                            </span>
                         )}
                     </span>
                 ))}
@@ -36,7 +45,7 @@ function EntryOutput({ entry }: { entry: Entry }) {
 
     if (entry.type === 'music') {
         return (
-            <p className="font-mono text-xs text-muted-foreground/70">
+            <p className="text-muted-foreground/70 font-mono text-xs">
                 Heavy rotation,{' '}
                 <Link
                     to="/music"
@@ -49,49 +58,77 @@ function EntryOutput({ entry }: { entry: Entry }) {
         )
     }
 
-    return <p className="font-mono text-xs text-muted-foreground/70">{entry.text}</p>
+    return (
+        <p className="text-muted-foreground/70 font-mono text-xs">
+            {entry.text}
+        </p>
+    )
 }
 
 function BeyondCodeTerminal({ inView }: { inView: boolean }) {
     return (
-        <div className="rounded-xl border bg-card/40 overflow-hidden shadow-sm">
+        <div className="bg-card/40 overflow-hidden rounded-xl border shadow-sm">
             {/* Mac chrome */}
-            <div className="flex items-center gap-1.5 px-4 py-2.5 border-b bg-muted/40">
+            <div className="bg-muted/40 flex items-center gap-1.5 border-b px-4 py-2.5">
                 <span className="size-2.5 rounded-full bg-red-400/70" />
                 <span className="size-2.5 rounded-full bg-yellow-400/70" />
                 <span className="size-2.5 rounded-full bg-green-400/70" />
-                <span className="ml-auto font-mono text-xs text-muted-foreground">{SITE.home.interests.filename}</span>
+                <span className="text-muted-foreground ml-auto font-mono text-xs">
+                    {SITE.home.interests.filename}
+                </span>
             </div>
 
             {/* Content */}
             <div className="relative">
                 {/* Dot grid */}
-                <svg className="absolute inset-0 w-full h-full pointer-events-none" aria-hidden>
+                <svg
+                    className="pointer-events-none absolute inset-0 h-full w-full"
+                    aria-hidden
+                >
                     <defs>
-                        <pattern id="term-dots" width="20" height="20" patternUnits="userSpaceOnUse">
-                            <circle cx="1" cy="1" r="1" className="fill-foreground" opacity="0.07" />
+                        <pattern
+                            id="term-dots"
+                            width="20"
+                            height="20"
+                            patternUnits="userSpaceOnUse"
+                        >
+                            <circle
+                                cx="1"
+                                cy="1"
+                                r="1"
+                                className="fill-foreground"
+                                opacity="0.07"
+                            />
                         </pattern>
                     </defs>
                     <rect width="100%" height="100%" fill="url(#term-dots)" />
                 </svg>
 
                 <div className="relative z-10 p-5 sm:p-6">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4">
+                    <div className="grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2">
                         {ENTRIES.map((entry, i) => (
                             <motion.div
                                 key={entry.cmd}
                                 initial={{ opacity: 0, x: -10 }}
                                 animate={inView ? { opacity: 1, x: 0 } : {}}
-                                transition={{ duration: 0.35, delay: 0.1 + i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                                transition={{
+                                    duration: 0.35,
+                                    delay: 0.1 + i * 0.1,
+                                    ease: [0.22, 1, 0.36, 1]
+                                }}
                                 className="flex flex-col gap-1"
                             >
                                 {/* Prompt line */}
                                 <div className="flex items-center gap-1.5 font-mono text-sm">
-                                    <span className="text-emerald-500 select-none">$</span>
-                                    <span style={{ color: entry.color }}>{entry.cmd}</span>
+                                    <span className="text-emerald-500 select-none">
+                                        $
+                                    </span>
+                                    <span style={{ color: entry.color }}>
+                                        {entry.cmd}
+                                    </span>
                                 </div>
                                 {/* Output */}
-                                <div className="pl-4 border-l border-foreground/8">
+                                <div className="border-foreground/8 border-l pl-4">
                                     <EntryOutput entry={entry} />
                                 </div>
                             </motion.div>
@@ -103,7 +140,7 @@ function BeyondCodeTerminal({ inView }: { inView: boolean }) {
                         initial={{ opacity: 0 }}
                         animate={inView ? { opacity: 1 } : {}}
                         transition={{ delay: 0.1 + ENTRIES.length * 0.1 + 0.2 }}
-                        className="flex items-center gap-1.5 font-mono text-sm mt-4"
+                        className="mt-4 flex items-center gap-1.5 font-mono text-sm"
                     >
                         <span className="text-emerald-500 select-none">$</span>
                         <BlinkingCursor />
@@ -119,23 +156,30 @@ export function InterestsSection() {
     const inView = useInView(ref, { once: true, margin: '-60px' })
 
     return (
-        <section ref={ref} className="py-14 lg:py-20 border-t">
+        <section ref={ref} className="border-t py-14 lg:py-20">
             <div className="mx-auto max-w-5xl px-4 sm:px-6 md:px-8">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
-                    animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                    animate={
+                        inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
+                    }
                     transition={{ duration: 0.5 }}
                     className="mb-10"
                 >
-                    <p className="font-mono text-xs uppercase tracking-[0.22em] text-muted-foreground mb-4">
+                    <p className="text-muted-foreground mb-4 font-mono text-xs tracking-[0.22em] uppercase">
                         {SITE.home.interests.label}
                     </p>
-                    <h2 className="font-hand font-bold text-4xl sm:text-5xl tracking-tight">
-                        {SITE.home.interests.heading.split('\n').map((line, i, arr) => (
-                            <span key={i}>{line}{i < arr.length - 1 && <br />}</span>
-                        ))}
+                    <h2 className="font-hand text-4xl font-bold tracking-tight sm:text-5xl">
+                        {SITE.home.interests.heading
+                            .split('\n')
+                            .map((line, i, arr) => (
+                                <span key={i}>
+                                    {line}
+                                    {i < arr.length - 1 && <br />}
+                                </span>
+                            ))}
                     </h2>
-                    <p className="mt-3 text-muted-foreground text-sm sm:text-base max-w-lg">
+                    <p className="text-muted-foreground mt-3 max-w-lg text-sm sm:text-base">
                         {SITE.home.interests.sub}
                     </p>
                 </motion.div>

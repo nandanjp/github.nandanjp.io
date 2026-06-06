@@ -1,7 +1,7 @@
-import type { ComponentPropsWithoutRef } from 'react'
-import { cn } from '@/lib/utils'
 import { MdxCodeBlock } from './mdx-code-block'
 import { MdxImage } from './mdx-image'
+import type { ComponentPropsWithoutRef } from 'react'
+import { cn } from '@/lib/utils'
 
 type HeadingProps = ComponentPropsWithoutRef<'h1'>
 type ParagraphProps = ComponentPropsWithoutRef<'p'>
@@ -26,7 +26,7 @@ export const mdxComponents = {
     h2: ({ className, ...props }: HeadingProps) => (
         <h2
             className={cn(
-                'mt-10 mb-4 scroll-m-20 border-b border-border pb-2 text-2xl font-semibold tracking-tight',
+                'border-border mt-10 mb-4 scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight',
                 className
             )}
             {...props}
@@ -43,13 +43,19 @@ export const mdxComponents = {
     ),
     h4: ({ className, ...props }: HeadingProps) => (
         <h4
-            className={cn('mt-6 mb-2 scroll-m-20 text-lg font-semibold', className)}
+            className={cn(
+                'mt-6 mb-2 scroll-m-20 text-lg font-semibold',
+                className
+            )}
             {...props}
         />
     ),
     p: ({ className, ...props }: ParagraphProps) => (
         <p
-            className={cn('mb-5 leading-7 [&:not(:first-child)]:mt-4', className)}
+            className={cn(
+                'mb-5 leading-7 [&:not(:first-child)]:mt-4',
+                className
+            )}
             {...props}
         />
     ),
@@ -59,7 +65,7 @@ export const mdxComponents = {
             <a
                 href={href}
                 className={cn(
-                    'font-medium underline underline-offset-4 decoration-primary/40 hover:decoration-primary transition-[text-decoration-color] duration-150',
+                    'decoration-primary/40 hover:decoration-primary font-medium underline underline-offset-4 transition-[text-decoration-color] duration-150',
                     className
                 )}
                 {...(external
@@ -91,7 +97,7 @@ export const mdxComponents = {
     blockquote: ({ className, ...props }: BlockquoteProps) => (
         <blockquote
             className={cn(
-                'my-6 rounded-r-lg border-l-4 border-primary bg-primary/5 py-3 pl-5 pr-4 text-muted-foreground [&>p]:mb-0',
+                'border-primary bg-primary/5 text-muted-foreground my-6 rounded-r-lg border-l-4 py-3 pr-4 pl-5 [&>p]:mb-0',
                 className
             )}
             {...props}
@@ -113,9 +119,13 @@ export const mdxComponents = {
         <li className={cn('leading-7', className)} {...props} />
     ),
     hr: ({ className, ...props }: HRProps) => (
-        <hr className={cn('my-10 border-border', className)} {...props} />
+        <hr className={cn('border-border my-10', className)} {...props} />
     ),
-    pre: ({ className, children, ...props }: ComponentPropsWithoutRef<'pre'> & {
+    pre: ({
+        className,
+        children,
+        ...props
+    }: ComponentPropsWithoutRef<'pre'> & {
         'data-language'?: string
         'data-theme'?: string
     }) => (
@@ -124,12 +134,14 @@ export const mdxComponents = {
         </MdxCodeBlock>
     ),
     code: ({ className, ...props }: ComponentPropsWithoutRef<'code'>) => {
-        const isBlock = className?.includes('language-') || (props as Record<string, unknown>)['data-language']
+        const isBlock =
+            className?.includes('language-') ||
+            (props as Record<string, unknown>)['data-language']
         if (isBlock) return <code className={className} {...props} />
         return (
             <code
                 className={cn(
-                    'rounded-md border border-border bg-muted px-[0.35em] py-[0.15em] font-mono text-[0.85em]',
+                    'border-border bg-muted rounded-md border px-[0.35em] py-[0.15em] font-mono text-[0.85em]',
                     className
                 )}
                 {...props}
@@ -140,7 +152,7 @@ export const mdxComponents = {
         <MdxImage className={className} {...props} />
     ),
     table: ({ className, ...props }: ComponentPropsWithoutRef<'table'>) => (
-        <div className="my-6 w-full overflow-auto rounded-xl border border-border">
+        <div className="border-border my-6 w-full overflow-auto rounded-xl border">
             <table
                 className={cn('w-full border-collapse text-sm', className)}
                 {...props}
@@ -153,7 +165,7 @@ export const mdxComponents = {
     th: ({ className, ...props }: ComponentPropsWithoutRef<'th'>) => (
         <th
             className={cn(
-                'border-b border-border px-4 py-2.5 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground',
+                'border-border text-muted-foreground border-b px-4 py-2.5 text-left text-xs font-semibold tracking-wider uppercase',
                 className
             )}
             {...props}
@@ -162,7 +174,7 @@ export const mdxComponents = {
     td: ({ className, ...props }: ComponentPropsWithoutRef<'td'>) => (
         <td
             className={cn(
-                'border-b border-border px-4 py-3 last:border-0 [tr:last-child>&]:border-0',
+                'border-border border-b px-4 py-3 last:border-0 [tr:last-child>&]:border-0',
                 className
             )}
             {...props}

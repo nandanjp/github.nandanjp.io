@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest'
-import { formatDuration, formatCompactNumber } from './utils'
+import { describe, expect, it } from 'vitest'
+import { formatCompactNumber, formatDuration } from './utils'
 
 describe('formatDuration', () => {
     it('formats sub-minute durations', () => {

@@ -17,7 +17,7 @@ export function TechBadge({ name, iconPath, colors }: TechBadgeProps) {
             className={cn(
                 'inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-sm font-medium transition-opacity hover:opacity-80',
                 colors.bg,
-                colors.border,
+                colors.border
             )}
         >
             <svg

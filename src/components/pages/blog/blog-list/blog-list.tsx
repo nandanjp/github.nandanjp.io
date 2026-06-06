@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { getAllPosts } from '@/lib/blog'
 import { BlogCard } from './components/blog-card'
+import { getAllPosts } from '@/lib/blog'
 import {
     Pagination,
     PaginationContent,
@@ -8,7 +8,7 @@ import {
     PaginationItem,
     PaginationLink,
     PaginationNext,
-    PaginationPrevious,
+    PaginationPrevious
 } from '@/components/ui/pagination'
 
 const PER_PAGE = 5
@@ -19,8 +19,10 @@ export function BlogList() {
 
     if (posts.length === 0) {
         return (
-            <div className="flex flex-col items-center gap-2 py-16 text-muted-foreground">
-                <p className="font-hand text-2xl font-bold">Nothing here yet.</p>
+            <div className="text-muted-foreground flex flex-col items-center gap-2 py-16">
+                <p className="font-hand text-2xl font-bold">
+                    Nothing here yet.
+                </p>
                 <p className="text-sm">Check back soon.</p>
             </div>
         )
@@ -48,8 +50,15 @@ export function BlogList() {
                         <PaginationItem>
                             <PaginationPrevious
                                 href="#"
-                                onClick={(e) => { e.preventDefault(); goTo(page - 1) }}
-                                className={page === 1 ? 'pointer-events-none opacity-40' : ''}
+                                onClick={e => {
+                                    e.preventDefault()
+                                    goTo(page - 1)
+                                }}
+                                className={
+                                    page === 1
+                                        ? 'pointer-events-none opacity-40'
+                                        : ''
+                                }
                             />
                         </PaginationItem>
 
@@ -63,7 +72,10 @@ export function BlogList() {
                                     <PaginationLink
                                         href="#"
                                         isActive={n === page}
-                                        onClick={(e) => { e.preventDefault(); goTo(n as number) }}
+                                        onClick={e => {
+                                            e.preventDefault()
+                                            goTo(n)
+                                        }}
                                     >
                                         {n}
                                     </PaginationLink>
@@ -74,8 +86,15 @@ export function BlogList() {
                         <PaginationItem>
                             <PaginationNext
                                 href="#"
-                                onClick={(e) => { e.preventDefault(); goTo(page + 1) }}
-                                className={page === totalPages ? 'pointer-events-none opacity-40' : ''}
+                                onClick={e => {
+                                    e.preventDefault()
+                                    goTo(page + 1)
+                                }}
+                                className={
+                                    page === totalPages
+                                        ? 'pointer-events-none opacity-40'
+                                        : ''
+                                }
                             />
                         </PaginationItem>
                     </PaginationContent>
@@ -85,7 +104,10 @@ export function BlogList() {
     )
 }
 
-function buildPageNumbers(current: number, total: number): (number | 'ellipsis')[] {
+function buildPageNumbers(
+    current: number,
+    total: number
+): (number | 'ellipsis')[] {
     if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1)
 
     const pages: (number | 'ellipsis')[] = [1]

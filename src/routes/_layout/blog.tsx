@@ -3,21 +3,33 @@ import { BlogList } from '@/components/pages/blog/blog-list/blog-list'
 
 export const Route = createFileRoute('/_layout/blog')({
     component: BlogRoute,
-    head: () => ({ meta: [{ title: 'Blog — Nandan Patel' }, { name: 'description', content: 'Writing on systems design, Go, TypeScript, Kubernetes, and web development.' }] }),
+    head: () => ({
+        meta: [
+            { title: 'Blog — Nandan Patel' },
+            {
+                name: 'description',
+                content:
+                    'Writing on systems design, Go, TypeScript, Kubernetes, and web development.'
+            }
+        ]
+    })
 })
 
 function BlogRoute() {
     return (
         <div className="mx-auto w-full max-w-2xl px-6 sm:px-8 md:px-10">
-            <section className="pt-16 pb-10 mb-10 border-b">
-                <p className="font-mono text-xs uppercase tracking-[0.22em] text-muted-foreground mb-4">
+            <section className="mb-10 border-b pt-16 pb-10">
+                <p className="text-muted-foreground mb-4 font-mono text-xs tracking-[0.22em] uppercase">
                     [blog] — thoughts &amp; writing
                 </p>
-                <h1 className="font-hand font-bold text-5xl sm:text-6xl tracking-tight leading-[1.05] mb-3">
-                    Writing.<br />Sometimes.
+                <h1 className="font-hand mb-3 text-5xl leading-[1.05] font-bold tracking-tight sm:text-6xl">
+                    Writing.
+                    <br />
+                    Sometimes.
                 </h1>
                 <p className="text-muted-foreground text-sm sm:text-base">
-                    On software, systems, and whatever else I find interesting enough to write down.
+                    On software, systems, and whatever else I find interesting
+                    enough to write down.
                 </p>
             </section>
             <BlogList />

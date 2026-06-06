@@ -9,7 +9,11 @@ export function getQueryClient() {
     return queryClient
 }
 
-export default function TanStackQueryProvider({ children }: { children: ReactNode }) {
+export default function TanStackQueryProvider({
+    children
+}: {
+    children: ReactNode
+}) {
     return (
         <QueryClientProvider client={getQueryClient()}>
             {children}

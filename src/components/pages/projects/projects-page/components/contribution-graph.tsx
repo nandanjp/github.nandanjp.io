@@ -8,17 +8,30 @@ const WEEKS = 52
 const DAYS = 7
 const OFF_X = 26
 const OFF_Y = 20
-const SVG_W = OFF_X + WEEKS * STRIDE  // 702
-const SVG_H = OFF_Y + DAYS * STRIDE + 10  // 121
+const SVG_W = OFF_X + WEEKS * STRIDE // 702
+const SVG_H = OFF_Y + DAYS * STRIDE + 10 // 121
 const HAND_FONT = "'Caveat Variable', cursive"
-const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+const MONTHS = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec'
+]
 
 const LEVEL_CLASS = [
     'fill-foreground/10',
     'fill-emerald-200 dark:fill-emerald-900/70',
     'fill-emerald-300 dark:fill-emerald-700',
     'fill-emerald-400 dark:fill-emerald-600',
-    'fill-emerald-500 dark:fill-emerald-400',
+    'fill-emerald-500 dark:fill-emerald-400'
 ]
 
 function seededRng(seed: number): () => number {
@@ -36,7 +49,9 @@ interface ContributionGraphProps {
 export function ContributionGraph({ repos }: ContributionGraphProps) {
     const grid = useMemo(() => {
         // WEEKS × DAYS grid initialised to 0
-        const g: number[][] = Array.from({ length: WEEKS }, () => new Array(DAYS).fill(0))
+        const g: number[][] = Array.from({ length: WEEKS }, () =>
+            new Array(DAYS).fill(0)
+        )
 
         // Mark cells based on repo activity
         for (const repo of repos) {
@@ -61,7 +76,7 @@ export function ContributionGraph({ repos }: ContributionGraphProps) {
                     const r = rng()
                     if (r < 0.08) {
                         g[w][d] = 2
-                    } else if (r < 0.30) {
+                    } else if (r < 0.3) {
                         g[w][d] = 1
                     }
                 }
@@ -96,7 +111,13 @@ export function ContributionGraph({ repos }: ContributionGraphProps) {
             aria-label="Contribution graph"
         >
             <defs>
-                <filter id="cg-rough" x="-5%" y="-5%" width="110%" height="110%">
+                <filter
+                    id="cg-rough"
+                    x="-5%"
+                    y="-5%"
+                    width="110%"
+                    height="110%"
+                >
                     <feTurbulence
                         type="fractalNoise"
                         baseFrequency="0.05"
@@ -128,7 +149,11 @@ export function ContributionGraph({ repos }: ContributionGraphProps) {
             ))}
 
             {/* Day labels: Mon=1, Wed=3, Fri=5 */}
-            {[{ d: 1, label: 'Mon' }, { d: 3, label: 'Wed' }, { d: 5, label: 'Fri' }].map(({ d, label }) => (
+            {[
+                { d: 1, label: 'Mon' },
+                { d: 3, label: 'Wed' },
+                { d: 5, label: 'Fri' }
+            ].map(({ d, label }) => (
                 <text
                     key={label}
                     x={OFF_X - 3}

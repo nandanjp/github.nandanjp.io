@@ -1,11 +1,11 @@
-import { X, ChevronLeft, ChevronRight } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { ChevronLeft, ChevronRight, X } from 'lucide-react'
+import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { Image } from '@unpic/react'
+import type { Photo } from '@/lib/api'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
-import { netlifyTransformer } from '@/lib/image'
-import type { Photo } from '@/lib/api'
+import { netlifyCdn, netlifyTransformer } from '@/lib/image'
 
 interface PhotoLightboxProps {
     photo: Photo
@@ -24,10 +24,12 @@ export function PhotoLightbox({
     currentIndex,
     onClose,
     onPrev,
-    onNext,
+    onNext
 }: PhotoLightboxProps) {
     const [imgLoaded, setImgLoaded] = useState(false)
-    useEffect(() => { setImgLoaded(false) }, [photo.key])
+    useEffect(() => {
+        setImgLoaded(false)
+    }, [photo.key])
 
     useEffect(() => {
         const handleKey = (e: KeyboardEvent) => {
@@ -39,7 +41,7 @@ export function PhotoLightbox({
         return () => window.removeEventListener('keydown', handleKey)
     }, [onClose, onPrev, onNext])
 
-    const thumbUrl = netlifyTransformer?.({ url: photo.url, width: 60 }) ?? photo.url
+    const thumbUrl = netlifyTransformer?.(photo.url, { width: 60 }) ?? photo.url
     const progressPct = ((currentIndex + 1) / total) * 100
     const useDots = total <= MAX_DOTS
 
@@ -53,7 +55,7 @@ export function PhotoLightbox({
                 onClick={onClose}
             >
                 {/* Progress bar */}
-                <div className="absolute top-0 left-0 right-0 h-[2px] bg-white/10">
+                <div className="absolute top-0 right-0 left-0 h-[2px] bg-white/10">
                     <motion.div
                         className="h-full bg-white/50"
                         initial={false}
@@ -66,7 +68,7 @@ export function PhotoLightbox({
                 <Button
                     variant="ghost"
                     size="icon"
-                    className="absolute right-4 top-4 text-white/60 hover:text-white hover:bg-white/10"
+                    className="absolute top-4 right-4 text-white/60 hover:bg-white/10 hover:text-white"
                     onClick={onClose}
                 >
                     <X className="size-5" />
@@ -76,8 +78,11 @@ export function PhotoLightbox({
                 <Button
                     variant="ghost"
                     size="icon"
-                    className="absolute left-4 top-1/2 -translate-y-1/2 z-10 text-white/60 hover:text-white hover:bg-white/10 disabled:opacity-20"
-                    onClick={e => { e.stopPropagation(); onPrev() }}
+                    className="absolute top-1/2 left-4 z-10 -translate-y-1/2 text-white/60 hover:bg-white/10 hover:text-white disabled:opacity-20"
+                    onClick={e => {
+                        e.stopPropagation()
+                        onPrev()
+                    }}
                     disabled={currentIndex === 0}
                 >
                     <ChevronLeft className="size-6" />
@@ -94,8 +99,8 @@ export function PhotoLightbox({
                         alt=""
                         aria-hidden
                         className={cn(
-                            'absolute max-h-[85vh] max-w-[88vw] rounded-lg object-contain blur-xl scale-105 transition-opacity duration-300',
-                            imgLoaded ? 'opacity-0' : 'opacity-100',
+                            'absolute max-h-[85vh] max-w-[88vw] scale-105 rounded-lg object-contain blur-xl transition-opacity duration-300',
+                            imgLoaded ? 'opacity-0' : 'opacity-100'
                         )}
                     />
                     <motion.div
@@ -107,14 +112,15 @@ export function PhotoLightbox({
                         <Image
                             src={photo.url}
                             width={1400}
+                            aspectRatio={4 / 3}
                             layout="constrained"
-                            transformer={netlifyTransformer}
+                            cdn={netlifyCdn}
                             alt={`Photo ${currentIndex + 1}`}
                             sizes="88vw"
                             onLoad={() => setImgLoaded(true)}
                             className={cn(
                                 'max-h-[85vh] max-w-[88vw] rounded-lg object-contain shadow-2xl transition-opacity duration-300',
-                                imgLoaded ? 'opacity-100' : 'opacity-0',
+                                imgLoaded ? 'opacity-100' : 'opacity-0'
                             )}
                         />
                     </motion.div>
@@ -124,8 +130,11 @@ export function PhotoLightbox({
                 <Button
                     variant="ghost"
                     size="icon"
-                    className="absolute right-4 top-1/2 -translate-y-1/2 z-10 text-white/60 hover:text-white hover:bg-white/10 disabled:opacity-20"
-                    onClick={e => { e.stopPropagation(); onNext() }}
+                    className="absolute top-1/2 right-4 z-10 -translate-y-1/2 text-white/60 hover:bg-white/10 hover:text-white disabled:opacity-20"
+                    onClick={e => {
+                        e.stopPropagation()
+                        onNext()
+                    }}
                     disabled={currentIndex === total - 1}
                 >
                     <ChevronRight className="size-6" />
@@ -142,7 +151,7 @@ export function PhotoLightbox({
                                         'rounded-full transition-all duration-300',
                                         i === currentIndex
                                             ? 'size-2 bg-white/80'
-                                            : 'size-1.5 bg-white/25',
+                                            : 'size-1.5 bg-white/25'
                                     )}
                                 />
                             ))}

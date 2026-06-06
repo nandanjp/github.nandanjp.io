@@ -11,20 +11,27 @@ import { CtaSection } from '@/components/pages/home/cta-section'
 const heroImageSrc = import.meta.env.DEV
     ? null
     : SITE.identity.profileImageUrl
-        ? netlifyTransformer?.({ url: SITE.identity.profileImageUrl, width: 600, height: 900 }) ?? null
-        : null
+      ? (netlifyTransformer?.(SITE.identity.profileImageUrl, {
+            width: 600,
+            height: 900
+        }) ?? null)
+      : null
 
 export const Route = createFileRoute('/_layout/')({
     component: HomePage,
     head: () => ({
         meta: [
             { title: 'Nandan Patel — Software Engineer' },
-            { name: 'description', content: 'Software engineer building fast systems, elegant UIs, and open-source tools.' },
+            {
+                name: 'description',
+                content:
+                    'Software engineer building fast systems, elegant UIs, and open-source tools.'
+            }
         ],
         links: heroImageSrc
             ? [{ rel: 'preload', as: 'image', href: heroImageSrc }]
-            : [],
-    }),
+            : []
+    })
 })
 
 function HomePage() {
