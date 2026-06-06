@@ -6,9 +6,11 @@ import { netlifyCdn, netlifyTransformer } from '@/lib/image'
 
 // Renders inside an existing relative+overflow-hidden container (fills it absolutely).
 // Handles the blur-up crossfade, cached-image detection, and unpic srcset/CDN transforms.
+// 'unstyled' is omitted so we can force it internally — constrained layout's
+// inline max-width/max-height would otherwise fight the absolute-fill CSS.
 type BlurImageProps = Omit<
     ImageProps,
-    'background' | 'layout' | 'width' | 'height' | 'aspectRatio'
+    'background' | 'layout' | 'width' | 'height' | 'aspectRatio' | 'unstyled'
 > & {
     width: number
     height: number
@@ -56,7 +58,8 @@ export function BlurImage({
                 src={src}
                 width={width}
                 height={height}
-                layout="fullWidth"
+                layout="constrained"
+                unstyled
                 cdn={netlifyCdn}
                 fetchPriority={fp}
                 alt={alt}
