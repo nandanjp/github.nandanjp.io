@@ -1,0 +1,245 @@
+export const meta = {
+    title: 'How I Ship Backend Systems on My Homelab',
+    date: '2026-06-05',
+    summary: 'The end-to-end process I follow to go from a backend idea to a running Kubernetes deployment on my homelab, with concrete examples at each step.',
+    tags: ['go', 'kubernetes', 'homelab', 'backend']
+}
+
+I run a desktop PC at home with Ubuntu Server and k3s. Most of the services that power this site live there. Over time I have settled into a fairly consistent process for taking a backend idea from nothing to a running deployment.
+
+To make this concrete, I will walk through a simple example: a `notes-api` service with a Postgres database, exposed publicly via Traefik and a Cloudflare Tunnel.
+
+## 1. Ideate on the system
+
+Before writing any code, I map out the moving parts. What services are needed? How do they communicate? What are the latency requirements? Does this need a message queue, or is request-response enough?
+
+For `notes-api`: one Go HTTP service, one Postgres instance, and a Traefik ingress to make it publicly reachable. Simple enough that gRPC is overkill here, so plain HTTP between any future clients.
+
+I draw this in Excalidraw first. Nothing formal, just boxes and arrows to make sure the topology is clear before touching any config.
+
+## 2. Kubernetes config
+
+I write the manifests before the service code. This forces clarity on resource limits, environment variables, health check endpoints, and inter-service discovery before they become implementation assumptions buried in code.
+
+```yaml
+# k8s/notes-api.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notes-api
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notes-api
+  template:
+    metadata:
+      labels:
+        app: notes-api
+    spec:
+      containers:
+        - name: api
+          image: ghcr.io/nandanjp/notes-api:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: PORT
+              value: "8080"
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: notes-secrets
+                  key: database-url
+          resources:
+            requests:
+              cpu: 25m
+              memory: 32Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 30
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: notes-api
+  namespace: default
+spec:
+  selector:
+    app: notes-api
+  ports:
+    - port: 8080
+      targetPort: 8080
+```
+
+The `readinessProbe` and `livenessProbe` are non-negotiable. Without them, Kubernetes will route traffic to a pod that is still starting up or has silently crashed.
+
+## 3. Proto/RPC structure
+
+If services need to talk to each other, I define the interface before writing either side. For internal service-to-service communication I use gRPC with Protobuf. The `.proto` file becomes the contract, and both services can be developed in parallel once it is agreed on.
+
+For `notes-api`, if it needed to call a separate auth service:
+
+```protobuf
+syntax = "proto3";
+package notes.v1;
+
+service NotesService {
+  rpc GetNote(GetNoteRequest) returns (GetNoteResponse);
+  rpc CreateNote(CreateNoteRequest) returns (CreateNoteResponse);
+}
+
+message Note {
+  string id         = 1;
+  string title      = 2;
+  string body       = 3;
+  string user_id    = 4;
+  string created_at = 5;
+}
+
+message GetNoteRequest  { string id = 1; }
+message GetNoteResponse { Note note = 1; }
+
+message CreateNoteRequest  { string title = 1; string body = 2; string user_id = 3; }
+message CreateNoteResponse { Note note = 1; }
+```
+
+Getting this right early prevents painful refactoring once both sides have implementation details baked into their assumptions.
+
+## 4. Core data structures
+
+Before writing any business logic, I define the types that will flow through the system. These get persisted, cached, or published. Getting the model right here prevents schema drift later.
+
+```go
+type Note struct {
+    ID        string    `db:"id"         json:"id"`
+    Title     string    `db:"title"      json:"title"`
+    Body      string    `db:"body"       json:"body"`
+    UserID    string    `db:"user_id"    json:"user_id"`
+    CreatedAt time.Time `db:"created_at" json:"created_at"`
+}
+```
+
+I usually start from the database schema and work outward. The struct tags keep the database column names and JSON keys explicit and co-located.
+
+## 5. Services, Dockerfiles, and CI
+
+With the contracts and model in place, I write the service code. Each service gets its own multi-stage `Dockerfile`:
+
+```dockerfile
+FROM golang:1.22-alpine AS builder
+WORKDIR /app
+COPY go.mod go.sum ./
+RUN go mod download
+COPY . .
+RUN CGO_ENABLED=0 GOOS=linux go build -o /app/server ./cmd/server
+
+FROM alpine:3.19
+RUN apk add --no-cache ca-certificates
+COPY --from=builder /app/server /server
+EXPOSE 8080
+CMD ["/server"]
+```
+
+And a GitHub Actions workflow that builds and pushes on every merge to `main`:
+
+```yaml
+name: Build and Push
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: docker/build-push-action@v5
+        with:
+          push: true
+          tags: |
+            ghcr.io/nandanjp/notes-api:latest
+            ghcr.io/nandanjp/notes-api:${{ github.sha }}
+```
+
+Tagging with both `latest` and the commit SHA means I can roll back to any previous image if something goes wrong in prod.
+
+## 6. Deploy to the homelab
+
+With images building in CI, I apply the manifests to the cluster:
+
+```bash
+kubectl apply -f k8s/
+```
+
+For public services I add a Traefik `IngressRoute`. Traffic enters via a Cloudflare Tunnel, hits Traefik, and routes to the service inside the cluster. No ports open on my router.
+
+```yaml
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: notes-api
+  namespace: default
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`notes-api.nandan-hl.dev`)
+      kind: Rule
+      services:
+        - name: notes-api
+          port: 8080
+```
+
+Internal services stay as `ClusterIP` and are only reachable within the cluster. No ingress needed for those.
+
+## 7. Battle-test in prod
+
+Before touching the homelab I test everything locally with `docker-compose`. The Compose file mirrors the Kubernetes setup as closely as possible: same environment variables, same network topology, same dependencies.
+
+```yaml
+services:
+  api:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      PORT: "8080"
+      DATABASE_URL: postgres://postgres:postgres@db:5432/notes
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: notes
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+```
+
+Once it works locally, I deploy to the homelab and stress it with real traffic. Things that pass locally reliably fail in unexpected ways in production, usually around connection pooling, timeouts under load, or resource limits being hit. That is expected. The homelab is production but it is also a learning environment, and fixing those failures is most of the fun.

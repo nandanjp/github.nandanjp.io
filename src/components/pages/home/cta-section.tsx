@@ -20,9 +20,7 @@ export function CtaSection() {
                             {SITE.home.cta.label}
                         </p>
                         <h2 className="font-hand font-bold text-4xl sm:text-5xl tracking-tight">
-                            {SITE.home.cta.heading.split('\n').map((line, i, arr) => (
-                                <span key={i}>{line}{i < arr.length - 1 && <br className="hidden sm:block" />}</span>
-                            ))}
+                            {SITE.home.cta.heading}
                         </h2>
                     </div>
 

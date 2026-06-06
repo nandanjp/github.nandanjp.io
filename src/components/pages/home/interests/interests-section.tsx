@@ -37,7 +37,7 @@ function EntryOutput({ entry }: { entry: Entry }) {
     if (entry.type === 'music') {
         return (
             <p className="font-mono text-xs text-muted-foreground/70">
-                Heavy rotation —{' '}
+                Heavy rotation,{' '}
                 <Link
                     to="/music"
                     className="transition-colors"

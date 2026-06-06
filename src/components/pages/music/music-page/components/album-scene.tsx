@@ -30,7 +30,7 @@ export function AlbumScene({ tracks }: AlbumSceneProps) {
                 {albums.map((track) => {
                     const albumArtSrc = import.meta.env.DEV
                         ? track.album_art_url
-                        : `/.netlify/images?url=${encodeURIComponent(track.album_art_url)}&w=216&fit=cover&f=webp`
+                        : `/.netlify/images?url=${encodeURIComponent(track.album_art_url)}&w=216&h=216&fit=cover&f=webp`
                     return (
                         <motion.div
                             key={track.album_art_url}

@@ -1,6 +1,6 @@
 import { useRef } from 'react'
+import { ExternalLink } from 'lucide-react'
 import { motion, useInView } from 'framer-motion'
-import { Skeleton } from '@/components/ui/skeleton'
 import { SITE } from '@/content/site'
 
 const WORK_ENTRIES = SITE.work.entries
@@ -40,19 +40,14 @@ function SectionDivider({ label, accent }: { label: string; accent: Accent }) {
     )
 }
 
-function BulletSkeletons({ count, accent }: { count: number; accent: Accent }) {
+function EntryBullets({ bullets, accent }: { bullets: readonly string[]; accent: Accent }) {
     const a = ACCENT[accent]
     return (
-        <div className="flex flex-col gap-2.5 mt-4">
-            {Array.from({ length: count }).map((_, i) => (
-                <div key={i} className="flex items-center gap-2.5">
-                    <span className={`font-hand text-base shrink-0 select-none ${a.arrow}`}>
-                        ↳
-                    </span>
-                    <Skeleton
-                        className="h-3 animate-none opacity-20"
-                        style={{ width: `${72 - i * 8}%` }}
-                    />
+        <div className="flex flex-col gap-2 mt-3">
+            {bullets.map((b, i) => (
+                <div key={i} className="flex items-start gap-2.5">
+                    <span className={`font-hand text-base shrink-0 select-none mt-px ${a.arrow}`}>↳</span>
+                    <p className="font-hand text-sm sm:text-base text-muted-foreground leading-snug">{b}</p>
                 </div>
             ))}
         </div>
@@ -89,7 +84,7 @@ function WorkEntryCard({ entry, index }: { entry: WorkEntry; index: number }) {
                     {entry.period}
                 </span>
             </div>
-            <BulletSkeletons count={3} accent="sky" />
+            <EntryBullets bullets={entry.bullets} accent="sky" />
         </motion.div>
     )
 }
@@ -108,13 +103,20 @@ function ProjectEntryCard({ entry, index }: { entry: ProjectEntry; index: number
             whileHover={{ rotate: 0, y: -3, transition: { type: 'spring', stiffness: 280, damping: 22 } }}
             className={`rounded-xl border-2 border-dashed ${ACCENT.violet.border} ${ACCENT.violet.bg} px-3 py-4 sm:px-5 sm:py-5 mb-4 cursor-default`}
         >
-            <p className="font-hand font-bold text-xl sm:text-2xl leading-tight text-foreground">
+            <a
+                href={entry.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={e => e.stopPropagation()}
+                className="font-hand font-bold text-xl sm:text-2xl leading-tight text-foreground hover:text-violet-500 dark:hover:text-violet-400 transition-colors inline-flex items-center gap-1.5 group/link"
+            >
                 {entry.name}
-            </p>
+                <ExternalLink className="size-3.5 opacity-0 group-hover/link:opacity-60 transition-opacity shrink-0" />
+            </a>
             <p className="font-mono text-xs text-muted-foreground mt-1 tracking-wider">
                 {entry.tech}
             </p>
-            <BulletSkeletons count={3} accent="violet" />
+            <EntryBullets bullets={entry.bullets} accent="violet" />
         </motion.div>
     )
 }

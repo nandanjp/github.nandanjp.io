@@ -17,7 +17,7 @@ function PhotosRoute() {
                     Through the Lens.
                 </h1>
                 <p className="text-muted-foreground text-sm sm:text-base">
-                    Scenes and subjects I found worth capturing — mostly candid, always personal.
+                    Scenes and subjects I found worth capturing, mostly candid and always personal.
                 </p>
             </section>
             <PhotoGallery />
