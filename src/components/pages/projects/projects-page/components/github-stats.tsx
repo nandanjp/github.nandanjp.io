@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Star, BookOpen, Users, ExternalLink } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { formatCompactNumber } from '@/lib/utils'
@@ -9,7 +10,11 @@ interface GitHubStatsCardProps {
 }
 
 export function GitHubStatsCard({ stats }: GitHubStatsCardProps) {
+    const [avatarLoaded, setAvatarLoaded] = useState(false)
     const total = stats.languages.reduce((acc, l) => acc + l.count, 0)
+    const avatarThumb = import.meta.env.DEV
+        ? stats.avatar_url
+        : `/.netlify/images?url=${encodeURIComponent(stats.avatar_url)}&w=10&h=10&fit=cover&f=webp`
     const avatarSrc = import.meta.env.DEV
         ? stats.avatar_url
         : `/.netlify/images?url=${encodeURIComponent(stats.avatar_url)}&w=96&h=96&fit=cover&f=webp`
@@ -36,11 +41,26 @@ export function GitHubStatsCard({ stats }: GitHubStatsCardProps) {
             <div className="p-5">
                 {/* Profile row */}
                 <div className="flex items-start gap-3">
-                    <img
-                        src={avatarSrc}
-                        alt={stats.name}
-                        className="size-12 rounded-full object-cover object-center shrink-0"
-                    />
+                    <div className="relative size-12 rounded-full overflow-hidden shrink-0">
+                        <img
+                            src={avatarThumb}
+                            alt=""
+                            aria-hidden
+                            className={cn(
+                                'absolute inset-0 h-full w-full object-cover object-center blur-sm scale-105 transition-opacity duration-500',
+                                avatarLoaded ? 'opacity-0' : 'opacity-100',
+                            )}
+                        />
+                        <img
+                            src={avatarSrc}
+                            alt={stats.name}
+                            onLoad={() => setAvatarLoaded(true)}
+                            className={cn(
+                                'absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-500',
+                                avatarLoaded ? 'opacity-100' : 'opacity-0',
+                            )}
+                        />
+                    </div>
                     <div className="min-w-0 flex-1">
                         <p className="font-hand font-bold text-xl leading-tight">{stats.name}</p>
                         <p className="font-mono text-xs text-muted-foreground">@{stats.username}</p>

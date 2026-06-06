@@ -37,7 +37,11 @@ interface TrackCardProps {
 export function TrackCard({ track, index, isPlaying, progress, onPlay, onStop }: TrackCardProps) {
     const hasPreview = !!track.preview_url
     const [hovered, setHovered] = useState(false)
+    const [artLoaded, setArtLoaded] = useState(false)
     const c = getArtistColor(track.artists[0])
+    const albumArtThumb = import.meta.env.DEV
+        ? track.album_art_url
+        : `/.netlify/images?url=${encodeURIComponent(track.album_art_url)}&w=16&h=16&fit=cover&f=webp`
     const albumArtSrc = import.meta.env.DEV
         ? track.album_art_url
         : `/.netlify/images?url=${encodeURIComponent(track.album_art_url)}&w=128&h=128&fit=cover&f=webp`
@@ -85,11 +89,26 @@ export function TrackCard({ track, index, isPlaying, progress, onPlay, onStop }:
             </div>
 
             {/* Album art */}
-            <img
-                src={albumArtSrc}
-                alt={track.album_name}
-                className="size-16 rounded-lg object-cover object-center shrink-0 shadow-sm"
-            />
+            <div className="relative size-16 rounded-lg overflow-hidden shrink-0 shadow-sm">
+                <img
+                    src={albumArtThumb}
+                    alt=""
+                    aria-hidden
+                    className={cn(
+                        'absolute inset-0 h-full w-full object-cover blur-sm scale-105 transition-opacity duration-500',
+                        artLoaded ? 'opacity-0' : 'opacity-100',
+                    )}
+                />
+                <img
+                    src={albumArtSrc}
+                    alt={track.album_name}
+                    onLoad={() => setArtLoaded(true)}
+                    className={cn(
+                        'absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-500',
+                        artLoaded ? 'opacity-100' : 'opacity-0',
+                    )}
+                />
+            </div>
 
             {/* Track info */}
             <div className="flex-1 min-w-0">
