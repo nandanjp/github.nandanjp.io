@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Image from 'next/image'
 import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
@@ -89,36 +90,49 @@ export function PhotoLightbox({
 
                 {/* Image with blur-backdrop progressive loading */}
                 <div
-                    className="relative flex max-h-[78vh] max-w-[85vw] items-center justify-center"
+                    className="relative"
+                    style={{ width: '85vw', height: '78vh' }}
                     onClick={event => event.stopPropagation()}
                 >
-                    {/* Blurred backdrop — reuses the same card-size URL already in cache */}
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    {/* Blurred backdrop — same cached URL as the card, shown while loading */}
+                    <div
                         key={`blur-${photo.key}`}
-                        src={netlifyImageSrc(photo.url, 280, 20)}
-                        alt=""
-                        aria-hidden
+                        aria-hidden="true"
                         className={cn(
-                            'absolute max-h-[78vh] max-w-[85vw] scale-110 rounded-lg object-contain blur-2xl brightness-50 transition-opacity duration-300',
+                            'pointer-events-none absolute inset-0 scale-110 rounded-lg blur-2xl brightness-50 transition-opacity duration-300',
                             imageLoaded ? 'opacity-0' : 'opacity-100'
                         )}
-                    />
-                    {/* Full image */}
-                    <motion.img
+                    >
+                        <Image
+                            src={netlifyImageSrc(photo.url, 280, 10)}
+                            alt=""
+                            unoptimized
+                            fill
+                            className="object-contain"
+                        />
+                    </div>
+                    {/* Full image — scale animation on the wrapper, not the Image */}
+                    <motion.div
                         key={photo.key}
-                        src={netlifyImageSrc(photo.url, 1200, 80)}
-                        alt={`Photo ${currentIndex + 1}`}
                         initial={{ scale: 0.97 }}
                         animate={{ scale: imageLoaded ? 1 : 0.97 }}
                         transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
                         className={cn(
-                            'relative max-h-[78vh] max-w-[85vw] rounded-lg object-contain shadow-2xl transition-opacity duration-300',
+                            'absolute inset-0 transition-opacity duration-300',
                             imageLoaded ? 'opacity-100' : 'opacity-0'
                         )}
-                        onLoad={() => setLoadedKey(photo.key)}
-                        draggable={false}
-                    />
+                    >
+                        <Image
+                            src={netlifyImageSrc(photo.url, 280, 10)}
+                            alt={`Photo ${currentIndex + 1}`}
+                            unoptimized
+                            fill
+                            priority
+                            draggable={false}
+                            className="rounded-lg object-contain shadow-2xl"
+                            onLoad={() => setLoadedKey(photo.key)}
+                        />
+                    </motion.div>
                 </div>
 
                 {/* Next */}

@@ -59,7 +59,7 @@ export function PhotoGallery({ photos }: PhotoGalleryProps) {
 
     function prefetchPhoto(url: string) {
         const img = new window.Image()
-        img.src = netlifyImageSrc(url, 1200, 80)
+        img.src = netlifyImageSrc(url, 280, 10)
     }
 
     function handlePrev() {
