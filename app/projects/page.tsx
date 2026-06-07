@@ -5,22 +5,22 @@ import { SITE } from '@/content/site'
 import { SectionLabel, PageHeading, BodyText } from '@/components/ui/typography'
 import { ProjectsContent, ProjectsContentSkeleton } from './components/ProjectsContent'
 
-export const revalidate = 3600
-
 export const metadata: Metadata = {
     title: 'Projects — Nandan Patel',
     description: SITE.projects.sub
 }
 
-export default async function ProjectsPage() {
+async function ProjectsData() {
     const [statsResult, reposResult] = await Promise.allSettled([
         api.github.stats(),
         api.github.repos()
     ])
-
     const stats = statsResult.status === 'fulfilled' ? statsResult.value : null
     const repos = reposResult.status === 'fulfilled' ? reposResult.value.repos : []
+    return <ProjectsContent stats={stats} repos={repos} />
+}
 
+export default function ProjectsPage() {
     return (
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 md:px-8">
             <section className="mb-10 border-b pt-16 pb-10">
@@ -29,7 +29,7 @@ export default async function ProjectsPage() {
                 <BodyText>{SITE.projects.sub}</BodyText>
             </section>
             <Suspense fallback={<ProjectsContentSkeleton />}>
-                <ProjectsContent stats={stats} repos={repos} />
+                <ProjectsData />
             </Suspense>
         </div>
     )

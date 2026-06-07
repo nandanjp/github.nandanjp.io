@@ -96,7 +96,7 @@ export function PhotoLightbox({
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                         key={`blur-${photo.key}`}
-                        src={netlifyImageSrc(photo.url, 280, 65)}
+                        src={netlifyImageSrc(photo.url, 280, 20)}
                         alt=""
                         aria-hidden
                         className={cn(

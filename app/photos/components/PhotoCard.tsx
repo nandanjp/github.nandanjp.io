@@ -71,7 +71,7 @@ export function PhotoCard({ photo, index, priority = false, onClick }: PhotoCard
                 <div className="p-2 pb-1.5">
                     <div className="bg-muted relative aspect-square overflow-hidden rounded-[1px]">
                         <BlurImage
-                            src={netlifyImageSrc(photo.url, 280, 65)}
+                            src={netlifyImageSrc(photo.url, 280, 20)}
                             thumbnailSrc={netlifyThumbnailSrc(photo.url)}
                             alt={label}
                             fill
