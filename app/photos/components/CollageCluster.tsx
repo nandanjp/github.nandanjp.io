@@ -63,7 +63,7 @@ function CollagePolaroid({ photo, index, pileIndex, marginLeft, onClick }: Colla
                 <div className="p-2 pb-1.5">
                     <div className="bg-muted relative aspect-square overflow-hidden rounded-[1px]">
                         <BlurImage
-                            src={netlifyImageSrc(photo.url, 280, 40)}
+                            src={netlifyImageSrc(photo.url, 280, 30)}
                             thumbnailSrc={netlifyThumbnailSrc(photo.url)}
                             alt={label}
                             fill

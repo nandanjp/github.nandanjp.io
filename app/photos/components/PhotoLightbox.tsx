@@ -88,52 +88,27 @@ export function PhotoLightbox({
                     <ChevronLeft className="size-6" />
                 </Button>
 
-                {/* Image with blur-backdrop progressive loading */}
-                <div
-                    className="relative"
+                {/* Image container */}
+                <motion.div
+                    key={photo.key}
+                    className="relative overflow-hidden rounded-2xl"
                     style={{ width: '85vw', height: '78vh' }}
+                    initial={{ scale: 0.97, opacity: 0 }}
+                    animate={{ scale: imageLoaded ? 1 : 0.97, opacity: imageLoaded ? 1 : 0 }}
+                    transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
                     onClick={event => event.stopPropagation()}
                 >
-                    {/* Blurred backdrop — same cached URL as the card, shown while loading */}
-                    <div
-                        key={`blur-${photo.key}`}
-                        aria-hidden="true"
-                        className={cn(
-                            'pointer-events-none absolute inset-0 scale-110 rounded-lg blur-2xl brightness-50 transition-opacity duration-300',
-                            imageLoaded ? 'opacity-0' : 'opacity-100'
-                        )}
-                    >
-                        <Image
-                            src={netlifyImageSrc(photo.url, 280, 40)}
-                            alt=""
-                            unoptimized
-                            fill
-                            className="object-contain"
-                        />
-                    </div>
-                    {/* Full image — scale animation on the wrapper, not the Image */}
-                    <motion.div
-                        key={photo.key}
-                        initial={{ scale: 0.97 }}
-                        animate={{ scale: imageLoaded ? 1 : 0.97 }}
-                        transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-                        className={cn(
-                            'absolute inset-0 transition-opacity duration-300',
-                            imageLoaded ? 'opacity-100' : 'opacity-0'
-                        )}
-                    >
-                        <Image
-                            src={netlifyImageSrc(photo.url, 280, 40)}
-                            alt={`Photo ${currentIndex + 1}`}
-                            unoptimized
-                            fill
-                            priority
-                            draggable={false}
-                            className="rounded-lg object-contain shadow-2xl"
-                            onLoad={() => setLoadedKey(photo.key)}
-                        />
-                    </motion.div>
-                </div>
+                    <Image
+                        src={netlifyImageSrc(photo.url, 600, 60)}
+                        alt={`Photo ${currentIndex + 1}`}
+                        unoptimized
+                        fill
+                        priority
+                        draggable={false}
+                        className="object-contain shadow-2xl"
+                        onLoad={() => setLoadedKey(photo.key)}
+                    />
+                </motion.div>
 
                 {/* Next */}
                 <Button

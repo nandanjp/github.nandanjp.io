@@ -44,7 +44,9 @@ export type GitHubRepo = {
 }
 
 async function apiFetch<T>(path: string): Promise<T> {
-    const res = await fetch(`${env.NEXT_PUBLIC_PERSONAL_API_URL}${path}`)
+    const res = await fetch(`${env.NEXT_PUBLIC_PERSONAL_API_URL}${path}`, {
+        next: { revalidate: 3600 }
+    })
     if (!res.ok) throw new Error(`personal-api ${res.status}: ${path}`)
     return res.json() as Promise<T>
 }

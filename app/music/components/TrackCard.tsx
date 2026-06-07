@@ -48,7 +48,7 @@ export function TrackCard({ track, index }: TrackCardProps) {
             {/* Album art */}
             <div className="relative size-16 shrink-0 overflow-hidden rounded-md shadow-sm">
                 <BlurImage
-                    src={netlifyImageSrc(track.album_art_url, 64, 20)}
+                    src={netlifyImageSrc(track.album_art_url, 64, 45)}
                     thumbnailSrc={netlifyThumbnailSrc(track.album_art_url)}
                     alt={track.album_name}
                     fill
