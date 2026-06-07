@@ -1,6 +1,7 @@
 'use client'
 
 import { BlurImage } from '@/components/ui/blur-image'
+import { netlifyImageSrc, netlifyThumbnailSrc } from '@/lib/netlify-image-loader'
 import { ExternalLink } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
@@ -25,12 +26,11 @@ function AlbumCard({ track }: { track: Track }) {
         >
             <div className="relative size-27 overflow-hidden rounded-md shadow-md">
                 <BlurImage
-                    src={track.album_art_url}
+                    src={netlifyImageSrc(track.album_art_url, 108, 65)}
+                    thumbnailSrc={netlifyThumbnailSrc(track.album_art_url)}
                     alt={track.album_name}
                     fill
-                    sizes="108px"
                     draggable={false}
-                    quality={70}
                     className="object-cover"
                 />
                 <div className="absolute inset-0 flex items-end justify-end bg-black/30 p-2 opacity-0 transition-opacity group-hover:opacity-100">

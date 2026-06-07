@@ -1,10 +1,11 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Caveat, Geist, Geist_Mono, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import { cn } from '@/lib/utils'
 import { Navbar } from '@/components/Navbar'
 import { Footer } from '@/components/Footer'
 import Provider from '@/components/providers/provider'
+import { ServiceWorker } from '@/components/ServiceWorker'
 
 const caveat = Caveat({
     subsets: ['latin'],
@@ -31,7 +32,15 @@ const THEME_INIT_SCRIPT = `(function(){try{var s=window.localStorage.getItem('th
 
 export const metadata: Metadata = {
     title: 'Nandan Patel',
-    description: 'Software engineer building fast systems, elegant UIs, and open-source tools.'
+    description: 'Software engineer building fast systems, elegant UIs, and open-source tools.',
+    manifest: '/site.webmanifest',
+    icons: {
+        apple: '/apple-touch-icon.png'
+    }
+}
+
+export const viewport: Viewport = {
+    themeColor: '#38bdf8'
 }
 
 export default function RootLayout({
@@ -62,6 +71,7 @@ export default function RootLayout({
                     <main className="flex flex-1 flex-col">{children}</main>
                     <Footer />
                 </Provider>
+                <ServiceWorker />
             </body>
         </html>
     )

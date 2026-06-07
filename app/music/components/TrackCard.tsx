@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { BlurImage } from '@/components/ui/blur-image'
+import { netlifyImageSrc, netlifyThumbnailSrc } from '@/lib/netlify-image-loader'
 import { ExternalLink } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { getArtistColor } from './artist-color'
@@ -47,11 +48,10 @@ export function TrackCard({ track, index }: TrackCardProps) {
             {/* Album art */}
             <div className="relative size-16 shrink-0 overflow-hidden rounded-md shadow-sm">
                 <BlurImage
-                    src={track.album_art_url}
+                    src={netlifyImageSrc(track.album_art_url, 64, 65)}
+                    thumbnailSrc={netlifyThumbnailSrc(track.album_art_url)}
                     alt={track.album_name}
                     fill
-                    sizes="64px"
-                    quality={70}
                     className="object-cover object-center"
                 />
             </div>

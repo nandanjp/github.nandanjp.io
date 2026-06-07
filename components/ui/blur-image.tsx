@@ -2,22 +2,45 @@
 
 import Image from 'next/image'
 import type { ImageProps } from 'next/image'
+import { useState } from 'react'
 import { cn } from '@/lib/utils'
 
-const SHIMMER_DATA_URL = `data:image/svg+xml;base64,${btoa(
-    '<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"><rect width="10" height="10" fill="hsl(0 0% 87%)"/></svg>'
-)}`
+interface BlurImageProps extends Omit<ImageProps, 'placeholder' | 'blurDataURL'> {
+    thumbnailSrc?: string
+}
 
-export function BlurImage({ className, blurDataURL, fill, alt, ...props }: ImageProps) {
+export function BlurImage({ className, fill, alt, thumbnailSrc, ...props }: BlurImageProps) {
+    const [loaded, setLoaded] = useState(false)
+
     return (
         <div className={cn('overflow-hidden', fill ? 'absolute inset-0' : 'relative')}>
+            {thumbnailSrc && (
+                <div
+                    aria-hidden="true"
+                    className={cn(
+                        'absolute inset-0 transition-opacity duration-500',
+                        loaded ? 'opacity-0 pointer-events-none' : 'opacity-100'
+                    )}
+                    style={{
+                        backgroundImage: `url(${thumbnailSrc})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        filter: 'blur(12px)',
+                        transform: 'scale(1.12)'
+                    }}
+                />
+            )}
             <Image
                 {...props}
                 alt={alt}
                 fill={fill}
-                placeholder="blur"
-                blurDataURL={blurDataURL ?? SHIMMER_DATA_URL}
-                className={cn('transition-all duration-500', className)}
+                unoptimized
+                onLoad={() => setLoaded(true)}
+                className={cn(
+                    'transition-opacity duration-500',
+                    loaded ? 'opacity-100' : 'opacity-0',
+                    className
+                )}
             />
         </div>
     )

@@ -18,7 +18,6 @@ export function MdxImage({ src, alt }: MdxImageProps) {
                     alt={alt ?? ''}
                     width={800}
                     height={450}
-                    quality={80}
                     className="block w-full object-cover"
                     loading="lazy"
                 />

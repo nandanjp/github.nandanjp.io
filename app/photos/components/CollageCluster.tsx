@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { BlurImage } from '@/components/ui/blur-image'
-import { MonoText } from '@/components/ui/typography'
+import { netlifyImageSrc, netlifyThumbnailSrc } from '@/lib/netlify-image-loader'
 import { cn } from '@/lib/utils'
 import type { Photo } from '@/lib/api'
 
@@ -63,20 +63,19 @@ function CollagePolaroid({ photo, index, pileIndex, marginLeft, onClick }: Colla
                 <div className="p-2 pb-1.5">
                     <div className="bg-muted relative aspect-square overflow-hidden rounded-[1px]">
                         <BlurImage
-                            src={photo.url}
+                            src={netlifyImageSrc(photo.url, 280, 65)}
+                            thumbnailSrc={netlifyThumbnailSrc(photo.url)}
                             alt={label}
                             fill
-                            sizes="(max-width: 768px) 36vw, 280px"
                             draggable={false}
                             loading="eager"
                             fetchPriority="high"
-                            quality={65}
                             className="object-cover object-center"
                         />
                     </div>
                 </div>
                 <div className={cn('flex h-8 items-center justify-center', theme.bg)}>
-                    <MonoText className="tracking-widest opacity-50">{label}</MonoText>
+                    <span className="font-mono text-xs tracking-widest text-foreground/90">{label}</span>
                 </div>
             </div>
         </motion.div>

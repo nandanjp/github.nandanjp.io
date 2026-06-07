@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { BlurImage } from '@/components/ui/blur-image'
 import { MacCard } from '@/components/ui/mac-card'
+import { netlifyImageSrc, netlifyThumbnailSrc } from '@/lib/netlify-image-loader'
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import { Icon } from '@/components/Icon'
@@ -122,13 +123,12 @@ export function HeroSection() {
                     <div className="bg-muted/20 relative aspect-square">
                         {profileImageUrl && (
                             <BlurImage
-                                src={profileImageUrl}
-                                fill
+                                src={netlifyImageSrc(profileImageUrl, 600, 75)}
+                                thumbnailSrc={netlifyThumbnailSrc(profileImageUrl)}
                                 alt="Nandan Patel"
+                                fill
                                 loading="eager"
                                 fetchPriority="high"
-                                sizes="(max-width: 768px) 100vw, 448px"
-                                quality={80}
                                 className="object-cover object-center"
                             />
                         )}
