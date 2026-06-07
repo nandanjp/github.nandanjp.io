@@ -89,7 +89,7 @@ export function PhotoLightbox({
                 </Button>
 
                 <div
-                    className="aspect-2/3 h-[75vh] overflow-hidden rounded-md"
+                    className="aspect-2/3 h-[70vh] overflow-hidden rounded-md lg:h-[75vh]"
                     onClick={event => event.stopPropagation()}
                 >
                     <motion.div

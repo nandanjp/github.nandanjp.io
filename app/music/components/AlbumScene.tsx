@@ -19,7 +19,7 @@ function AlbumCard({ track }: { track: Track }) {
                 window.open(track.external_url, '_blank', 'noopener,noreferrer')
             }
         >
-            <div className="relative size-27 overflow-hidden rounded-md shadow-md">
+            <div className="relative size-27 overflow-hidden rounded-md">
                 <BlurImage
                     src={netlifyImageSrc(track.album_art_url, 216, 75)}
                     thumbnailSrc={netlifyThumbnailSrc(track.album_art_url)}
@@ -60,8 +60,8 @@ export function AlbumScene({ tracks }: AlbumSceneProps) {
     return (
         <div className="flex flex-col gap-3">
             <SubLabel>{albums.length} albums</SubLabel>
-            <ScrollArea>
-                <div className="flex gap-4 py-3">
+            <ScrollArea className="w-full overflow-hidden">
+                <div className="flex gap-4 py-3 pb-4">
                     {albums.map(track => (
                         <AlbumCard key={track.album_art_url} track={track} />
                     ))}
