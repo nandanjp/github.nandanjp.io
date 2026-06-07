@@ -67,9 +67,8 @@ function CollagePolaroid({ photo, index, pileIndex, marginLeft, onClick }: Colla
                             thumbnailSrc={netlifyThumbnailSrc(photo.url)}
                             alt={label}
                             fill
+                            priority
                             draggable={false}
-                            loading="eager"
-                            fetchPriority="high"
                             className="object-cover object-center"
                         />
                     </div>

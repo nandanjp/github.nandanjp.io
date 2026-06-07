@@ -4,6 +4,7 @@ import { Circle, CircleDot, Clock, ExternalLink, GitFork, Star } from 'lucide-re
 import { motion } from 'framer-motion'
 import { formatCompactNumber, relativeTime } from '@/lib/utils'
 import { LANGUAGE_COLORS } from './language-colors'
+import type { CSSProperties } from 'react'
 import type { GitHubRepo } from '@/lib/api'
 
 interface RepoCardProps {
@@ -24,12 +25,8 @@ export function RepoCard({ repo, index }: RepoCardProps) {
                 delay: Math.min(index, 8) * 0.07,
                 ease: [0.22, 1, 0.36, 1]
             }}
-            whileHover={{
-                y: -5,
-                boxShadow: hoverGlow,
-                transition: { type: 'spring', stiffness: 300, damping: 22 }
-            }}
-            className="rounded-xl"
+            style={{ '--hover-glow': hoverGlow } as CSSProperties}
+            className="rounded-xl transition-[translate,box-shadow] duration-200 ease-out hover:-translate-y-[5px] hover:[box-shadow:var(--hover-glow)]"
         >
             <a
                 href={repo.url}

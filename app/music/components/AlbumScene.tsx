@@ -3,7 +3,6 @@
 import { BlurImage } from '@/components/ui/blur-image'
 import { netlifyImageSrc, netlifyThumbnailSrc } from '@/lib/netlify-image-loader'
 import { ExternalLink } from 'lucide-react'
-import { motion } from 'framer-motion'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 import { SubLabel, CardHeading, MonoText } from '@/components/ui/typography'
 import type { Track } from '@/lib/api'
@@ -14,12 +13,8 @@ interface AlbumSceneProps {
 
 function AlbumCard({ track }: { track: Track }) {
     return (
-        <motion.div
-            className="group flex w-27 shrink-0 cursor-pointer flex-col gap-2"
-            whileHover={{
-                y: -3,
-                transition: { type: 'spring', stiffness: 300, damping: 22 }
-            }}
+        <div
+            className="group flex w-27 shrink-0 cursor-pointer flex-col gap-2 transition-transform duration-200 ease-out hover:-translate-y-[3px]"
             onClick={() =>
                 window.open(track.external_url, '_blank', 'noopener,noreferrer')
             }
@@ -48,7 +43,7 @@ function AlbumCard({ track }: { track: Track }) {
                     {track.artists[0]}
                 </MonoText>
             </div>
-        </motion.div>
+        </div>
     )
 }
 

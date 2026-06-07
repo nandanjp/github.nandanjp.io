@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import type { ImageProps } from 'next/image'
-import { useState } from 'react'
+import { useState, useTransition } from 'react'
 import { cn } from '@/lib/utils'
 
 interface BlurImageProps extends Omit<ImageProps, 'placeholder' | 'blurDataURL'> {
@@ -11,6 +11,7 @@ interface BlurImageProps extends Omit<ImageProps, 'placeholder' | 'blurDataURL'>
 
 export function BlurImage({ className, fill, alt, thumbnailSrc, ...props }: BlurImageProps) {
     const [loaded, setLoaded] = useState(false)
+    const [, startTransition] = useTransition()
 
     return (
         <div className={cn('overflow-hidden', fill ? 'absolute inset-0' : 'relative')}>
@@ -35,7 +36,7 @@ export function BlurImage({ className, fill, alt, thumbnailSrc, ...props }: Blur
                 alt={alt}
                 fill={fill}
                 unoptimized
-                onLoad={() => setLoaded(true)}
+                onLoad={() => startTransition(() => setLoaded(true))}
                 className={cn(
                     'transition-opacity duration-300',
                     loaded ? 'opacity-100' : 'opacity-0',

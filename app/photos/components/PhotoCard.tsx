@@ -1,9 +1,9 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import { BlurImage } from '@/components/ui/blur-image'
 import { netlifyImageSrc, netlifyThumbnailSrc } from '@/lib/netlify-image-loader'
 import { cn } from '@/lib/utils'
+import type { CSSProperties } from 'react'
 import type { Photo } from '@/lib/api'
 
 const STRIP_THEMES = [
@@ -48,45 +48,32 @@ export function PhotoCard({ photo, index, priority = false, onClick }: PhotoCard
     const label = `#${String(index + 1).padStart(3, '0')}`
 
     return (
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-                duration: 0.35,
-                delay: Math.min(index, 5) * 0.04,
-                ease: [0.22, 1, 0.36, 1]
-            }}
-            whileHover={{
-                rotate: 0,
-                scale: 1.03,
-                y: -6,
-                boxShadow: theme.glow,
-                transition: { type: 'spring', stiffness: 420, damping: 28 }
-            }}
-            style={{ rotate: `${rotation}deg` }}
-            className="w-full max-w-[280px] cursor-pointer rounded-[3px]"
-            onClick={() => onClick(photo)}
-        >
-            <div className="overflow-hidden rounded-[3px] bg-white shadow-[0_3px_14px_rgba(0,0,0,0.13)] dark:bg-zinc-900 dark:shadow-[0_3px_14px_rgba(0,0,0,0.45)]">
-                <div className="p-2 pb-1.5">
-                    <div className="bg-muted relative aspect-square overflow-hidden rounded-[1px]">
-                        <BlurImage
-                            src={netlifyImageSrc(photo.url, 280, 30)}
-                            thumbnailSrc={netlifyThumbnailSrc(photo.url)}
-                            alt={label}
-                            fill
-                            draggable={false}
-                            loading={priority ? 'eager' : 'lazy'}
-                            fetchPriority={priority ? 'high' : 'auto'}
-                            className="object-cover object-center"
-                        />
+        <div className="w-full max-w-[280px]">
+            <div
+                style={{ '--r': `${rotation}deg`, '--photo-glow': theme.glow } as CSSProperties}
+                className="cursor-pointer rounded-[3px] rotate-[var(--r)] transition-[rotate,scale,translate] duration-300 ease-out hover:rotate-0 hover:scale-[1.03] hover:-translate-y-[6px] hover:[box-shadow:var(--photo-glow)]"
+                onClick={() => onClick(photo)}
+            >
+                <div className="overflow-hidden rounded-[3px] bg-white shadow-[0_3px_14px_rgba(0,0,0,0.13)] dark:bg-zinc-900 dark:shadow-[0_3px_14px_rgba(0,0,0,0.45)]">
+                    <div className="p-2 pb-1.5">
+                        <div className="bg-muted relative aspect-square overflow-hidden rounded-[1px]">
+                            <BlurImage
+                                src={netlifyImageSrc(photo.url, 280, 30)}
+                                thumbnailSrc={netlifyThumbnailSrc(photo.url)}
+                                alt={label}
+                                fill
+                                priority={priority}
+                                draggable={false}
+                                className="object-cover object-center"
+                            />
+                        </div>
+                    </div>
+
+                    <div className={cn('flex h-8 items-center justify-center px-3', theme.bg)}>
+                        <span className="font-mono text-xs tracking-widest text-foreground/90">{label}</span>
                     </div>
                 </div>
-
-                <div className={cn('flex h-8 items-center justify-center px-3', theme.bg)}>
-                    <span className="font-mono text-xs tracking-widest text-foreground/90">{label}</span>
-                </div>
             </div>
-        </motion.div>
+        </div>
     )
 }

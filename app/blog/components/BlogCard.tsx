@@ -8,6 +8,7 @@ import { formatDate } from '@/lib/utils'
 import { CardHeading, MonoText } from '@/components/ui/typography'
 import { cn } from '@/lib/utils'
 import { MacWindowHeader } from '@/components/ui/mac-card'
+import type { CSSProperties } from 'react'
 
 const THEMES = [
     {
@@ -68,20 +69,14 @@ export function BlogCard({ post, index }: BlogCardProps) {
                 delay: index * 0.07,
                 ease: [0.22, 1, 0.36, 1]
             }}
-            whileHover={{
-                rotate: 0,
-                scale: 1.015,
-                y: -5,
-                boxShadow: theme.glow,
-                transition: { type: 'spring', stiffness: 300, damping: 22 }
-            }}
-            style={{ rotate: `${rotation}deg` }}
-            className="rounded-xl"
         >
             <Link
                 href={`/blog/${post.slug}`}
+                style={{ '--r': `${rotation}deg`, '--card-glow': theme.glow } as CSSProperties}
                 className={cn(
                     'group block overflow-hidden rounded-xl border-2',
+                    'rotate-[var(--r)] transition-[rotate,scale,translate,box-shadow] duration-300 ease-out',
+                    'hover:rotate-0 hover:scale-[1.015] hover:-translate-y-[5px] hover:[box-shadow:var(--card-glow)]',
                     theme.bg,
                     theme.border
                 )}

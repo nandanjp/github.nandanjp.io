@@ -34,7 +34,7 @@ export function ArtistLeaderboard({ tracks }: ArtistLeaderboardProps) {
                         </MonoText>
                         <div className="relative size-9 shrink-0 overflow-hidden rounded-md">
                             <BlurImage
-                                src={netlifyImageSrc(albumArtUrl, 36, 45)}
+                                src={netlifyImageSrc(albumArtUrl, 72, 75)}
                                 thumbnailSrc={netlifyThumbnailSrc(albumArtUrl)}
                                 alt={artist}
                                 fill

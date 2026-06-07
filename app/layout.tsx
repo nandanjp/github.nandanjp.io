@@ -63,6 +63,7 @@ export default function RootLayout({
             )}
         >
             <head>
+                {/* Runs before first paint to apply stored theme — prevents FOUC. Advisory-only warning: this is intentionally server-only. */}
                 <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
             </head>
             <body className="flex min-h-full flex-col">

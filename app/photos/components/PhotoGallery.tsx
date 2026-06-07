@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useTransition } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { netlifyImageSrc } from '@/lib/netlify-image-loader'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -59,6 +59,10 @@ function PhotoGallerySkeleton() {
 }
 
 export function PhotoGallery() {
+    const [mounted, setMounted] = useState(false)
+    const [, startTransition] = useTransition()
+    useEffect(() => { startTransition(() => setMounted(true)) }, [])
+
     const { data, isPending } = useQuery({
         queryKey: ['photos'],
         queryFn: () => api.photos.list(),
@@ -66,7 +70,7 @@ export function PhotoGallery() {
     })
     const [lightboxPhoto, setLightboxPhoto] = useState<Photo | null>(null)
 
-    if (isPending) return <PhotoGallerySkeleton />
+    if (!mounted || isPending) return <PhotoGallerySkeleton />
 
     const photos = data?.photos ?? []
 

@@ -1,6 +1,5 @@
 'use client'
 
-import { useState } from 'react'
 import { BlurImage } from '@/components/ui/blur-image'
 import { netlifyImageSrc, netlifyThumbnailSrc } from '@/lib/netlify-image-loader'
 import { ExternalLink } from 'lucide-react'
@@ -16,7 +15,6 @@ interface TrackCardProps {
 }
 
 export function TrackCard({ track, index }: TrackCardProps) {
-    const [hovered, setHovered] = useState(false)
     const primaryArtistColor = getArtistColor(track.artists[0])
 
     return (
@@ -28,14 +26,12 @@ export function TrackCard({ track, index }: TrackCardProps) {
                 delay: (index % 8) * 0.04,
                 ease: [0.22, 1, 0.36, 1]
             }}
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
             onClick={() =>
                 window.open(track.external_url, '_blank', 'noopener,noreferrer')
             }
             className={cn(
                 'group relative flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 transition-colors',
-                hovered ? primaryArtistColor.activeBg : ''
+                primaryArtistColor.groupHoverBg
             )}
         >
             {/* Track # */}
@@ -58,12 +54,7 @@ export function TrackCard({ track, index }: TrackCardProps) {
 
             {/* Track info */}
             <div className="min-w-0 flex-1">
-                <p
-                    className={cn(
-                        'font-hand truncate text-[17px] leading-tight font-bold transition-colors',
-                        hovered ? 'text-white' : 'text-foreground'
-                    )}
-                >
+                <p className="font-hand truncate text-[17px] leading-tight font-bold text-foreground transition-colors group-hover:text-white">
                     {track.name}
                 </p>
                 <div className="flex min-w-0 flex-wrap items-center gap-1 overflow-hidden">
@@ -74,21 +65,16 @@ export function TrackCard({ track, index }: TrackCardProps) {
                                 key={artist}
                                 className={cn(
                                     'inline-flex shrink-0 items-center rounded-full px-1.5 py-px font-mono text-xs leading-none transition-colors',
-                                    hovered
-                                        ? 'bg-white/20 text-white/90'
-                                        : cn(artistColor.bg, artistColor.text)
+                                    artistColor.bg,
+                                    artistColor.text,
+                                    'group-hover:bg-white/20 group-hover:text-white/90'
                                 )}
                             >
                                 {artist}
                             </span>
                         )
                     })}
-                    <MonoText
-                        className={cn(
-                            'truncate transition-colors',
-                            hovered ? 'text-white/60' : ''
-                        )}
-                    >
+                    <MonoText className="truncate transition-colors group-hover:text-white/60">
                         <span className="mx-1 opacity-50">·</span>
                         {track.album_name}
                     </MonoText>
@@ -97,12 +83,7 @@ export function TrackCard({ track, index }: TrackCardProps) {
 
             {/* Duration + open link */}
             <div className="flex shrink-0 items-center gap-2.5">
-                <MonoText
-                    className={cn(
-                        'w-8 text-right tabular-nums transition-colors',
-                        hovered ? 'text-white/60' : 'text-muted-foreground/45'
-                    )}
-                >
+                <MonoText className="w-8 text-right tabular-nums text-muted-foreground/45 transition-colors group-hover:text-white/60">
                     {formatDuration(track.duration_ms)}
                 </MonoText>
                 <a

@@ -1,13 +1,12 @@
 'use client'
 
-import { useRef } from 'react'
+import { useRef, type CSSProperties } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { ExternalLink } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { SITE } from '@/content/site'
 import { SectionLabel, SectionHeading, SubLabel } from '@/components/ui/typography'
 import { MacCard } from '@/components/ui/mac-card'
-
 const HAND_FONT = 'var(--font-hand), cursive'
 
 interface ArchNode {
@@ -121,15 +120,14 @@ function DeployedApps() {
             <SubLabel>{SITE.home.architecture.deploymentsLabel}</SubLabel>
             <div className="flex flex-col gap-3">
                 {DEPLOYED_APPS.map((app, appIndex) => (
-                    <motion.a
+                    <a
                         key={app.name}
                         href={app.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        whileHover={{ y: -2, transition: { type: 'spring', stiffness: 320, damping: 22 } }}
                         className={cn(
                             'block w-full overflow-hidden rounded-xl border shadow-sm',
-                            'transition-shadow hover:shadow-md',
+                            'transition-[translate,box-shadow] duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md',
                             app.bg,
                             app.border
                         )}
@@ -149,7 +147,7 @@ function DeployedApps() {
                         {appIndex === 0 && <PersonalSitePreview app={app} />}
                         {appIndex === 1 && <VaultPreview app={app} />}
                         {appIndex === 2 && <DramalistPreview app={app} />}
-                    </motion.a>
+                    </a>
                 ))}
             </div>
         </div>
@@ -201,11 +199,10 @@ function ArchitectureDiagram() {
             ))}
 
             {NODES.map(node => (
-                <motion.g
+                <g
                     key={node.id}
-                    style={{ transformOrigin: `${node.cx}px ${node.cy}px`, cursor: 'pointer' }}
-                    whileHover={{ scale: 1.07, filter: `drop-shadow(${node.glow})` }}
-                    transition={{ type: 'spring', stiffness: 320, damping: 22 }}
+                    style={{ transformOrigin: `${node.cx}px ${node.cy}px`, '--node-glow': node.glow } as CSSProperties}
+                    className="cursor-pointer transition-[scale,filter] duration-200 ease-out hover:scale-[1.07] hover:[filter:drop-shadow(var(--node-glow))]"
                 >
                     <rect
                         x={node.cx - node.w / 2} y={node.cy - node.h / 2}
@@ -229,7 +226,7 @@ function ArchitectureDiagram() {
                     >
                         {node.sub}
                     </text>
-                </motion.g>
+                </g>
             ))}
         </svg>
     )

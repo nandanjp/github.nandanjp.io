@@ -88,30 +88,35 @@ export function PhotoLightbox({
                     <ChevronLeft className="size-6" />
                 </Button>
 
-                {/* Image container — always animates in on key change; image fades via CSS once loaded */}
-                <motion.div
-                    key={photo.key}
-                    className="relative transform-gpu overflow-hidden rounded-xl"
-                    style={{ width: '85vw', height: '78vh' }}
-                    initial={{ scale: 0.97, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                <div
+                    className="aspect-2/3 h-[75vh] overflow-hidden rounded-md"
                     onClick={event => event.stopPropagation()}
                 >
-                    <Image
-                        src={netlifyImageSrc(photo.url, 1200, 75)}
-                        alt={`Photo ${currentIndex + 1}`}
-                        unoptimized
-                        fill
-                        priority
-                        draggable={false}
-                        className={cn(
-                            'object-contain transition-opacity duration-200',
-                            imageLoaded ? 'opacity-100' : 'opacity-0'
-                        )}
-                        onLoad={() => setLoadedKey(photo.key)}
-                    />
-                </motion.div>
+                    <motion.div
+                        key={photo.key}
+                        className="relative size-full"
+                        initial={{ scale: 0.97, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{
+                            duration: 0.22,
+                            ease: [0.22, 1, 0.36, 1]
+                        }}
+                    >
+                        <Image
+                            src={netlifyImageSrc(photo.url, 800, 75)}
+                            alt={`Photo ${currentIndex + 1}`}
+                            unoptimized
+                            fill
+                            priority
+                            draggable={false}
+                            className={cn(
+                                'transform-gpu object-cover transition-opacity duration-200',
+                                imageLoaded ? 'opacity-100' : 'opacity-0'
+                            )}
+                            onLoad={() => setLoadedKey(photo.key)}
+                        />
+                    </motion.div>
+                </div>
 
                 {/* Next */}
                 <Button
@@ -131,20 +136,22 @@ export function PhotoLightbox({
                 <div className="absolute bottom-5 flex items-center gap-3">
                     {useDots ? (
                         <div className="flex items-center gap-1.5">
-                            {Array.from({ length: total }).map((_, dotIndex) => (
-                                <div
-                                    key={dotIndex}
-                                    className={cn(
-                                        'rounded-full transition-all duration-300',
-                                        dotIndex === currentIndex
-                                            ? 'size-2 bg-white/80'
-                                            : 'size-1.5 bg-white/25'
-                                    )}
-                                />
-                            ))}
+                            {Array.from({ length: total }).map(
+                                (_, dotIndex) => (
+                                    <div
+                                        key={dotIndex}
+                                        className={cn(
+                                            'rounded-full transition-all duration-300',
+                                            dotIndex === currentIndex
+                                                ? 'size-2 bg-white/80'
+                                                : 'size-1.5 bg-white/25'
+                                        )}
+                                    />
+                                )
+                            )}
                         </div>
                     ) : (
-                        <MonoText className="tabular-nums text-white/40">
+                        <MonoText className="text-white/40 tabular-nums">
                             {currentIndex + 1} / {total}
                         </MonoText>
                     )}
