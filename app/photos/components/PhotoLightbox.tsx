@@ -5,6 +5,7 @@ import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { MonoText } from '@/components/ui/typography'
+import { netlifyImageSrc } from '@/lib/netlify-image-loader'
 import { cn } from '@/lib/utils'
 import type { Photo } from '@/lib/api'
 
@@ -91,11 +92,11 @@ export function PhotoLightbox({
                     className="relative flex max-h-[78vh] max-w-[85vw] items-center justify-center"
                     onClick={event => event.stopPropagation()}
                 >
-                    {/* Blurred backdrop — same URL, already in browser cache from the grid */}
+                    {/* Blurred backdrop — reuses the same card-size URL already in cache */}
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                         key={`blur-${photo.key}`}
-                        src={photo.url}
+                        src={netlifyImageSrc(photo.url, 280, 65)}
                         alt=""
                         aria-hidden
                         className={cn(
@@ -106,7 +107,7 @@ export function PhotoLightbox({
                     {/* Full image */}
                     <motion.img
                         key={photo.key}
-                        src={photo.url}
+                        src={netlifyImageSrc(photo.url, 1200, 80)}
                         alt={`Photo ${currentIndex + 1}`}
                         initial={{ scale: 0.97 }}
                         animate={{ scale: imageLoaded ? 1 : 0.97 }}

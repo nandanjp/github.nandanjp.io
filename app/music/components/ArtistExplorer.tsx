@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
+import { netlifyImageSrc } from '@/lib/netlify-image-loader'
 import type { Track } from '@/lib/api'
 import {
     Select,
@@ -174,7 +175,7 @@ function ArtistGraph({ artistName, albums }: { artistName: string; albums: Track
                         filter="url(#music-rough)"
                     />
                     <image
-                        href={track.album_art_url}
+                        href={netlifyImageSrc(track.album_art_url, NODE_R * 2, 65)}
                         x={albumCX - NODE_R}
                         y={albumCY - NODE_R}
                         width={NODE_R * 2}
@@ -265,7 +266,7 @@ function ArtistGraph({ artistName, albums }: { artistName: string; albums: Track
                             filter="url(#music-rough)"
                         />
                         <image
-                            href={node.track.album_art_url}
+                            href={netlifyImageSrc(node.track.album_art_url, NODE_R * 2, 65)}
                             x={node.x - NODE_R}
                             y={node.y - NODE_R}
                             width={NODE_R * 2}

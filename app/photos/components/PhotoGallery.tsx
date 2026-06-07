@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { netlifyImageSrc } from '@/lib/netlify-image-loader'
 import { Skeleton } from '@/components/ui/skeleton'
 import { MonoText } from '@/components/ui/typography'
 import { EmptyHeading, EmptyBody } from '@/components/ui/typography'
@@ -58,7 +59,7 @@ export function PhotoGallery({ photos }: PhotoGalleryProps) {
 
     function prefetchPhoto(url: string) {
         const img = new window.Image()
-        img.src = url
+        img.src = netlifyImageSrc(url, 1200, 80)
     }
 
     function handlePrev() {
