@@ -5,7 +5,7 @@ import { SITE } from '@/content/site'
 import { SectionLabel, PageHeading, BodyText } from '@/components/ui/typography'
 import { ProjectsContent, ProjectsContentSkeleton } from './components/ProjectsContent'
 
-export const revalidate = 3600
+export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
     title: 'Projects — Nandan Patel',

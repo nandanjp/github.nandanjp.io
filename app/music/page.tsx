@@ -5,7 +5,7 @@ import { SITE } from '@/content/site'
 import { SectionLabel, PageHeading, BodyText } from '@/components/ui/typography'
 import { MusicContent, TrackGridSkeleton } from './components/MusicContent'
 
-export const revalidate = 3600
+export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
     title: 'Music — Nandan Patel',

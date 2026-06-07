@@ -5,7 +5,7 @@ import { SITE } from '@/content/site'
 import { SectionLabel, PageHeading, BodyText } from '@/components/ui/typography'
 import { PhotoGallery, PhotoGallerySkeleton } from './components/PhotoGallery'
 
-export const revalidate = 3600
+export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
     title: 'Photos — Nandan Patel',
