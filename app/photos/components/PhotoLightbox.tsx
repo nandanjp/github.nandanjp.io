@@ -104,7 +104,7 @@ export function PhotoLightbox({
                         )}
                     >
                         <Image
-                            src={netlifyImageSrc(photo.url, 280, 10)}
+                            src={netlifyImageSrc(photo.url, 280, 40)}
                             alt=""
                             unoptimized
                             fill
@@ -123,7 +123,7 @@ export function PhotoLightbox({
                         )}
                     >
                         <Image
-                            src={netlifyImageSrc(photo.url, 280, 10)}
+                            src={netlifyImageSrc(photo.url, 280, 40)}
                             alt={`Photo ${currentIndex + 1}`}
                             unoptimized
                             fill
