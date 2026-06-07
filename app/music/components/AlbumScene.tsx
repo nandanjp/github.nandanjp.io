@@ -26,7 +26,7 @@ function AlbumCard({ track }: { track: Track }) {
         >
             <div className="relative size-27 overflow-hidden rounded-md shadow-md">
                 <BlurImage
-                    src={netlifyImageSrc(track.album_art_url, 108, 45)}
+                    src={netlifyImageSrc(track.album_art_url, 216, 75)}
                     thumbnailSrc={netlifyThumbnailSrc(track.album_art_url)}
                     alt={track.album_name}
                     fill

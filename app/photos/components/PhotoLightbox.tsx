@@ -88,24 +88,27 @@ export function PhotoLightbox({
                     <ChevronLeft className="size-6" />
                 </Button>
 
-                {/* Image container */}
+                {/* Image container — always animates in on key change; image fades via CSS once loaded */}
                 <motion.div
                     key={photo.key}
-                    className="relative overflow-hidden rounded-2xl"
+                    className="relative transform-gpu overflow-hidden rounded-xl"
                     style={{ width: '85vw', height: '78vh' }}
                     initial={{ scale: 0.97, opacity: 0 }}
-                    animate={{ scale: imageLoaded ? 1 : 0.97, opacity: imageLoaded ? 1 : 0 }}
-                    transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
                     onClick={event => event.stopPropagation()}
                 >
                     <Image
-                        src={netlifyImageSrc(photo.url, 600, 60)}
+                        src={netlifyImageSrc(photo.url, 1200, 75)}
                         alt={`Photo ${currentIndex + 1}`}
                         unoptimized
                         fill
                         priority
                         draggable={false}
-                        className="object-contain shadow-2xl"
+                        className={cn(
+                            'object-contain transition-opacity duration-200',
+                            imageLoaded ? 'opacity-100' : 'opacity-0'
+                        )}
                         onLoad={() => setLoadedKey(photo.key)}
                     />
                 </motion.div>
