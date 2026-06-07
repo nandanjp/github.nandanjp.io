@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { AlbumScene } from './AlbumScene'
-import { ArtistExplorer } from './ArtistExplorer'
+import { ArtistLeaderboard } from './ArtistLeaderboard'
 import { TrackGrid } from './TrackGrid'
 import type { Track } from '@/lib/api'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -74,7 +74,7 @@ export function MusicContent({ tracks }: MusicContentProps) {
             </div>
 
             <AlbumScene tracks={tracks} />
-            <ArtistExplorer tracks={tracks} />
+            <ArtistLeaderboard tracks={tracks} />
             <TrackGrid tracks={pageTracks} startIndex={(page - 1) * PER_PAGE} />
 
             {totalPages > 1 && (
