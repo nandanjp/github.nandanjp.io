@@ -18,7 +18,7 @@ export function BlurImage({ className, fill, alt, thumbnailSrc, ...props }: Blur
                 <div
                     aria-hidden="true"
                     className={cn(
-                        'absolute inset-0 transition-opacity duration-500',
+                        'absolute inset-0 transition-opacity duration-300',
                         loaded ? 'opacity-0 pointer-events-none' : 'opacity-100'
                     )}
                     style={{
@@ -37,7 +37,7 @@ export function BlurImage({ className, fill, alt, thumbnailSrc, ...props }: Blur
                 unoptimized
                 onLoad={() => setLoaded(true)}
                 className={cn(
-                    'transition-opacity duration-500',
+                    'transition-opacity duration-300',
                     loaded ? 'opacity-100' : 'opacity-0',
                     className
                 )}

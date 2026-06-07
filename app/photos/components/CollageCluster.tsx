@@ -30,7 +30,7 @@ const PILE_CONFIG = [
     }
 ] as const
 
-const SPRING = { type: 'spring' as const, stiffness: 260, damping: 22 }
+const SPRING = { type: 'spring' as const, stiffness: 420, damping: 28 }
 
 interface CollagePolaroidProps {
     photo: Photo

@@ -1,10 +1,11 @@
 'use client'
 
 import { useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
 import { AlbumScene } from './AlbumScene'
 import { ArtistLeaderboard } from './ArtistLeaderboard'
 import { TrackGrid } from './TrackGrid'
-import type { Track } from '@/lib/api'
+import { api } from '@/lib/api'
 import { Skeleton } from '@/components/ui/skeleton'
 import {
     Pagination,
@@ -41,12 +42,15 @@ export function TrackGridSkeleton() {
     )
 }
 
-interface MusicContentProps {
-    tracks: Track[]
-}
-
-export function MusicContent({ tracks }: MusicContentProps) {
+export function MusicContent() {
+    const { data, isPending } = useQuery({
+        queryKey: ['music'],
+        queryFn: () => api.music.list()
+    })
     const [page, setPage] = useState(1)
+    const tracks = data?.tracks ?? []
+
+    if (isPending) return <TrackGridSkeleton />
 
     if (tracks.length === 0) {
         return (

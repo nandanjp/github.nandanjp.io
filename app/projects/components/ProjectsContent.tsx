@@ -1,14 +1,15 @@
 'use client'
 
+import { useQuery } from '@tanstack/react-query'
 import { motion } from 'framer-motion'
 import { Skeleton } from '@/components/ui/skeleton'
 import { EmptyHeading, EmptyBody, SectionLabel, SectionHeading } from '@/components/ui/typography'
 import { GitHubStatsCard } from './GitHubStatsCard'
 import { ActivityCard } from './ActivityCard'
 import { RepoCard } from './RepoCard'
-import type { GitHubStats, GitHubRepo } from '@/lib/api'
+import { api } from '@/lib/api'
 
-export function ProjectsContentSkeleton() {
+function ProjectsContentSkeleton() {
     return (
         <div className="flex flex-col gap-12 pb-16">
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
@@ -24,12 +25,20 @@ export function ProjectsContentSkeleton() {
     )
 }
 
-interface ProjectsContentProps {
-    stats: GitHubStats | null
-    repos: GitHubRepo[]
-}
+export function ProjectsContent() {
+    const { data: stats, isPending: statsPending } = useQuery({
+        queryKey: ['github-stats'],
+        queryFn: () => api.github.stats()
+    })
+    const { data: reposData, isPending: reposPending } = useQuery({
+        queryKey: ['github-repos'],
+        queryFn: () => api.github.repos()
+    })
 
-export function ProjectsContent({ stats, repos }: ProjectsContentProps) {
+    if (statsPending || reposPending) return <ProjectsContentSkeleton />
+
+    const repos = reposData?.repos ?? []
+
     if (!stats && repos.length === 0) {
         return (
             <div className="flex flex-col items-center gap-2 py-16">
@@ -41,7 +50,6 @@ export function ProjectsContent({ stats, repos }: ProjectsContentProps) {
 
     return (
         <div className="flex flex-col gap-12 pb-16">
-            {/* Stats + Activity row */}
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -52,7 +60,6 @@ export function ProjectsContent({ stats, repos }: ProjectsContentProps) {
                 <ActivityCard repos={repos} />
             </motion.div>
 
-            {/* Repos grid */}
             {repos.length > 0 && (
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}

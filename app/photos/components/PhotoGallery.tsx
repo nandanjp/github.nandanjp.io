@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
 import { netlifyImageSrc } from '@/lib/netlify-image-loader'
 import { Skeleton } from '@/components/ui/skeleton'
 import { MonoText } from '@/components/ui/typography'
@@ -8,6 +9,7 @@ import { EmptyHeading, EmptyBody } from '@/components/ui/typography'
 import { cn } from '@/lib/utils'
 import { PhotoGrid } from './PhotoGrid'
 import { PhotoLightbox } from './PhotoLightbox'
+import { api } from '@/lib/api'
 import type { Photo } from '@/lib/api'
 
 const SKELETON_STRIP_THEMES = [
@@ -19,30 +21,54 @@ const SKELETON_STRIP_THEMES = [
     'bg-teal-100/80 dark:bg-teal-950/40'
 ]
 
-export function PhotoGallerySkeleton() {
+function PhotoCardSkeleton({ stripTheme }: { stripTheme: string }) {
+    return (
+        <div className="w-full max-w-70 overflow-hidden rounded-[3px] bg-white shadow-[0_3px_14px_rgba(0,0,0,0.13)] dark:bg-zinc-900 dark:shadow-[0_3px_14px_rgba(0,0,0,0.45)]">
+            <div className="p-2 pb-1.5">
+                <Skeleton className="aspect-square w-full rounded-[1px]" />
+            </div>
+            <div className={cn('h-8', stripTheme)} />
+        </div>
+    )
+}
+
+function PhotoGallerySkeleton() {
     return (
         <div className="grid grid-cols-2 justify-items-center gap-6 md:grid-cols-3 lg:gap-8">
-            {Array.from({ length: 8 }).map((_, skeletonIndex) => (
-                <div
-                    key={skeletonIndex}
-                    className="w-full max-w-[280px] overflow-hidden rounded-[3px] bg-white shadow-[0_3px_14px_rgba(0,0,0,0.13)] dark:bg-zinc-900 dark:shadow-[0_3px_14px_rgba(0,0,0,0.45)]"
-                >
-                    <div className="p-2 pb-1.5">
-                        <Skeleton className="aspect-square w-full rounded-[1px]" />
+            {/* Collage cluster placeholder — spans 2 cols like the real thing */}
+            <div className="col-span-2 flex w-full items-end justify-center gap-0 pt-6 pb-4">
+                {['-9deg', '2deg', '10deg'].map((rotate, i) => (
+                    <div
+                        key={i}
+                        style={{ rotate, zIndex: i === 1 ? 3 : i === 0 ? 1 : 2, width: '36%', flexShrink: 0, marginLeft: i > 0 ? '-2.75rem' : undefined }}
+                        className="overflow-hidden rounded-[3px] bg-white shadow-[0_4px_18px_rgba(0,0,0,0.15)] dark:bg-zinc-900"
+                    >
+                        <div className="p-2 pb-1.5">
+                            <Skeleton className="aspect-square w-full rounded-[1px]" />
+                        </div>
+                        <div className={cn('h-8', SKELETON_STRIP_THEMES[i % SKELETON_STRIP_THEMES.length])} />
                     </div>
-                    <div className={cn('h-8', SKELETON_STRIP_THEMES[skeletonIndex % SKELETON_STRIP_THEMES.length])} />
-                </div>
+                ))}
+            </div>
+            {/* Grid cards */}
+            {Array.from({ length: 6 }).map((_, i) => (
+                <PhotoCardSkeleton key={i} stripTheme={SKELETON_STRIP_THEMES[(i + 3) % SKELETON_STRIP_THEMES.length]} />
             ))}
         </div>
     )
 }
 
-interface PhotoGalleryProps {
-    photos: Photo[]
-}
-
-export function PhotoGallery({ photos }: PhotoGalleryProps) {
+export function PhotoGallery() {
+    const { data, isPending } = useQuery({
+        queryKey: ['photos'],
+        queryFn: () => api.photos.list(),
+        refetchOnWindowFocus: false
+    })
     const [lightboxPhoto, setLightboxPhoto] = useState<Photo | null>(null)
+
+    if (isPending) return <PhotoGallerySkeleton />
+
+    const photos = data?.photos ?? []
 
     if (photos.length === 0) {
         return (

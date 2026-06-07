@@ -1,25 +1,11 @@
 import type { Metadata } from 'next'
-import { Suspense } from 'react'
-import { api } from '@/lib/api'
 import { SITE } from '@/content/site'
 import { SectionLabel, PageHeading, BodyText } from '@/components/ui/typography'
-import { ProjectsContent, ProjectsContentSkeleton } from './components/ProjectsContent'
-
-export const dynamic = 'force-dynamic'
+import { ProjectsContent } from './components/ProjectsContent'
 
 export const metadata: Metadata = {
     title: 'Projects — Nandan Patel',
     description: SITE.projects.sub
-}
-
-async function ProjectsData() {
-    const [statsResult, reposResult] = await Promise.allSettled([
-        api.github.stats(),
-        api.github.repos()
-    ])
-    const stats = statsResult.status === 'fulfilled' ? statsResult.value : null
-    const repos = reposResult.status === 'fulfilled' ? reposResult.value.repos : []
-    return <ProjectsContent stats={stats} repos={repos} />
 }
 
 export default function ProjectsPage() {
@@ -30,9 +16,7 @@ export default function ProjectsPage() {
                 <PageHeading className="mb-3">{SITE.projects.heading}</PageHeading>
                 <BodyText>{SITE.projects.sub}</BodyText>
             </section>
-            <Suspense fallback={<ProjectsContentSkeleton />}>
-                <ProjectsData />
-            </Suspense>
+            <ProjectsContent />
         </div>
     )
 }

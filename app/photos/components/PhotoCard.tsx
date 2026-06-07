@@ -52,8 +52,8 @@ export function PhotoCard({ photo, index, priority = false, onClick }: PhotoCard
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
-                duration: 0.45,
-                delay: Math.min(index, 8) * 0.06,
+                duration: 0.35,
+                delay: Math.min(index, 5) * 0.04,
                 ease: [0.22, 1, 0.36, 1]
             }}
             whileHover={{
@@ -61,7 +61,7 @@ export function PhotoCard({ photo, index, priority = false, onClick }: PhotoCard
                 scale: 1.03,
                 y: -6,
                 boxShadow: theme.glow,
-                transition: { type: 'spring', stiffness: 280, damping: 20 }
+                transition: { type: 'spring', stiffness: 420, damping: 28 }
             }}
             style={{ rotate: `${rotation}deg` }}
             className="w-full max-w-[280px] cursor-pointer rounded-[3px]"

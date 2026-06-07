@@ -5,7 +5,13 @@ let queryClient: QueryClient | undefined
 
 export function getQueryClient() {
     if (queryClient) return queryClient
-    queryClient = new QueryClient()
+    queryClient = new QueryClient({
+        defaultOptions: {
+            queries: {
+                staleTime: 60 * 60 * 1000
+            }
+        }
+    })
     return queryClient
 }
 
