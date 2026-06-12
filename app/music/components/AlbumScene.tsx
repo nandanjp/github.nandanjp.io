@@ -1,5 +1,6 @@
 'use client'
 
+import { useMemo } from 'react'
 import { BlurImage } from '@/components/ui/blur-image'
 import { netlifyImageSrc, netlifyThumbnailSrc } from '@/lib/netlify-image-loader'
 import { ExternalLink } from 'lucide-react'
@@ -48,14 +49,17 @@ function AlbumCard({ track }: { track: Track }) {
 }
 
 export function AlbumScene({ tracks }: AlbumSceneProps) {
-    const seen = new Set<string>()
-    const albums: Track[] = []
-    for (const t of tracks) {
-        if (!seen.has(t.album_art_url)) {
-            seen.add(t.album_art_url)
-            albums.push(t)
+    const albums = useMemo(() => {
+        const seen = new Set<string>()
+        const result: Track[] = []
+        for (const t of tracks) {
+            if (!seen.has(t.album_art_url)) {
+                seen.add(t.album_art_url)
+                result.push(t)
+            }
         }
-    }
+        return result
+    }, [tracks])
 
     return (
         <div className="flex flex-col gap-3">

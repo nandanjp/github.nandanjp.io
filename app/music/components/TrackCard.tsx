@@ -3,7 +3,6 @@
 import { BlurImage } from '@/components/ui/blur-image'
 import { netlifyImageSrc, netlifyThumbnailSrc } from '@/lib/netlify-image-loader'
 import { ExternalLink } from 'lucide-react'
-import { motion } from 'framer-motion'
 import { getArtistColor } from './artist-color'
 import type { Track } from '@/lib/api'
 import { cn, formatDuration } from '@/lib/utils'
@@ -18,21 +17,16 @@ export function TrackCard({ track, index }: TrackCardProps) {
     const primaryArtistColor = getArtistColor(track.artists[0])
 
     return (
-        <motion.div
-            initial={{ opacity: 0, x: -8 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{
-                duration: 0.3,
-                delay: (index % 8) * 0.04,
-                ease: [0.22, 1, 0.36, 1]
-            }}
+        <div
             onClick={() =>
                 window.open(track.external_url, '_blank', 'noopener,noreferrer')
             }
             className={cn(
                 'group relative flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 transition-colors',
+                'animate-[track-in_0.3s_cubic-bezier(0.22,1,0.36,1)_both]',
                 primaryArtistColor.groupHoverBg
             )}
+            style={{ animationDelay: `${(index % 8) * 40}ms` }}
         >
             {/* Track # */}
             <div className="flex w-8 shrink-0 items-center justify-center">
@@ -54,7 +48,7 @@ export function TrackCard({ track, index }: TrackCardProps) {
 
             {/* Track info */}
             <div className="min-w-0 flex-1">
-                <p className="font-hand truncate text-[17px] leading-tight font-bold text-foreground transition-colors group-hover:text-white">
+                <p className="font-hand truncate text-[17px] leading-tight font-bold text-foreground transition-colors group-hover:text-foreground dark:group-hover:text-white">
                     {track.name}
                 </p>
                 <div className="flex min-w-0 flex-wrap items-center gap-1 overflow-hidden">
@@ -67,14 +61,14 @@ export function TrackCard({ track, index }: TrackCardProps) {
                                     'inline-flex shrink-0 items-center rounded-full px-1.5 py-px font-mono text-xs leading-none transition-colors',
                                     artistColor.bg,
                                     artistColor.text,
-                                    'group-hover:bg-white/20 group-hover:text-white/90'
+                                    'group-hover:bg-foreground/10 group-hover:text-foreground/90 dark:group-hover:bg-white/20 dark:group-hover:text-white/90'
                                 )}
                             >
                                 {artist}
                             </span>
                         )
                     })}
-                    <MonoText className="truncate transition-colors group-hover:text-white/60">
+                    <MonoText className="truncate transition-colors group-hover:text-foreground/60 dark:group-hover:text-white/60">
                         <span className="mx-1 opacity-50">·</span>
                         {track.album_name}
                     </MonoText>
@@ -83,7 +77,7 @@ export function TrackCard({ track, index }: TrackCardProps) {
 
             {/* Duration + open link */}
             <div className="flex shrink-0 items-center gap-2.5">
-                <MonoText className="w-8 text-right tabular-nums text-muted-foreground/45 transition-colors group-hover:text-white/60">
+                <MonoText className="w-8 text-right tabular-nums text-muted-foreground/45 transition-colors group-hover:text-foreground/60 dark:group-hover:text-white/60">
                     {formatDuration(track.duration_ms)}
                 </MonoText>
                 <a
@@ -97,6 +91,6 @@ export function TrackCard({ track, index }: TrackCardProps) {
                     <ExternalLink className="size-3.5" />
                 </a>
             </div>
-        </motion.div>
+        </div>
     )
 }

@@ -1,5 +1,6 @@
 'use client'
 
+import { useMemo } from 'react'
 import { BlurImage } from '@/components/ui/blur-image'
 import { MacCard } from '@/components/ui/mac-card'
 import { netlifyImageSrc, netlifyThumbnailSrc } from '@/lib/netlify-image-loader'
@@ -11,18 +12,19 @@ interface ArtistLeaderboardProps {
 }
 
 export function ArtistLeaderboard({ tracks }: ArtistLeaderboardProps) {
-    const artistMap = new Map<string, { count: number; albumArtUrl: string }>()
-    for (const track of tracks) {
-        const artist = track.artists[0]
-        if (!artistMap.has(artist)) {
-            artistMap.set(artist, { count: 0, albumArtUrl: track.album_art_url })
+    const ranked = useMemo(() => {
+        const artistMap = new Map<string, { count: number; albumArtUrl: string }>()
+        for (const track of tracks) {
+            const artist = track.artists[0]
+            if (!artistMap.has(artist)) {
+                artistMap.set(artist, { count: 0, albumArtUrl: track.album_art_url })
+            }
+            artistMap.get(artist)!.count++
         }
-        artistMap.get(artist)!.count++
-    }
-
-    const ranked = [...artistMap.entries()]
-        .sort((a, b) => b[1].count - a[1].count)
-        .slice(0, 5)
+        return [...artistMap.entries()]
+            .sort((a, b) => b[1].count - a[1].count)
+            .slice(0, 5)
+    }, [tracks])
 
     return (
         <MacCard title="top-artists.txt" className="bg-card/40 rounded-xl border shadow-sm">
